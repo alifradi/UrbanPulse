@@ -1,25 +1,22 @@
 {% extends 'core/base.html' %}
-{% load static %}
 
-{% block title %}Services & Partnerships - UrbanPulse{% endblock %}
+{% block title %}{{ page_title|default:"Services & Partnerships - UrbanPulse" }}{% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
 <section class="bg-light py-5">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6">
-                <h1 class="mb-3">Services & Partnerships</h1>
+                <h1 class="mb-3">{{ page_title|default:"Services & Partnerships" }}</h1>
                 <p class="lead mb-4">Discover how UrbanPulse's comprehensive data analytics services and strategic partnerships can transform your urban development and investment strategies.</p>
             </div>
             <div class="col-lg-6">
-                <img src="{% static 'core/img/services_illustration.png' %}" alt="UrbanPulse Services" class="img-fluid rounded shadow">
+                <img src="{{ STATIC_URL }}img/services_illustration.png" alt="UrbanPulse Services" class="img-fluid rounded shadow"> {# Adjusted static path #}
             </div>
         </div>
     </div>
 </section>
 
-<!-- Core Services Section -->
 <section class="py-5">
     <div class="container">
         <div class="row mb-5">
@@ -30,10 +27,34 @@
         </div>
         
         <div class="row">
+            {# Example of looping through services if provided by context #}
+            {% if services %}
+                {% for service in services %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon mx-auto mb-4"> {# Assuming 'feature-icon' class is styled in base or custom CSS #}
+                                <i class="bi bi-{{ service.icon|default:'briefcase' }}"></i>
+                            </div>
+                            <h4 class="card-title">{{ service.name }}</h4>
+                            <p class="card-text">{{ service.description|default:"Service description." }}</p>
+                            <ul class="list-unstyled text-start mt-4">
+                                {% for point in service.points %}
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i> {{ point }}</li>
+                                {% endfor %}
+                            </ul>
+                            <div class="mt-4">
+                                <a href="{{ service.link|default:'#' }}" class="btn btn-outline-primary">Explore {{ service.name_short|default:service.name }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card h-100">
                     <div class="card-body text-center p-4">
-                        <div class="feature-icon mx-auto mb-4">
+                        <div class="feature-icon mx-auto mb-4" style="font-size: 2.5rem; color: var(--bs-primary); width: 70px; height: 70px; border-radius: 50%; background-color: #e9ecef; display: flex; align-items: center; justify-content: center;">
                             <i class="bi bi-graph-up-arrow"></i>
                         </div>
                         <h4 class="card-title">Data Insights & Analytics</h4>
@@ -46,16 +67,15 @@
                             <li><i class="bi bi-check-circle-fill text-primary me-2"></i> Custom data visualization and reporting</li>
                         </ul>
                         <div class="mt-4">
-                            <a href="{% url 'insights' %}" class="btn btn-outline-primary">Explore Data Insights</a>
+                            <a href="/investment/" class="btn btn-outline-primary">Explore Data Insights</a> {# Static path #}
                         </div>
                     </div>
                 </div>
             </div>
-            
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card h-100">
                     <div class="card-body text-center p-4">
-                        <div class="feature-icon mx-auto mb-4">
+                        <div class="feature-icon mx-auto mb-4" style="font-size: 2.5rem; color: var(--bs-primary); width: 70px; height: 70px; border-radius: 50%; background-color: #e9ecef; display: flex; align-items: center; justify-content: center;">
                             <i class="bi bi-building-check"></i>
                         </div>
                         <h4 class="card-title">Investment Opportunity Analysis</h4>
@@ -68,16 +88,15 @@
                             <li><i class="bi bi-check-circle-fill text-primary me-2"></i> Investment risk profiling</li>
                         </ul>
                         <div class="mt-4">
-                            <a href="{% url 'investment' %}" class="btn btn-outline-primary">Explore Investment Analysis</a>
+                            <a href="/investment/" class="btn btn-outline-primary">Explore Investment Analysis</a> {# Static path #}
                         </div>
                     </div>
                 </div>
             </div>
-            
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card h-100">
                     <div class="card-body text-center p-4">
-                        <div class="feature-icon mx-auto mb-4">
+                        <div class="feature-icon mx-auto mb-4" style="font-size: 2.5rem; color: var(--bs-primary); width: 70px; height: 70px; border-radius: 50%; background-color: #e9ecef; display: flex; align-items: center; justify-content: center;">
                             <i class="bi bi-shield-check"></i>
                         </div>
                         <h4 class="card-title">Hazard & Sustainability Assessment</h4>
@@ -90,16 +109,16 @@
                             <li><i class="bi bi-check-circle-fill text-primary me-2"></i> Hazard mitigation recommendations</li>
                         </ul>
                         <div class="mt-4">
-                            <a href="{% url 'hazards' %}" class="btn btn-outline-primary">Explore Hazard Analysis</a>
+                            <a href="/hazards/" class="btn btn-outline-primary">Explore Hazard Analysis</a> {# Static path #}
                         </div>
                     </div>
                 </div>
             </div>
+            {% endif %}
         </div>
     </div>
 </section>
 
-<!-- Specialized Services Section -->
 <section class="py-5 bg-light">
     <div class="container">
         <div class="row mb-5">
@@ -127,7 +146,7 @@
                             <li>Risk mitigation strategy development</li>
                         </ul>
                         <div class="mt-3">
-                            <a href="{% url 'contact' %}" class="btn btn-sm btn-outline-primary">Request Consultation</a>
+                            <a href="/contact/" class="btn btn-sm btn-outline-primary">Request Consultation</a> {# Static path #}
                         </div>
                     </div>
                 </div>
@@ -150,7 +169,7 @@
                             <li>Data API and integration services</li>
                         </ul>
                         <div class="mt-3">
-                            <a href="{% url 'contact' %}" class="btn btn-sm btn-outline-primary">Discuss Your Needs</a>
+                            <a href="/contact/" class="btn btn-sm btn-outline-primary">Discuss Your Needs</a> {# Static path #}
                         </div>
                     </div>
                 </div>
@@ -173,7 +192,7 @@
                             <li>Custom training curriculum development</li>
                         </ul>
                         <div class="mt-3">
-                            <a href="{% url 'contact' %}" class="btn btn-sm btn-outline-primary">Explore Training Options</a>
+                            <a href="/contact/" class="btn btn-sm btn-outline-primary">Explore Training Options</a> {# Static path #}
                         </div>
                     </div>
                 </div>
@@ -196,7 +215,7 @@
                             <li>Academic and industry collaborations</li>
                         </ul>
                         <div class="mt-3">
-                            <a href="{% url 'contact' %}" class="btn btn-sm btn-outline-primary">Discuss Research Opportunities</a>
+                            <a href="/contact/" class="btn btn-sm btn-outline-primary">Discuss Research Opportunities</a> {# Static path #}
                         </div>
                     </div>
                 </div>
@@ -205,7 +224,6 @@
     </div>
 </section>
 
-<!-- Service Packages Section -->
 <section class="py-5">
     <div class="container">
         <div class="row mb-5">
@@ -235,7 +253,7 @@
                             <li class="text-muted"><i class="bi bi-x-circle-fill me-2"></i> Dedicated consultant</li>
                         </ul>
                         <div class="mt-auto pt-3">
-                            <a href="{% url 'contact' %}" class="btn btn-lg btn-outline-primary w-100">Get Started</a>
+                            <a href="/contact/" class="btn btn-lg btn-outline-primary w-100">Get Started</a> {# Static path #}
                         </div>
                     </div>
                 </div>
@@ -260,7 +278,7 @@
                             <li class="text-muted"><i class="bi bi-x-circle-fill me-2"></i> Dedicated consultant</li>
                         </ul>
                         <div class="mt-auto pt-3">
-                            <a href="{% url 'contact' %}" class="btn btn-lg btn-primary w-100">Get Started</a>
+                            <a href="/contact/" class="btn btn-lg btn-primary w-100">Get Started</a> {# Static path #}
                         </div>
                     </div>
                 </div>
@@ -285,7 +303,7 @@
                             <li><i class="bi bi-check-circle-fill text-primary me-2"></i> Dedicated consultant team</li>
                         </ul>
                         <div class="mt-auto pt-3">
-                            <a href="{% url 'contact' %}" class="btn btn-lg btn-outline-primary w-100">Contact Sales</a>
+                            <a href="/contact/" class="btn btn-lg btn-outline-primary w-100">Contact Sales</a> {# Static path #}
                         </div>
                     </div>
                 </div>
@@ -294,7 +312,6 @@
     </div>
 </section>
 
-<!-- Strategic Partnerships Section -->
 <section class="py-5 bg-light">
     <div class="container">
         <div class="row mb-5">
@@ -304,59 +321,35 @@
             </div>
         </div>
         
-        <div class="row mb-5">
-            <div class="col-lg-3 col-md-4 col-6 mb-4 text-center">
-                <img src="{% static 'core/img/partners/partner1.png' %}" alt="Technology Partner" class="img-fluid mb-3" style="max-height: 80px;">
-                <p class="mb-0">Technology Solutions</p>
+        <div class="row mb-5 justify-content-center"> {# Added justify-content-center #}
+            <div class="col-lg-2 col-md-3 col-4 mb-4 text-center"> {# Adjusted column classes for better spacing #}
+                <img src="{{ STATIC_URL }}img/partners/partner1.png" alt="Technology Partner" class="img-fluid mb-3" style="max-height: 60px;"> {# Adjusted max-height #}
+                <p class="mb-0 small">Technology Solutions</p>
             </div>
-            
-            <div class="col-lg-3 col-md-4 col-6 mb-4 text-center">
-                <img src="{% static 'core/img/partners/partner2.png' %}" alt="Research Partner" class="img-fluid mb-3" style="max-height: 80px;">
-                <p class="mb-0">Research Institute</p>
+            <div class="col-lg-2 col-md-3 col-4 mb-4 text-center">
+                <img src="{{ STATIC_URL }}img/partners/partner2.png" alt="Research Partner" class="img-fluid mb-3" style="max-height: 60px;">
+                <p class="mb-0 small">Research Institute</p>
             </div>
-            
-            <div class="col-lg-3 col-md-4 col-6 mb-4 text-center">
-                <img src="{% static 'core/img/partners/partner3.png' %}" alt="Government Partner" class="img-fluid mb-3" style="max-height: 80px;">
-                <p class="mb-0">Government Agency</p>
+            <div class="col-lg-2 col-md-3 col-4 mb-4 text-center">
+                <img src="{{ STATIC_URL }}img/partners/partner3.png" alt="Government Partner" class="img-fluid mb-3" style="max-height: 60px;">
+                <p class="mb-0 small">Government Agency</p>
             </div>
-            
-            <div class="col-lg-3 col-md-4 col-6 mb-4 text-center">
-                <img src="{% static 'core/img/partners/partner4.png' %}" alt="Investment Partner" class="img-fluid mb-3" style="max-height: 80px;">
-                <p class="mb-0">Investment Group</p>
+            <div class="col-lg-2 col-md-3 col-4 mb-4 text-center">
+                <img src="{{ STATIC_URL }}img/partners/partner4.png" alt="Investment Partner" class="img-fluid mb-3" style="max-height: 60px;">
+                <p class="mb-0 small">Investment Group</p>
             </div>
-            
-            <div class="col-lg-3 col-md-4 col-6 mb-4 text-center">
-                <img src="{% static 'core/img/partners/partner5.png' %}" alt="University Partner" class="img-fluid mb-3" style="max-height: 80px;">
-                <p class="mb-0">University Partner</p>
             </div>
-            
-            <div class="col-lg-3 col-md-4 col-6 mb-4 text-center">
-                <img src="{% static 'core/img/partners/partner6.png' %}" alt="Sustainability Partner" class="img-fluid mb-3" style="max-height: 80px;">
-                <p class="mb-0">Sustainability Alliance</p>
-            </div>
-            
-            <div class="col-lg-3 col-md-4 col-6 mb-4 text-center">
-                <img src="{% static 'core/img/partners/partner7.png' %}" alt="Data Partner" class="img-fluid mb-3" style="max-height: 80px;">
-                <p class="mb-0">Data Provider</p>
-            </div>
-            
-            <div class="col-lg-3 col-md-4 col-6 mb-4 text-center">
-                <img src="{% static 'core/img/partners/partner8.png' %}" alt="Industry Partner" class="img-fluid mb-3" style="max-height: 80px;">
-                <p class="mb-0">Industry Association</p>
-            </div>
-        </div>
         
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">
                 <h4 class="mb-4">Become a Partner</h4>
                 <p class="mb-4">We're always looking to expand our network of partners to enhance our urban data analytics capabilities and deliver more value to our clients.</p>
-                <a href="{% url 'contact' %}" class="btn btn-primary">Explore Partnership Opportunities</a>
+                <a href="/contact/" class="btn btn-primary">Explore Partnership Opportunities</a> {# Static path #}
             </div>
         </div>
     </div>
 </section>
 
-<!-- Testimonials Section -->
 <section class="py-5">
     <div class="container">
         <div class="row mb-5">
@@ -371,15 +364,11 @@
                 <div class="card h-100">
                     <div class="card-body">
                         <div class="mb-3">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning"></i>
                         </div>
                         <p class="card-text">"UrbanPulse's data analytics transformed our investment strategy, helping us identify opportunities we would have otherwise missed. Their hazard analysis saved us from a potentially disastrous investment in a flood-prone area."</p>
                         <div class="d-flex align-items-center mt-4">
-                            <img src="{% static 'core/img/testimonials/testimonial1.jpg' %}" alt="Client" class="rounded-circle me-3" width="60" height="60">
+                            <img src="{{ STATIC_URL }}img/testimonials/testimonial1.jpg" alt="Client" class="rounded-circle me-3" width="60" height="60"> {# Adjusted static path #}
                             <div>
                                 <h5 class="mb-0">Jennifer Martinez</h5>
                                 <p class="text-muted mb-0">Director of Investments, Urban Growth Capital</p>
@@ -393,15 +382,11 @@
                 <div class="card h-100">
                     <div class="card-body">
                         <div class="mb-3">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning"></i>
                         </div>
                         <p class="card-text">"As a city planner, I've found UrbanPulse's insights invaluable for making data-driven decisions about infrastructure investments. Their sustainability metrics have helped us prioritize green initiatives with the highest impact."</p>
                         <div class="d-flex align-items-center mt-4">
-                            <img src="{% static 'core/img/testimonials/testimonial2.jpg' %}" alt="Client" class="rounded-circle me-3" width="60" height="60">
+                            <img src="{{ STATIC_URL }}img/testimonials/testimonial2.jpg" alt="Client" class="rounded-circle me-3" width="60" height="60"> {# Adjusted static path #}
                             <div>
                                 <h5 class="mb-0">David Wilson</h5>
                                 <p class="text-muted mb-0">Chief Urban Planner, Metropolitan Development Authority</p>
@@ -415,15 +400,11 @@
                 <div class="card h-100">
                     <div class="card-body">
                         <div class="mb-3">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-half text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-fill text-warning"></i><i class="bi bi-star-half text-warning"></i>
                         </div>
                         <p class="card-text">"The ROI on our partnership with UrbanPulse has been exceptional. Their custom analytics platform has become an essential tool for our development team, providing insights that drive our strategic decisions."</p>
                         <div class="d-flex align-items-center mt-4">
-                            <img src="{% static 'core/img/testimonials/testimonial3.jpg' %}" alt="Client" class="rounded-circle me-3" width="60" height="60">
+                            <img src="{{ STATIC_URL }}img/testimonials/testimonial3.jpg" alt="Client" class="rounded-circle me-3" width="60" height="60"> {# Adjusted static path #}
                             <div>
                                 <h5 class="mb-0">Michael Chang</h5>
                                 <p class="text-muted mb-0">CEO, Innovative Urban Developers</p>
@@ -436,16 +417,15 @@
     </div>
 </section>
 
-<!-- CTA Section -->
 <section class="py-5 bg-primary text-white">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-8 mx-auto text-center">
                 <h2 class="mb-4">Ready to Transform Your Urban Strategy?</h2>
                 <p class="lead mb-4">Contact us today to discuss how our urban data analytics services can help you make more informed decisions and achieve better outcomes.</p>
-                <div class="d-flex justify-content-center gap-3">
-                    <a href="{% url 'contact' %}" class="btn btn-light">Contact Us</a>
-                    <a href="#" class="btn btn-outline-light">Schedule a Demo</a>
+                <div class="d-flex justify-content-center gap-3 flex-wrap"> {# Added flex-wrap #}
+                    <a href="/contact/" class="btn btn-light btn-lg">Contact Us</a> {# Static path, larger button #}
+                    <a href="#" class="btn btn-outline-light btn-lg">Schedule a Demo</a> {# Placeholder link, larger button #}
                 </div>
             </div>
         </div>

@@ -6,89 +6,96 @@ This script generates a static version of the UrbanPulse website for Netlify dep
 
 import os
 import shutil
-# subprocess and sys are no longer needed for Jinja2 installation
+import sys # Keep sys for sys.exit
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader # Import Jinja2 at the top
 
 # Configuration
 BUILD_DIR = "build"
-# STATIC_DIR = "static" # This variable was defined but not used directly in main logic, BUILD_DIR/static is used.
 TEMPLATES_DIR = "core/templates/core"  # Make sure this path is correct relative to your project root
 STATIC_ASSETS_DIR = "core/static/core" # Make sure this path is correct
 PAGES = [
-    {"template": "home.html", "output": "index.html"},
-    {"template": "investment.html", "output": "investment/index.html"},
-    {"template": "hazards.html", "output": "hazards/index.html"},
-    {"template": "contact.html", "output": "contact/index.html"},
-    {"template": "team.html", "output": "team/index.html"},
-    {"template": "contributions.html", "output": "contributions/index.html"},
-    {"template": "services.html", "output": "services/index.html"},
+    {"template": "home.html", "output": "index.html", "name": "home"},
+    {"template": "investment.html", "output": "investment/index.html", "name": "investment"},
+    {"template": "hazards.html", "output": "hazards/index.html", "name": "hazards"},
+    {"template": "contact.html", "output": "contact/index.html", "name": "contact"},
+    {"template": "team.html", "output": "team/index.html", "name": "team"},
+    {"template": "contributions.html", "output": "contributions/index.html", "name": "contributions"},
+    {"template": "services.html", "output": "services/index.html", "name": "services"},
 ]
 
-def get_mock_context_for_template(template_name):
-    """Generate mock context data for templates"""
-    # Base context used across all templates
+def get_mock_context_for_template(template_name, current_page_name_from_build):
+    """
+    Generate mock context data for templates.
+    Now includes current_page_name for active navigation link highlighting.
+    """
     base_context = {
-        "STATIC_URL": "/static/",  # Assuming static files will be served from /static/
-        "MEDIA_URL": "/media/",    # Assuming media files will be served from /media/
+        "STATIC_URL": "/static/",
+        "MEDIA_URL": "/media/",
+        "current_page_name": current_page_name_from_build, # Added for nav highlighting
+        # "BASE_URL": "/" # Optional: if you need absolute base for links, though relative usually fine for Netlify
     }
     
     # Template-specific context (ensure these match your template needs)
+    # These are examples; customize them based on what each page actually needs.
     template_contexts = {
         "home.html": {
             "page_title": "UrbanPulse - Urban Data Analytics",
-            "featured_insights": [
-                {"title": "Population Growth Trends", "description": "Analysis of urban population changes"},
-                {"title": "Business Opportunity Index", "description": "Top locations for new businesses"},
-                {"title": "Safety Score Map", "description": "Comprehensive safety metrics by neighborhood"}
+            "featured_insights": [ # Example data for home page cards
+                {"title": "Buildings Analyzed", "value": "14,382", "icon": "bi-building"},
+                {"title": "Cities Covered", "value": "237", "icon": "bi-geo-alt"},
+                {"title": "Business Opportunities", "value": "3,845", "icon": "bi-shop"},
+                {"title": "Data Accuracy", "value": "98.7%", "icon": "bi-check-circle"}
             ]
         },
         "investment.html": {
             "page_title": "Investment Opportunities - UrbanPulse",
-            "opportunities": [
-                {"name": "Downtown Development", "score": 87, "roi": "12-15%"},
-                {"name": "Westside Commercial", "score": 92, "roi": "10-14%"},
-                {"name": "North District Mixed-Use", "score": 78, "roi": "8-11%"}
+            "opportunities": [ # Example data for investment page
+                {"id": "prop1", "name": "Downtown Office Building", "image_slug": "property1.jpg", "type": "Commercial", "address": "123 Main St, Downtown", "safety_score": 4.0, "description": "Modern office building...", "price": "$2,450,000"},
+                {"id": "prop2", "name": "East Side Mixed-Use", "image_slug": "property2.jpg", "type": "Mixed Use", "address": "456 Park Ave, East Side", "safety_score": 4.5, "description": "Newly renovated mixed-use...", "price": "$3,750,000"},
+                {"id": "prop3", "name": "North District Residential", "image_slug": "property3.jpg", "type": "Residential", "address": "789 Oak St, North District", "safety_score": 3.0, "description": "Multi-family residential complex...", "price": "$4,200,000"},
+                {"id": "prop4", "name": "Industrial Zone Warehouse", "image_slug": "property4.jpg", "type": "Industrial", "address": "101 Factory Rd, Industrial Zone", "safety_score": 3.5, "description": "Modern warehouse facility...", "price": "$1,850,000"},
+                {"id": "prop5", "name": "West End Retail Center", "image_slug": "property5.jpg", "type": "Commercial", "address": "222 Market St, West End", "safety_score": 4.0, "description": "Established retail center...", "price": "$3,100,000"},
+                {"id": "prop6", "name": "South Quarter Land", "image_slug": "property6.jpg", "type": "Vacant Land", "address": "333 River Rd, South Quarter", "safety_score": 5.0, "description": "Prime development land...", "price": "$5,800,000"},
             ]
         },
         "hazards.html": {
-            "page_title": "Hazard Analysis - UrbanPulse",
-            "hazard_reports": [
-                {"title": "Flood Risk Assessment", "date": "April 2025"},
-                {"title": "Seismic Activity Report", "date": "March 2025"},
-                {"title": "Air Quality Index", "date": "May 2025"}
+            "page_title": "Hazard Analysis & Sustainability - UrbanPulse",
+            "hazard_reports": [ # Example data for sustainability reports
+                 {"score_grade": "A", "district_name": "Downtown District", "summary": "Leading sustainability...", "green_buildings_pct": 85, "solar_capacity_mw": 12.5, "ev_stations_count": 245, "public_transit_rating": "Excellent", "waste_recycling_pct": 78, "full_report_link": "#"},
+                 {"score_grade": "B", "district_name": "North District", "summary": "Strong sustainability...", "green_buildings_pct": 72, "solar_capacity_mw": 8.3, "ev_stations_count": 178, "public_transit_rating": "Good", "waste_recycling_pct": 65, "full_report_link": "#"},
+                 {"score_grade": "C", "district_name": "Industrial Zone", "summary": "Moderate sustainability...", "green_buildings_pct": 45, "solar_capacity_mw": 5.1, "ev_stations_count": 62, "public_transit_rating": "Limited", "waste_recycling_pct": 52, "full_report_link": "#"},
             ]
         },
         "contact.html": {
             "page_title": "Contact Us - UrbanPulse",
-            "form_action": "#"  # Static form handling
+            "form_action": "#"  # For static site, form submission needs a service like Netlify Forms or Formspree
         },
         "team.html": {
             "page_title": "Our Team - UrbanPulse",
             "team_members": [
-                {"name": "Sarah Johnson", "position": "CEO", "image": "team/ceo.jpg"}, # Ensure these image paths are correct relative to your static/media setup
-                {"name": "Michael Chen", "position": "CTO", "image": "team/cto.jpg"},
-                {"name": "Elena Rodriguez", "position": "CSO", "image": "team/cso.jpg"}
+                {"name": "Ali Fradi", "position": "Co-Founder", "image_slug": "team/ali_fr.jpeg", "diploma": "M.Sc in Applied Mathematics...", "bio": "Former data consultant...", "linkedin_url": "https://www.linkedin.com/in/ali-frady/", "github_url": "https://github.com/alifradi"},
+                {"name": "Kais Riani", "position": "Co-Founder", "image_slug": "team/kais_r.jpg", "diploma": "Ph.D. in Computer and Information Sciences...", "bio": "Computer vision and machine learning engineer...", "linkedin_url": "https://www.linkedin.com/in/kais-riani/", "github_url": "#"},
+                {"name": "Yakin Hajlaoui", "position": "Co-Founder", "image_slug": "team/yakin_h.jpg", "diploma": "Ph.D. in Applied Mathematics...", "bio": "Expert in mathematical modeling...", "linkedin_url": "https://www.linkedin.com/in/yakin-hajlaoui/", "twitter_url": "#"}
             ]
         },
         "contributions.html": {
             "page_title": "Recent Contributions - UrbanPulse",
             "contributions": [
-                {"title": "Urban Infrastructure Resilience", "date": "March 2025"},
-                {"title": "Quantifying Urban Sustainability", "date": "January 2025"}
+                {"title": "Predictive Analytics for Urban Infrastructure Resilience", "publication_info": "Journal of Urban Technology, Vol. 38, Issue 2", "description": "This paper presents a novel framework...", "author_image_slug": "team/cto.jpg", "author_name": "Michael Chen, CTO", "date": "March 2025", "link": "#"},
+                {"title": "Quantifying Urban Sustainability: A Comprehensive Metrics Framework", "publication_info": "Sustainable Cities and Society, Vol. 92", "description": "This research introduces a new framework...", "author_image_slug": "team/cso.jpg", "author_name": "Elena Rodriguez, CSO", "date": "January 2025", "link": "#"}
             ]
         },
         "services.html": {
             "page_title": "Services & Partnerships - UrbanPulse",
-            "services": [
-                {"name": "Data Insights & Analytics", "icon": "graph-up-arrow"}, # Ensure your templates can use these icon names
-                {"name": "Investment Opportunity Analysis", "icon": "building-check"},
-                {"name": "Hazard & Sustainability Assessment", "icon": "shield-check"}
+            "services": [ # Example data for services page
+                {"name": "Data Insights & Analytics", "icon": "graph-up-arrow", "description": "Comprehensive analysis...", "points": ["Population analysis", "Infrastructure assessment"], "link":"/investment/", "name_short":"Data Insights"},
+                {"name": "Investment Opportunity Analysis", "icon": "building-check", "description": "Data-driven identification...", "points": ["Property evaluation", "Market trend analysis"], "link":"/investment/", "name_short":"Investment Analysis"},
+                {"name": "Hazard & Sustainability Assessment", "icon": "shield-check", "description": "Comprehensive analysis of risks...", "points": ["Environmental risk mapping", "Climate resilience"], "link":"/hazards/", "name_short":"Hazard Analysis"}
             ]
         }
     }
     
-    # Merge base context with template-specific context
     context = base_context.copy()
     if template_name in template_contexts:
         context.update(template_contexts[template_name])
@@ -99,26 +106,22 @@ def main():
     """Main build function"""
     print("Starting UrbanPulse static site build...")
     
-    # Ensure template directory exists
     if not os.path.isdir(TEMPLATES_DIR):
         print(f"Error: Templates directory '{TEMPLATES_DIR}' not found. Please check the path.")
-        sys.exit(1) # Exit if templates directory is missing
+        sys.exit(1)
 
-    # Create build directory
     if os.path.exists(BUILD_DIR):
-        print(f"Cleaning existing {BUILD_DIR} directory...")
+        print(f"Cleaning existing '{BUILD_DIR}' directory...")
         shutil.rmtree(BUILD_DIR)
     
     os.makedirs(BUILD_DIR, exist_ok=True)
     
-    # Create directories for pages if they have subpaths
-    for page in PAGES:
-        output_path = Path(BUILD_DIR) / page["output"]
-        if output_path.parent != Path(BUILD_DIR): # Check if output is in a subdirectory
+    for page_config in PAGES:
+        output_path = Path(BUILD_DIR) / page_config["output"]
+        if output_path.parent != Path(BUILD_DIR):
             output_path.parent.mkdir(parents=True, exist_ok=True)
             print(f"Created directory: {output_path.parent}")
     
-    # Copy static assets
     static_output_dir = Path(BUILD_DIR) / "static"
     if os.path.exists(STATIC_ASSETS_DIR):
         print(f"Copying static assets from '{STATIC_ASSETS_DIR}' to '{static_output_dir}'...")
@@ -130,8 +133,7 @@ def main():
     else:
         print(f"Warning: Static assets directory '{STATIC_ASSETS_DIR}' not found. Skipping static asset copy.")
     
-    # Copy media files if they exist
-    media_input_dir = "media" # Assuming 'media' is at the project root
+    media_input_dir = "media" 
     media_output_dir = Path(BUILD_DIR) / "media"
     if os.path.exists(media_input_dir):
         print(f"Copying media files from '{media_input_dir}' to '{media_output_dir}'...")
@@ -143,35 +145,26 @@ def main():
     else:
         print(f"Info: Media directory '{media_input_dir}' not found. Skipping media file copy.")
     
-    # Process templates
     print("Processing templates...")
-    
-    # Set up Jinja environment
-    # Ensure TEMPLATES_DIR is an absolute path or correctly relative to where the script is run from.
-    # For Netlify, paths are usually relative to the repository root.
     env = Environment(loader=FileSystemLoader(TEMPLATES_DIR))
     
-    # Process each page
-    for page in PAGES:
+    for page_config in PAGES:
         try:
-            template = env.get_template(page["template"])
-            output_file_path = Path(BUILD_DIR) / page["output"]
+            template = env.get_template(page_config["template"])
+            output_file_path = Path(BUILD_DIR) / page_config["output"]
             
-            # Render template with mock context
-            context = get_mock_context_for_template(page["template"])
+            # Get context, now passing the 'name' from page_config for current_page_name
+            context = get_mock_context_for_template(page_config["template"], page_config["name"])
             rendered_content = template.render(**context)
             
-            # Write to output file
             with open(output_file_path, "w", encoding="utf-8") as f:
                 f.write(rendered_content)
             
             print(f"Generated {output_file_path}")
         except Exception as e:
-            # Provide more specific error information if possible
-            print(f"Error processing template '{page['template']}' to '{page['output']}': {str(e)}")
-            # Depending on severity, you might want to exit or continue
-            # For CI, it's often better to fail fast:
-            # raise
+            print(f"Error processing template '{page_config['template']}' to '{page_config['output']}': {str(e)}")
+            # Consider re-raising the exception if you want the build to fail on any template error
+            # raise 
 
     print(f"Static site build complete! Files are in the '{BUILD_DIR}' directory.")
 

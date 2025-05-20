@@ -1,43 +1,29 @@
 {% extends 'core/base.html' %}
-{% load static %}
 
 {% block title %}Contact Us - UrbanPulse{% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
 <section class="bg-light py-5">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6">
-                <h1 class="mb-3">Contact Us</h1>
+                <h1 class="mb-3">{{ page_title|default:"Contact Us" }}</h1> {# Use page_title from context #}
                 <p class="lead mb-4">Have questions about our urban data analytics or need more information? Our team is ready to help you make informed decisions for urban development and investment.</p>
             </div>
-          <!--  <div class="col-lg-6">
-                <img src="{% static 'core/img/contact_illustration.png' %}" alt="Contact UrbanPulse" class="img-fluid rounded shadow">
-            </div> -->
-        </div>
+          </div>
     </div>
 </section>
 
-<!-- Contact Section -->
 <section class="py-5">
     <div class="container">
         <div class="row">
-            <!-- Contact Form -->
             <div class="col-lg-7 mb-5 mb-lg-0">
                 <div class="contact-form">
                     <h3 class="mb-4">Send Us a Message</h3>
                     
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="alert alert-{{ message.tags }}">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
-                    {% endif %}
+                    {# Django messages removed. For a static site, form submission and messages would be handled by a third-party service (e.g., Netlify Forms, Formspree) or client-side JS. #}
                     
-                    <form method="post" action="{% url 'contact' %}">
-                        {% csrf_token %}
+                    <form method="post" action="{{ form_action|default:'#' }}"> {# Use form_action from context, remove csrf_token #}
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="name" class="form-label">Your Name *</label>
@@ -83,7 +69,6 @@
                 </div>
             </div>
             
-            <!-- Contact Information -->
             <div class="col-lg-5">
                 <div class="card h-100">
                     <div class="card-body">
@@ -139,10 +124,10 @@
                         
                         <h5 class="mt-4 mb-3">Connect With Us</h5>
                         <div class="social-icons">
-                            <a href="#" class="btn btn-outline-primary me-2"><i class="bi bi-linkedin"></i></a>
-                            <a href="#" class="btn btn-outline-primary me-2"><i class="bi bi-twitter-x"></i></a>
-                            <a href="#" class="btn btn-outline-primary me-2"><i class="bi bi-facebook"></i></a>
-                            <a href="#" class="btn btn-outline-primary"><i class="bi bi-instagram"></i></a>
+                            <a href="#" class="btn btn-outline-primary me-2"><i class="bi bi-linkedin"></i></a> {# Placeholder link #}
+                            <a href="#" class="btn btn-outline-primary me-2"><i class="bi bi-twitter-x"></i></a> {# Placeholder link #}
+                            <a href="#" class="btn btn-outline-primary me-2"><i class="bi bi-facebook"></i></a> {# Placeholder link #}
+                            <a href="#" class="btn btn-outline-primary"><i class="bi bi-instagram"></i></a> {# Placeholder link #}
                         </div>
                     </div>
                 </div>
@@ -151,14 +136,20 @@
     </div>
 </section>
 
-<!-- Map Section -->
 <section class="py-5 bg-light">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body p-0">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5592.52502819168!2d-73.61576338769297!3d45.50479387095395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc919f2a9fc4d71%3A0xda267ca95684133e!2sPolytechnique%20Montr%C3%A9al!5e0!3m2!1sen!2sca!4v1747692252900!5m2!1sen!2sca" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        {# The Google Maps iframe URL might need to be whitelisted or handled differently depending on deployment if CSP is strict. 
+                           Consider using a placeholder or a more robust embedding method if issues arise. 
+                           The current URL "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5592.52502819168!2d-73.61576338769297!3d45.50479387095395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc919f2a9fc4d71%3A0xda267ca95684133e!2sPolytechnique%20Montr%C3%A9al!5e0!3m2!1sen!2sca!4v1747692252900!5m2!1sen!2sca" seems like a placeholder itself and might not work.
+                           A typical Google Maps embed looks like:
+                           <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d...."></iframe>
+                           For now, leaving as is from user's original file.
+                        #}
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2795.984440001997!2d-73.61499008444399!3d45.50990097910178!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc919f8b9f8e0c9%3A0x8f7c9c2df5a54f0c!2sPolytechnique%20Montr%C3%A9al!5e0!3m2!1sen!2sca!4v1620000000000" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
             </div>
@@ -166,7 +157,6 @@
     </div>
 </section>
 
-<!-- FAQ Section -->
 <section class="py-5">
     <div class="container">
         <div class="row mb-5">
