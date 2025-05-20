@@ -2,41 +2,50 @@
 
 {% block title %}{{ page_title }}{% endblock %}
 
+{% block extra_css %}
+{# Add any contact-page specific CSS here if needed #}
+<style>
+    /* Define custom CSS variables if they are used by this page and not in base.html */
+    :root {
+        --bs-primary: #0d6efd; /* Default Bootstrap primary */
+    }
+    /* Styles for FAQ accordion arrows, if not already in a global CSS file */
+    .accordion-button::after {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    }
+    .accordion-button:not(.collapsed)::after {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230c63e4'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+        transform: rotate(-180deg);
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<!-- Hero Section -->
 <section class="bg-light py-5">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6">
-                <h1 class="mb-3">Contact Us</h1>
+                <h1 class="mb-3">{{ page_title_hero }}</h1>
                 <p class="lead mb-4">Have questions about our urban data analytics or need more information? Our team is ready to help you make informed decisions for urban development and investment.</p>
             </div>
-          <!--  <div class="col-lg-6">
-                <img src="{% static 'core/img/contact_illustration.png' %}" alt="Contact UrbanPulse" class="img-fluid rounded shadow">
-            </div> -->
+            <div class="col-lg-6">
+                {# Ensure contact_illustration.png is in core/static/core/img/ if you uncomment this #}
+                </div>
         </div>
     </div>
 </section>
 
-<!-- Contact Section -->
 <section class="py-5">
     <div class="container">
         <div class="row">
-            <!-- Contact Form -->
             <div class="col-lg-7 mb-5 mb-lg-0">
                 <div class="contact-form">
                     <h3 class="mb-4">Send Us a Message</h3>
                     
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="alert alert-{{ message.tags }}">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
-                    {% endif %}
+                    {# Django messages block removed. For static sites, use Netlify forms, Formspree, or client-side JS for feedback. #}
                     
-                    <form method="post" action="{% url 'contact' %}">
-                        {% csrf_token %}
+                    <form method="post" action="{{ form_action }}"> {# action will be '#' from context #}
+                        {# CSRF token removed for static site #}
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="name" class="form-label">Your Name *</label>
@@ -82,7 +91,6 @@
                 </div>
             </div>
             
-            <!-- Contact Information -->
             <div class="col-lg-5">
                 <div class="card h-100">
                     <div class="card-body">
@@ -90,8 +98,8 @@
                         
                         <div class="d-flex mb-4">
                             <div class="flex-shrink-0">
-                                <div class="bg-light rounded-circle p-3">
-                                    <i class="bi bi-geo-alt text-primary"></i>
+                                <div class="bg-light rounded-circle p-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                    <i class="bi bi-geo-alt text-primary fs-5"></i>
                                 </div>
                             </div>
                             <div class="ms-3">
@@ -102,8 +110,8 @@
                         
                         <div class="d-flex mb-4">
                             <div class="flex-shrink-0">
-                                <div class="bg-light rounded-circle p-3">
-                                    <i class="bi bi-envelope text-primary"></i>
+                                <div class="bg-light rounded-circle p-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                    <i class="bi bi-envelope text-primary fs-5"></i>
                                 </div>
                             </div>
                             <div class="ms-3">
@@ -114,8 +122,8 @@
                         
                         <div class="d-flex mb-4">
                             <div class="flex-shrink-0">
-                                <div class="bg-light rounded-circle p-3">
-                                    <i class="bi bi-telephone text-primary"></i>
+                                <div class="bg-light rounded-circle p-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                    <i class="bi bi-telephone text-primary fs-5"></i>
                                 </div>
                             </div>
                             <div class="ms-3">
@@ -126,8 +134,8 @@
                         
                         <div class="d-flex mb-4">
                             <div class="flex-shrink-0">
-                                <div class="bg-light rounded-circle p-3">
-                                    <i class="bi bi-clock text-primary"></i>
+                                <div class="bg-light rounded-circle p-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                    <i class="bi bi-clock text-primary fs-5"></i>
                                 </div>
                             </div>
                             <div class="ms-3">
@@ -150,14 +158,14 @@
     </div>
 </section>
 
-<!-- Map Section -->
 <section class="py-5 bg-light">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body p-0">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5592.52502819168!2d-73.61576338769297!3d45.50479387095395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc919f2a9fc4d71%3A0xda267ca95684133e!2sPolytechnique%20Montr%C3%A9al!5e0!3m2!1sen!2sca!4v1747692252900!5m2!1sen!2sca" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        {# Using a more standard Google Maps embed URL structure. Replace with your actual embed URL. #}
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2795.9069634082513!2d-73.6160100841958!3d45.50940897910178!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc919f0a6c0d509%3A0x1845e1105990c107!2sPolytechnique%20Montr%C3%A9al!5e0!3m2!1sen!2sca!4v1620000000000!5m2!1sen!2sca" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
             </div>
@@ -165,7 +173,6 @@
     </div>
 </section>
 
-<!-- FAQ Section -->
 <section class="py-5">
     <div class="container">
         <div class="row mb-5">
@@ -178,70 +185,24 @@
         <div class="row">
             <div class="col-lg-10 mx-auto">
                 <div class="accordion" id="faqAccordion">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                What types of urban data does UrbanPulse collect and analyze?
-                            </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                UrbanPulse collects and analyzes a wide range of urban data, including building information, safety and inspection records, business occupancy, population statistics, environmental metrics, hazard events, and infrastructure conditions. Our comprehensive approach provides a holistic view of urban environments to inform investment decisions and urban planning strategies.
+                    {% if faq_items %}
+                        {% for item in faq_items %}
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading{{ loop.index }}">
+                                <button class="accordion-button {% if not loop.first %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}" aria-expanded="{{ 'true' if loop.first else 'false' }}" aria-controls="collapse{{ loop.index }}">
+                                    {{ item.question }}
+                                </button>
+                            </h2>
+                            <div id="collapse{{ loop.index }}" class="accordion-collapse collapse {% if loop.first %}show{% endif %}" aria-labelledby="heading{{ loop.index }}" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    {{ item.answer }}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                How accurate and up-to-date is your data?
-                            </button>
-                        </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                We maintain a data accuracy rate of over 98% through rigorous validation processes and regular updates. Our data is sourced from official government records, proprietary collection methods, and verified third-party sources. Most datasets are updated monthly, with critical metrics refreshed weekly or even daily depending on the category.
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingThree">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                How can I access UrbanPulse data and insights?
-                            </button>
-                        </h2>
-                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                UrbanPulse offers several access tiers, from a free basic account with limited data access to premium subscriptions with comprehensive analytics and custom reporting. Our platform is accessible via web interface and API integration. Contact our sales team for a personalized demonstration and to discuss which solution best fits your needs.
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingFour">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                Do you offer consulting services for specific urban development projects?
-                            </button>
-                        </h2>
-                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                Yes, our team of urban data specialists provides consulting services for specific development projects, investment decisions, and urban planning initiatives. We offer customized analysis, risk assessment, and strategic recommendations based on our comprehensive data and expertise in urban environments.
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingFive">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                                Which cities and regions are covered by your platform?
-                            </button>
-                        </h2>
-                        <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                UrbanPulse currently covers over 200 major metropolitan areas across North America, with expanding coverage in Europe and Asia. Our most comprehensive data is available for the top 50 U.S. cities, with varying levels of detail for other regions. We continuously expand our coverage based on client needs and data availability.
-                            </div>
-                        </div>
-                    </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No FAQs available at the moment.</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
