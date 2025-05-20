@@ -5,21 +5,35 @@
 {% block extra_css %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css">
 <style>
+    :root {
+        --bs-primary: #0d6efd; /* Default Bootstrap primary */
+        --vibrant-green: #00A651;
+        --light-gray: #f8f9fa;
+        --light-blue: #4A90E2;
+        --dark-slate: #343a40;
+    }
     #hazard-map { height: 500px; width: 100%; border-radius: 8px; }
     .risk-high { color: #FF3B30; font-weight: bold; }
     .risk-medium { color: #FF9500; font-weight: 500; }
-    .risk-low { color: #00A651; font-weight: 500; }
+    .risk-low { color: var(--vibrant-green); font-weight: 500; }
     .sustainability-score {
         width: 80px; height: 80px; border-radius: 50%;
         display: flex; align-items: center; justify-content: center;
         font-size: 1.75rem; font-weight: 700;
         margin: 0 auto 1rem; color: white;
     }
-    .score-a { background-color: #00A651; }
-    .score-b { background-color: #4CD964; }
-    .score-c { background-color: #4A90E2; }
-    /* Add other styles from your original file if needed */
-    :root { --bs-primary: #0d6efd; }
+    .score-a { background-color: var(--vibrant-green); }
+    .score-b { background-color: #4CD964; } /* Slightly lighter green */
+    .score-c { background-color: var(--light-blue); }
+    .score-d { background-color: #FF9500; } /* Orange */
+    .score-f { background-color: #FF3B30; } /* Red */
+
+    .report-card { transition: transform 0.3s ease; }
+    .report-card:hover { transform: translateY(-5px); }
+    .nav-pills .nav-link.active { background-color: var(--bs-primary); }
+    .progress-bar-success { background-color: var(--vibrant-green); }
+    .progress-bar-warning { background-color: #FF9500; }
+    .progress-bar-danger { background-color: #FF3B30; }
 </style>
 {% endblock %}
 
@@ -28,8 +42,8 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6">
-                <h1 class="mb-3">{{ page_title }}</h1> {# page_title from context #}
-                <p class="lead mb-4">Access comprehensive reports on environmental risks, hazardous events, and sustainability metrics.</p>
+                <h1 class="mb-3">{{ page_title_hero }}</h1>
+                <p class="lead mb-4">Access comprehensive reports on environmental risks, hazardous events, and sustainability metrics to make informed urban development decisions.</p>
             </div>
         </div>
     </div>
@@ -38,19 +52,16 @@
 <section class="py-4">
     <div class="container">
         <ul class="nav nav-pills nav-justified mb-4" id="hazardTabs" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="hazard-map-tab" data-bs-toggle="pill" data-bs-target="#hazard-map-content" type="button" role="tab">Hazard Map</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="sustainability-tab" data-bs-toggle="pill" data-bs-target="#sustainability-content" type="button" role="tab">Sustainability Reports</button>
-            </li>
+            <li class="nav-item" role="presentation"><button class="nav-link active" id="hazard-map-tab" data-bs-toggle="pill" data-bs-target="#hazard-map-content" type="button" role="tab"><i class="bi bi-map me-2"></i>Hazard Map</button></li>
+            <li class="nav-item" role="presentation"><button class="nav-link" id="sustainability-tab" data-bs-toggle="pill" data-bs-target="#sustainability-content" type="button" role="tab"><i class="bi bi-leaf me-2"></i>Sustainability</button></li>
+            <li class="nav-item" role="presentation"><button class="nav-link" id="historical-tab" data-bs-toggle="pill" data-bs-target="#historical-content" type="button" role="tab"><i class="bi bi-clock-history me-2"></i>Historical</button></li>
+            <li class="nav-item" role="presentation"><button class="nav-link" id="projections-tab" data-bs-toggle="pill" data-bs-target="#projections-content" type="button" role="tab"><i class="bi bi-graph-up me-2"></i>Projections</button></li>
         </ul>
         
         <div class="tab-content" id="hazardTabsContent">
-            <div class="tab-pane fade show active" id="hazard-map-content" role="tabpanel">
-                <div id="hazard-map"></div>
-            </div>
-            <div class="tab-pane fade" id="sustainability-content" role="tabpanel">
+            <div class="tab-pane fade show active" id="hazard-map-content" role="tabpanel" aria-labelledby="hazard-map-tab"><div id="hazard-map"></div></div>
+            
+            <div class="tab-pane fade" id="sustainability-content" role="tabpanel" aria-labelledby="sustainability-tab">
                 <div class="row mb-4">
                     {% if hazard_reports %}
                         {% for report in hazard_reports %}
@@ -60,7 +71,7 @@
                                     <div class="sustainability-score score-{{ report.score_grade|lower }}">{{ report.score_grade }}</div>
                                     <h4 class="card-title">{{ report.district_name }}</h4>
                                     <p class="card-text">{{ report.summary }}</p>
-                                    <div class="mt-3"><a href="{{ report.full_report_link }}" class="btn btn-outline-primary">View Report</a></div>
+                                    <div class="mt-3"><a href="{{ report.full_report_link }}" class="btn btn-outline-primary">View Full Report</a></div>
                                 </div>
                             </div>
                         </div>
@@ -68,6 +79,13 @@
                     {% else %}
                         <div class="col-12"><p>No sustainability reports available.</p></div>
                     {% endif %}
+                </div>
+            </div>
+            <div class="tab-pane fade" id="historical-content" role="tabpanel" aria-labelledby="historical-tab"><p>Historical event data will be displayed here.</p></div>
+            <div class="tab-pane fade" id="projections-content" role="tabpanel" aria-labelledby="projections-tab">
+                <div class="row">
+                    <div class="col-lg-6 mb-4"><div class="card"><div class="card-body"><h4 class="card-title">Climate Chart</h4><canvas id="climateChart"></canvas></div></div></div>
+                    <div class="col-lg-6 mb-4"><div class="card"><div class="card-body"><h4 class="card-title">Infrastructure Chart</h4><canvas id="infrastructureChart"></canvas></div></div></div>
                 </div>
             </div>
         </div>
@@ -80,14 +98,15 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const hazardMapElement = document.getElementById('hazard-map');
-        if (hazardMapElement) {
-            const hazardMap = L.map('hazard-map').setView([40.7128, -74.0060], 13);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors'
-            }).addTo(hazardMap);
+        const hazardMapEl = document.getElementById('hazard-map');
+        if (hazardMapEl) {
+            const map = L.map('hazard-map').setView([40.7128, -74.0060], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(map);
         }
-        // Add JS for other charts if needed, ensuring data comes from context or is static
+        const climateCtx = document.getElementById('climateChart');
+        if (climateCtx) new Chart(climateCtx.getContext('2d'), {type: 'line', data: {labels:['2025','2050'], datasets:[{label:'Temp',data:[15,17]}]}});
+        const infraCtx = document.getElementById('infrastructureChart');
+        if (infraCtx) new Chart(infraCtx.getContext('2d'), {type:'bar', data: {labels:['System A','System B'], datasets:[{label:'Vuln.',data:[30,45]}]}});
     });
 </script>
 {% endblock %}
