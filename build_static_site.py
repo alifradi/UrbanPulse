@@ -171,14 +171,10 @@ def get_mock_context_for_template(template_name, current_page_name_from_build):
                 }
             ],
             "partners": [
-                {"image_slug": "partner1.png", "name": "Technology Solutions"},
-                {"image_slug": "partner2.png", "name": "Research Institute"},
-                {"image_slug": "partner3.png", "name": "Government Agency"},
-                {"image_slug": "partner4.png", "name": "Investment Group"},
-                {"image_slug": "partner5.png", "name": "University Partner"},
-                {"image_slug": "partner6.png", "name": "Sustainability Alliance"},
-                {"image_slug": "partner7.png", "name": "Data Provider"},
-                {"image_slug": "partner8.png", "name": "Industry Association"}
+
+                {"image_slug": "goc.PNG", "name": "Partner"},
+                {"image_slug": "qatar-digital-government.png", "name": "Partner"},
+                {"image_slug": "LogoTXTW.png", "name": "Partner"}
             ],
             "testimonials": [
                 {
