@@ -1,0 +1,125 @@
+{% load django_bootstrap5 %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}UrbanPulse - Urban Data Analytics{% endblock %}</title>
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'core/img/urbanpulse_logo.png' %}" alt="UrbanPulse Logo" height="90">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if 'insights' in request.path %}active{% endif %}" href="{% url 'insights' %}">Data Insights</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if 'investment' in request.path %}active{% endif %}" href="{% url 'investment' %}">Investment Opportunities</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if 'hazards' in request.path %}active{% endif %}" href="{% url 'hazards' %}">Hazard Analysis</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            About Us
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{% url 'team' %}">Our Team</a></li>
+                            <li><a class="dropdown-item" href="{% url 'use_cases' %}">Use Cases</a></li>
+                            <li><a class="dropdown-item" href="{% url 'contributions' %}">Recent Contributions</a></li>
+                            <li><a class="dropdown-item" href="{% url 'services' %}">Services & Partnerships</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if 'contact' in request.path %}active{% endif %}" href="{% url 'contact' %}">Contact Us</a>
+                    </li>
+                </ul>
+                <div class="ms-3">
+                    <a href="#" class="btn btn-primary">Sign Up Free</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        {% bootstrap_messages %}
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <img src="{% static 'core/img/urbanpulse_logo_white.png' %}" alt="UrbanPulse Logo" height="60" class="mb-3">
+                    <p>Providing real-time urban data analytics and insights for informed investment decisions, urban development, and sustainability planning.</p>
+                    <div class="social-icons mt-3">
+                        <a href="#" class="text-white me-3"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 mb-4 mb-md-0">
+                    <h5>Services</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'insights' %}" class="text-white-50">Data Insights</a></li>
+                        <li><a href="{% url 'investment' %}" class="text-white-50">Investment Analysis</a></li>
+                        <li><a href="{% url 'hazards' %}" class="text-white-50">Hazard Reports</a></li>
+                        <li><a href="{% url 'services' %}" class="text-white-50">Consulting</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-4 mb-md-0">
+                    <h5>Company</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'team' %}" class="text-white-50">Our Team</a></li>
+                        <li><a href="{% url 'use_cases' %}" class="text-white-50">Use Cases</a></li>
+                        <li><a href="{% url 'contributions' %}" class="text-white-50">Contributions</a></li>
+                        <li><a href="#" class="text-white-50">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <address class="text-white-50">
+                        <p><i class="bi bi-geo-alt me-2"></i> 2500 Chem. de Polytechnique<br>Montréal, QC H3T 0A3</p>
+                        <p><i class="bi bi-envelope me-2"></i> info@urbanpulse.example.com</p>
+                        <p><i class="bi bi-telephone me-2"></i> +1 (438) 493-3907</p>
+                    </address>
+                </div>
+            </div>
+            <hr class="mt-4 mb-4 border-secondary">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; 2025 UrbanPulse. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-white-50 me-3">Privacy Policy</a>
+                    <a href="#" class="text-white-50 me-3">Terms of Service</a>
+                    <a href="#" class="text-white-50">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

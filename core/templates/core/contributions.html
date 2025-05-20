@@ -1,0 +1,417 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Recent Contributions - UrbanPulse{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="mb-3">Recent Contributions</h1>
+                <p class="lead mb-4">Explore our latest research, collaborations, and achievements in urban data analytics, sustainable development, and smart city initiatives.</p>
+            </div>
+            <div class="col-lg-6">
+                <img src="{% static 'core/img/contributions_illustration.png' %}" alt="UrbanPulse Contributions" class="img-fluid rounded shadow">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Research Publications Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-3">Research Publications</h2>
+                <p class="lead text-muted">Our team regularly contributes to academic and industry publications, advancing the field of urban data analytics.</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-primary text-white rounded p-2 me-3">
+                                <i class="bi bi-journal-text"></i>
+                            </div>
+                            <h5 class="card-title mb-0">Journal Publication</h5>
+                        </div>
+                        <h4>"Predictive Analytics for Urban Infrastructure Resilience"</h4>
+                        <p class="text-muted">Journal of Urban Technology, Vol. 38, Issue 2</p>
+                        <p class="card-text">This paper presents a novel framework for predicting infrastructure vulnerabilities in urban environments using machine learning and historical maintenance data. The model achieved 87% accuracy in identifying potential failure points before they occurred.</p>
+                        <div class="d-flex align-items-center mt-3">
+                            <div class="me-3">
+                                <img src="{% static 'core/img/team/cto.jpg' %}" alt="Michael Chen" class="rounded-circle" width="40" height="40">
+                            </div>
+                            <div>
+                                <p class="mb-0"><strong>Lead Author:</strong> Michael Chen, CTO</p>
+                                <p class="text-muted mb-0">March 2025</p>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <a href="#" class="btn btn-outline-primary">Read Publication</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-primary text-white rounded p-2 me-3">
+                                <i class="bi bi-journal-text"></i>
+                            </div>
+                            <h5 class="card-title mb-0">Journal Publication</h5>
+                        </div>
+                        <h4>"Quantifying Urban Sustainability: A Comprehensive Metrics Framework"</h4>
+                        <p class="text-muted">Sustainable Cities and Society, Vol. 92</p>
+                        <p class="card-text">This research introduces a new framework for measuring urban sustainability across multiple dimensions, including energy usage, transportation efficiency, green space, and social equity indicators.</p>
+                        <div class="d-flex align-items-center mt-3">
+                            <div class="me-3">
+                                <img src="{% static 'core/img/team/cso.jpg' %}" alt="Elena Rodriguez" class="rounded-circle" width="40" height="40">
+                            </div>
+                            <div>
+                                <p class="mb-0"><strong>Lead Author:</strong> Elena Rodriguez, CSO</p>
+                                <p class="text-muted mb-0">January 2025</p>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <a href="#" class="btn btn-outline-primary">Read Publication</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-success text-white rounded p-2 me-3">
+                                <i class="bi bi-book"></i>
+                            </div>
+                            <h5 class="card-title mb-0">Book Chapter</h5>
+                        </div>
+                        <h4>"Data-Driven Urban Investment: Optimizing Returns and Social Impact"</h4>
+                        <p class="text-muted">In: Smart Cities Handbook, 3rd Edition</p>
+                        <p class="card-text">This chapter explores how data analytics can guide urban investment decisions that maximize both financial returns and positive social outcomes, with case studies from major metropolitan areas.</p>
+                        <div class="d-flex align-items-center mt-3">
+                            <div class="me-3">
+                                <img src="{% static 'core/img/team/ceo.jpg' %}" alt="Sarah Johnson" class="rounded-circle" width="40" height="40">
+                            </div>
+                            <div>
+                                <p class="mb-0"><strong>Lead Author:</strong> Sarah Johnson, CEO</p>
+                                <p class="text-muted mb-0">December 2024</p>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <a href="#" class="btn btn-outline-primary">Read Chapter</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-info text-white rounded p-2 me-3">
+                                <i class="bi bi-file-earmark-text"></i>
+                            </div>
+                            <h5 class="card-title mb-0">White Paper</h5>
+                        </div>
+                        <h4>"The Future of Urban Hazard Prediction: AI and Sensor Networks"</h4>
+                        <p class="text-muted">UrbanPulse Research Series</p>
+                        <p class="card-text">This white paper details how artificial intelligence and distributed sensor networks can revolutionize urban hazard prediction and emergency response, potentially reducing response times by up to 45%.</p>
+                        <div class="d-flex align-items-center mt-3">
+                            <div class="me-3">
+                                <img src="{% static 'core/img/team/data1.jpg' %}" alt="David Park" class="rounded-circle" width="40" height="40">
+                            </div>
+                            <div>
+                                <p class="mb-0"><strong>Lead Author:</strong> David Park, Lead Data Scientist</p>
+                                <p class="text-muted mb-0">February 2025</p>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <a href="#" class="btn btn-outline-primary">Download White Paper</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Collaborations Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-3">Key Collaborations</h2>
+                <p class="lead text-muted">We partner with leading institutions, government agencies, and industry leaders to advance urban data analytics and sustainable development.</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            <img src="{% static 'core/img/collaborations/city_planning.png' %}" alt="Metropolitan Planning Commission" class="img-fluid mb-3" style="max-height: 80px;">
+                            <h4>Metropolitan Planning Commission</h4>
+                        </div>
+                        <p class="card-text">Ongoing collaboration to develop data-driven urban planning tools for mid-sized cities, with pilot programs in three metropolitan areas.</p>
+                        <p class="text-muted"><strong>Focus Areas:</strong> Infrastructure planning, public transit optimization, land use analysis</p>
+                        <p class="text-muted"><strong>Timeline:</strong> 2023 - Present</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            <img src="{% static 'core/img/collaborations/university.png' %}" alt="Urban Research Consortium" class="img-fluid mb-3" style="max-height: 80px;">
+                            <h4>Urban Research Consortium</h4>
+                        </div>
+                        <p class="card-text">Multi-university research initiative focused on developing next-generation urban sustainability metrics and assessment methodologies.</p>
+                        <p class="text-muted"><strong>Focus Areas:</strong> Sustainability metrics, climate resilience, urban ecology</p>
+                        <p class="text-muted"><strong>Timeline:</strong> 2024 - Present</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            <img src="{% static 'core/img/collaborations/investment.png' %}" alt="Global Urban Investment Forum" class="img-fluid mb-3" style="max-height: 80px;">
+                            <h4>Global Urban Investment Forum</h4>
+                        </div>
+                        <p class="card-text">Strategic partnership to develop investment frameworks that balance financial returns with social and environmental impact in urban development.</p>
+                        <p class="text-muted"><strong>Focus Areas:</strong> Impact investing, ROI metrics, sustainable development</p>
+                        <p class="text-muted"><strong>Timeline:</strong> 2022 - Present</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            <img src="{% static 'core/img/collaborations/tech.png' %}" alt="Smart City Technology Alliance" class="img-fluid mb-3" style="max-height: 80px;">
+                            <h4>Smart City Technology Alliance</h4>
+                        </div>
+                        <p class="card-text">Industry collaboration to develop open standards for urban data collection, sharing, and analysis across smart city platforms.</p>
+                        <p class="text-muted"><strong>Focus Areas:</strong> Data standards, interoperability, sensor networks</p>
+                        <p class="text-muted"><strong>Timeline:</strong> 2023 - Present</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            <img src="{% static 'core/img/collaborations/government.png' %}" alt="Federal Urban Resilience Initiative" class="img-fluid mb-3" style="max-height: 80px;">
+                            <h4>Federal Urban Resilience Initiative</h4>
+                        </div>
+                        <p class="card-text">Government partnership to enhance urban resilience through advanced data analytics and predictive modeling of environmental hazards.</p>
+                        <p class="text-muted"><strong>Focus Areas:</strong> Hazard prediction, emergency response, infrastructure resilience</p>
+                        <p class="text-muted"><strong>Timeline:</strong> 2024 - Present</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            <img src="{% static 'core/img/collaborations/nonprofit.png' %}" alt="Urban Equity Coalition" class="img-fluid mb-3" style="max-height: 80px;">
+                            <h4>Urban Equity Coalition</h4>
+                        </div>
+                        <p class="card-text">Nonprofit collaboration focused on ensuring data-driven urban development benefits all community members and addresses equity concerns.</p>
+                        <p class="text-muted"><strong>Focus Areas:</strong> Social equity metrics, inclusive development, community engagement</p>
+                        <p class="text-muted"><strong>Timeline:</strong> 2023 - Present</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Recent Achievements Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-3">Recent Achievements</h2>
+                <p class="lead text-muted">Recognition of our contributions to urban data analytics, sustainability, and smart city development.</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-warning text-dark rounded p-2 me-3">
+                                <i class="bi bi-trophy"></i>
+                            </div>
+                            <h5 class="card-title mb-0">Award</h5>
+                        </div>
+                        <h4>Urban Innovation Excellence Award</h4>
+                        <p class="text-muted">Smart City Expo World Congress</p>
+                        <p class="card-text">Recognized for our groundbreaking work in predictive analytics for urban infrastructure management and hazard prevention.</p>
+                        <p class="text-muted mb-0">April 2025</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-warning text-dark rounded p-2 me-3">
+                                <i class="bi bi-trophy"></i>
+                            </div>
+                            <h5 class="card-title mb-0">Recognition</h5>
+                        </div>
+                        <h4>Top 10 Urban Tech Companies</h4>
+                        <p class="text-muted">Urban Technology Review</p>
+                        <p class="card-text">Named among the most innovative companies transforming urban environments through data analytics and technology solutions.</p>
+                        <p class="text-muted mb-0">February 2025</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-warning text-dark rounded p-2 me-3">
+                                <i class="bi bi-trophy"></i>
+                            </div>
+                            <h5 class="card-title mb-0">Grant</h5>
+                        </div>
+                        <h4>Urban Resilience Research Grant</h4>
+                        <p class="text-muted">National Science Foundation</p>
+                        <p class="card-text">Awarded $2.5 million to advance research in climate resilience modeling for urban environments using AI and machine learning.</p>
+                        <p class="text-muted mb-0">December 2024</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-warning text-dark rounded p-2 me-3">
+                                <i class="bi bi-trophy"></i>
+                            </div>
+                            <h5 class="card-title mb-0">Recognition</h5>
+                        </div>
+                        <h4>Sustainability Impact Leader</h4>
+                        <p class="text-muted">Global Sustainability Forum</p>
+                        <p class="card-text">Recognized for developing metrics and tools that have measurably improved urban sustainability outcomes across multiple cities.</p>
+                        <p class="text-muted mb-0">March 2025</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-warning text-dark rounded p-2 me-3">
+                                <i class="bi bi-trophy"></i>
+                            </div>
+                            <h5 class="card-title mb-0">Patent</h5>
+                        </div>
+                        <h4>Urban Risk Assessment Algorithm</h4>
+                        <p class="text-muted">U.S. Patent Office</p>
+                        <p class="card-text">Patent granted for our innovative algorithm that combines multiple data sources to assess and predict urban hazard risks with unprecedented accuracy.</p>
+                        <p class="text-muted mb-0">January 2025</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-warning text-dark rounded p-2 me-3">
+                                <i class="bi bi-trophy"></i>
+                            </div>
+                            <h5 class="card-title mb-0">Recognition</h5>
+                        </div>
+                        <h4>Data for Good Excellence</h4>
+                        <p class="text-muted">Data Science Association</p>
+                        <p class="card-text">Honored for our work in applying data science to improve urban equity, accessibility, and quality of life for underserved communities.</p>
+                        <p class="text-muted mb-0">November 2024</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Upcoming Initiatives Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-3">Upcoming Initiatives</h2>
+                <p class="lead opacity-75">Stay tuned for our upcoming research projects and collaborative initiatives in urban data analytics.</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card bg-transparent border-white">
+                    <div class="card-body">
+                        <h4 class="card-title">Global Urban Data Observatory</h4>
+                        <p class="card-text opacity-75">A collaborative platform for sharing urban data, analytics tools, and best practices across cities worldwide. Launching Summer 2025.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card bg-transparent border-white">
+                    <div class="card-body">
+                        <h4 class="card-title">Urban Digital Twin Initiative</h4>
+                        <p class="card-text opacity-75">Creating comprehensive digital replicas of urban environments for advanced simulation and planning. Pilot cities announced Fall 2025.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card bg-transparent border-white">
+                    <div class="card-body">
+                        <h4 class="card-title">Climate Resilience Modeling Framework</h4>
+                        <p class="card-text opacity-75">Open-source tools for cities to model climate impacts and develop resilience strategies. Beta release scheduled for Winter 2025.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card bg-transparent border-white">
+                    <div class="card-body">
+                        <h4 class="card-title">Urban Investment Impact Index</h4>
+                        <p class="card-text opacity-75">New methodology for measuring the social, environmental, and economic impact of urban investments. Whitepaper coming Summer 2025.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-3">
+            <div class="col-12 text-center">
+                <a href="{% url 'contact' %}" class="btn btn-light">Stay Updated on Our Initiatives</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

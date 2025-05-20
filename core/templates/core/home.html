@@ -1,0 +1,320 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}UrbanPulse - Urban Data Analytics{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.css">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+        <div class="row align-items-center">
+            <div class="col-lg-6 fade-in">
+                <h1>Urban Data Intelligence for Smarter Investments</h1>
+                <p>UrbanPulse provides comprehensive data analytics on cities, buildings, safety, and urban development to inform your investment decisions and urban planning strategies.</p>
+                <div class="d-flex gap-3">
+                    <a href="{% url 'insights' %}" class="btn btn-light">Explore Data Insights</a>
+                    <a href="{% url 'contact' %}" class="btn btn-outline-light">Contact Us</a>
+                </div>
+            </div>
+            <!-- <div class="col-lg-6 d-none d-lg-block">
+                <img src="{% static 'core/img/city_data_visualization.png' %}" alt="Urban Data Visualization" class="img-fluid rounded shadow-lg slide-up" style="max-height: 400px;">
+            </div> -->
+        </div>
+    </div>
+</section>
+
+<!-- Key Features Section -->
+<section class="features bg-white py-5">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="mb-3">Comprehensive Urban Intelligence</h2>
+                <p class="lead text-muted">Our platform collects and analyzes data across multiple dimensions of urban environments to provide actionable insights.</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 p-4">
+                    <div class="feature-icon mx-auto">
+                        <i class="bi bi-building"></i>
+                    </div>
+                    <h4 class="card-title text-center">Urban Infrastructure</h4>
+                    <p class="card-text text-center">Detailed data on buildings, infrastructure quality, occupancy rates, and maintenance history.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 p-4">
+                    <div class="feature-icon mx-auto">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <h4 class="card-title text-center">Safety & Compliance</h4>
+                    <p class="card-text text-center">Comprehensive safety records, inspection histories, and regulatory compliance data.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 p-4">
+                    <div class="feature-icon mx-auto">
+                        <i class="bi bi-graph-up-arrow"></i>
+                    </div>
+                    <h4 class="card-title text-center">Investment Analytics</h4>
+                    <p class="card-text text-center">Identify promising investment opportunities with predictive analytics and trend forecasting.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 p-4">
+                    <div class="feature-icon mx-auto">
+                        <i class="bi bi-people"></i>
+                    </div>
+                    <h4 class="card-title text-center">Population Insights</h4>
+                    <p class="card-text text-center">Demographic trends, population density, and movement patterns to inform urban planning.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 p-4">
+                    <div class="feature-icon mx-auto">
+                        <i class="bi bi-exclamation-triangle"></i>
+                    </div>
+                    <h4 class="card-title text-center">Hazard Assessment</h4>
+                    <p class="card-text text-center">Analysis of environmental risks, natural hazards, and emergency response capabilities.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 p-4">
+                    <div class="feature-icon mx-auto">
+                        <i class="bi bi-leaf"></i>
+                    </div>
+                    <h4 class="card-title text-center">Sustainability Metrics</h4>
+                    <p class="card-text text-center">Green energy installations, environmental impact assessments, and sustainability scores.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Data Preview Section -->
+<section class="insights py-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-3">Real-Time Urban Insights</h2>
+                <p class="lead text-muted">Preview the power of our data analytics platform with these sample visualizations.</p>
+            </div>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-lg-6 mb-4">
+                <div class="chart-container">
+                    <h4>Urban Development Trends</h4>
+                    <p class="text-muted">New construction permits by district over the past 12 months</p>
+                   <!-- <canvas id="developmentChart" height="250"></canvas> -->
+                </div>
+            </div>
+            
+            <div class="col-lg-6 mb-4">
+                <div class="chart-container">
+                    <h4>Safety Inspection Results</h4>
+                    <p class="text-muted">Building safety compliance rates by category</p>
+                   <!-- <canvas id="safetyChart" height="250"></canvas>-->
+                </div>
+            </div>
+            
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-md-3 mb-4">
+                <div class="metric-card">
+                    <i class="bi bi-building text-primary mb-3" style="font-size: 2rem;"></i>
+                    <div class="metric-value">14,382</div>
+                    <div class="metric-label">Buildings Analyzed</div>
+                </div> 
+            </div>
+            
+            <div class="col-md-3 mb-4">
+                <div class="metric-card">
+                    <i class="bi bi-geo-alt text-primary mb-3" style="font-size: 2rem;"></i>
+                    <div class="metric-value">237</div>
+                    <div class="metric-label">Cities Covered</div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 mb-4">
+                <div class="metric-card">
+                    <i class="bi bi-shop text-primary mb-3" style="font-size: 2rem;"></i>
+                    <div class="metric-value">3,845</div>
+                    <div class="metric-label">Business Opportunities</div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 mb-4">
+                <div class="metric-card">
+                    <i class="bi bi-check-circle text-primary mb-3" style="font-size: 2rem;"></i>
+                    <div class="metric-value">98.7%</div>
+                    <div class="metric-label">Data Accuracy</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-12 text-center">
+                <a href="{% url 'insights' %}" class="btn btn-primary">Explore Full Data Insights</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Use Cases Section -->
+<section class="use-cases bg-white py-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-3">Success Stories</h2>
+                <p class="lead text-muted">See how organizations leverage our urban data intelligence to make informed decisions.</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Metropolitan Development Authority</h5>
+                        <p class="card-text">Used UrbanPulse data to identify optimal locations for new public transportation hubs, resulting in a 24% increase in ridership and improved urban mobility.</p>
+                        <div class="d-flex align-items-center mt-3">
+                            <div class="bg-light rounded-circle p-2 me-3">
+                                <i class="bi bi-building text-primary"></i>
+                            </div>
+                            <div>
+                                <small class="text-muted">Urban Planning</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Greenfield Investments Group</h5>
+                        <p class="card-text">Leveraged our hazard analysis and sustainability reports to identify low-risk, high-potential development areas, achieving 32% higher ROI than industry average.</p>
+                        <div class="d-flex align-items-center mt-3">
+                            <div class="bg-light rounded-circle p-2 me-3">
+                                <i class="bi bi-cash-coin text-primary"></i>
+                            </div>
+                            <div>
+                                <small class="text-muted">Investment Strategy</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-3">
+            <div class="col-12 text-center">
+                <a href="{% url 'use_cases' %}" class="btn btn-outline-primary">View All Success Stories</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta py-5" style="background-color: var(--deep-blue);">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center text-white">
+                <h2 class="mb-4">Ready to Transform Your Urban Investment Strategy?</h2>
+                <p class="lead mb-4">Join organizations worldwide that use UrbanPulse to make data-driven decisions for urban development and investment.</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="#" class="btn btn-light">Sign Up Free</a>
+                    <a href="{% url 'contact' %}" class="btn btn-outline-light">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<script>
+    // Development Trends Chart
+    const developmentCtx = document.getElementById('developmentChart').getContext('2d');
+    const developmentChart = new Chart(developmentCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Downtown', 'North District', 'East Side', 'West End', 'South Quarter', 'Industrial Zone'],
+            datasets: [{
+                label: 'New Construction Permits',
+                data: [124, 86, 105, 73, 93, 52],
+                backgroundColor: '#0066A4',
+                borderColor: '#0066A4',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.05)'
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+    
+    // Safety Inspection Chart
+    const safetyCtx = document.getElementById('safetyChart').getContext('2d');
+    const safetyChart = new Chart(safetyCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Excellent', 'Good', 'Satisfactory', 'Needs Improvement', 'Critical'],
+            datasets: [{
+                data: [42, 28, 18, 8, 4],
+                backgroundColor: [
+                    '#00A651',
+                    '#4CD964',
+                    '#4A90E2',
+                    '#FF9500',
+                    '#FF3B30'
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right'
+                }
+            },
+            cutout: '65%'
+        }
+    });
+</script>
+{% endblock %}

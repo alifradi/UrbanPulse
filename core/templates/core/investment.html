@@ -1,0 +1,662 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Investment Opportunities - UrbanPulse{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css">
+<style>
+    #map {
+        height: 500px;
+        width: 100%;
+        border-radius: 8px;
+    }
+    .filter-card {
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        background-color: white;
+        padding: 1.5rem;
+    }
+    .opportunity-card {
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .opportunity-card:hover {
+        transform: translateY(-5px);
+    }
+    .opportunity-card.active {
+        border: 2px solid var(--vibrant-green);
+    }
+    .comparison-table th {
+        background-color: var(--light-gray);
+    }
+    .score-high {
+        color: var(--vibrant-green);
+        font-weight: bold;
+    }
+    .score-medium {
+        color: var(--light-blue);
+    }
+    .score-low {
+        color: var(--dark-slate);
+    }
+    .range-slider {
+        width: 100%;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="mb-3">Investment Opportunities</h1>
+                <p class="lead mb-4">Discover promising investment locations based on comprehensive urban data analysis, safety records, business potential, and environmental considerations.</p>
+            </div>
+          <!--  <div class="col-lg-6">
+                <img src="{% static 'core/img/investment_illustration.png' %}" alt="Investment Opportunities" class="img-fluid rounded shadow">
+            </div> -->
+        </div>
+    </div>
+</section>
+
+<!-- Search and Filter Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Filters -->
+            <div class="col-lg-4 mb-4">
+                <div class="filter-card">
+                    <h4 class="mb-4">Search Filters</h4>
+                    
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Location</label>
+                        <select class="form-select" id="location">
+                            <option value="all">All Locations</option>
+                            <option value="downtown">Downtown</option>
+                            <option value="north">North District</option>
+                            <option value="east">East Side</option>
+                            <option value="west">West End</option>
+                            <option value="south">South Quarter</option>
+                            <option value="industrial">Industrial Zone</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="property-type" class="form-label">Property Type</label>
+                        <select class="form-select" id="property-type">
+                            <option value="all">All Types</option>
+                            <option value="commercial">Commercial</option>
+                            <option value="residential">Residential</option>
+                            <option value="mixed">Mixed Use</option>
+                            <option value="industrial">Industrial</option>
+                            <option value="land">Vacant Land</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Investment Range</label>
+                        <div class="d-flex align-items-center gap-2">
+                            <span>$100K</span>
+                            <input type="range" class="form-range range-slider" min="100000" max="10000000" step="100000" id="investment-range">
+                            <span>$10M+</span>
+                        </div>
+                        <div class="text-center" id="range-value">$1,000,000</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Safety Score (Minimum)</label>
+                        <select class="form-select" id="safety-score">
+                            <option value="1">Any Score</option>
+                            <option value="2">2+ Stars</option>
+                            <option value="3">3+ Stars</option>
+                            <option value="4">4+ Stars</option>
+                            <option value="5">5 Stars Only</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Sustainability Features</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="green-energy">
+                            <label class="form-check-label" for="green-energy">Green Energy Installations</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="leed-certified">
+                            <label class="form-check-label" for="leed-certified">LEED Certified</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="public-transport">
+                            <label class="form-check-label" for="public-transport">Public Transport Access</label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Business Potential</label>
+                        <select class="form-select" id="business-potential">
+                            <option value="all">All Ratings</option>
+                            <option value="high">High Potential</option>
+                            <option value="medium">Medium Potential</option>
+                            <option value="low">Low Potential</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn btn-primary w-100" id="apply-filters">Apply Filters</button>
+                    <button class="btn btn-outline-secondary w-100 mt-2" id="reset-filters">Reset Filters</button>
+                </div>
+            </div>
+            
+            <!-- Map View -->
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-body p-0">
+                        <div id="map"></div>
+                    </div>
+                </div>
+                
+                <!-- Results Count -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="mb-0">Results: <span id="results-count">6</span> properties</h4>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-sm btn-outline-secondary active" id="view-grid">
+                            <i class="bi bi-grid"></i> Grid
+                        </button>
+                        <button class="btn btn-sm btn-outline-secondary" id="view-list">
+                            <i class="bi bi-list-ul"></i> List
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Results Grid -->
+                <div class="row" id="results-grid">
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 opportunity-card" data-id="prop1">
+                            <img src="{% static 'core/img/property1.jpg' %}" class="card-img-top" alt="Downtown Office Building">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title mb-0">Downtown Office Building</h5>
+                                    <span class="badge bg-primary">Commercial</span>
+                                </div>
+                                <p class="card-text text-muted mb-2">123 Main St, Downtown</p>
+                                <div class="mb-2">
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star text-warning"></i>
+                                    <span class="ms-1">Safety Score</span>
+                                </div>
+                                <p class="card-text">Modern office building with high occupancy rate and excellent transit access.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <strong class="text-primary">$2,450,000</strong>
+                                    <button class="btn btn-sm btn-outline-primary compare-btn" data-id="prop1">Compare</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 opportunity-card" data-id="prop2">
+                            <img src="{% static 'core/img/property2.jpg' %}" class="card-img-top" alt="East Side Mixed-Use Development">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title mb-0">East Side Mixed-Use</h5>
+                                    <span class="badge bg-success">Mixed Use</span>
+                                </div>
+                                <p class="card-text text-muted mb-2">456 Park Ave, East Side</p>
+                                <div class="mb-2">
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-half text-warning"></i>
+                                    <span class="ms-1">Safety Score</span>
+                                </div>
+                                <p class="card-text">Newly renovated mixed-use property with retail space and luxury apartments.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <strong class="text-primary">$3,750,000</strong>
+                                    <button class="btn btn-sm btn-outline-primary compare-btn" data-id="prop2">Compare</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 opportunity-card" data-id="prop3">
+                            <img src="{% static 'core/img/property3.jpg' %}" class="card-img-top" alt="North District Residential Complex">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title mb-0">North District Residential</h5>
+                                    <span class="badge bg-info">Residential</span>
+                                </div>
+                                <p class="card-text text-muted mb-2">789 Oak St, North District</p>
+                                <div class="mb-2">
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star text-warning"></i>
+                                    <i class="bi bi-star text-warning"></i>
+                                    <span class="ms-1">Safety Score</span>
+                                </div>
+                                <p class="card-text">Multi-family residential complex with 24 units and community amenities.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <strong class="text-primary">$4,200,000</strong>
+                                    <button class="btn btn-sm btn-outline-primary compare-btn" data-id="prop3">Compare</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 opportunity-card" data-id="prop4">
+                            <img src="{% static 'core/img/property4.jpg' %}" class="card-img-top" alt="Industrial Zone Warehouse">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title mb-0">Industrial Zone Warehouse</h5>
+                                    <span class="badge bg-secondary">Industrial</span>
+                                </div>
+                                <p class="card-text text-muted mb-2">101 Factory Rd, Industrial Zone</p>
+                                <div class="mb-2">
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-half text-warning"></i>
+                                    <i class="bi bi-star text-warning"></i>
+                                    <span class="ms-1">Safety Score</span>
+                                </div>
+                                <p class="card-text">Modern warehouse facility with loading docks and office space.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <strong class="text-primary">$1,850,000</strong>
+                                    <button class="btn btn-sm btn-outline-primary compare-btn" data-id="prop4">Compare</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 opportunity-card" data-id="prop5">
+                            <img src="{% static 'core/img/property5.jpg' %}" class="card-img-top" alt="West End Retail Center">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title mb-0">West End Retail Center</h5>
+                                    <span class="badge bg-primary">Commercial</span>
+                                </div>
+                                <p class="card-text text-muted mb-2">222 Market St, West End</p>
+                                <div class="mb-2">
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star text-warning"></i>
+                                    <span class="ms-1">Safety Score</span>
+                                </div>
+                                <p class="card-text">Established retail center with high foot traffic and multiple tenants.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <strong class="text-primary">$3,100,000</strong>
+                                    <button class="btn btn-sm btn-outline-primary compare-btn" data-id="prop5">Compare</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 opportunity-card" data-id="prop6">
+                            <img src="{% static 'core/img/property6.jpg' %}" class="card-img-top" alt="South Quarter Development Land">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title mb-0">South Quarter Land</h5>
+                                    <span class="badge bg-warning text-dark">Vacant Land</span>
+                                </div>
+                                <p class="card-text text-muted mb-2">333 River Rd, South Quarter</p>
+                                <div class="mb-2">
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <span class="ms-1">Safety Score</span>
+                                </div>
+                                <p class="card-text">Prime development land with river views and approved mixed-use zoning.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <strong class="text-primary">$5,800,000</strong>
+                                    <button class="btn btn-sm btn-outline-primary compare-btn" data-id="prop6">Compare</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Comparison Section (Hidden by default) -->
+<section class="py-5 bg-light" id="comparison-section" style="display: none;">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Property Comparison</h2>
+            <button class="btn btn-outline-secondary" id="close-comparison">
+                <i class="bi bi-x-lg"></i> Close Comparison
+            </button>
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Property</th>
+                                <th id="prop-col-1">Downtown Office Building</th>
+                                <th id="prop-col-2">East Side Mixed-Use</th>
+                                <th id="prop-col-3">West End Retail Center</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Location</td>
+                                <td>Downtown</td>
+                                <td>East Side</td>
+                                <td>West End</td>
+                            </tr>
+                            <tr>
+                                <td>Property Type</td>
+                                <td>Commercial</td>
+                                <td>Mixed Use</td>
+                                <td>Commercial</td>
+                            </tr>
+                            <tr>
+                                <td>Price</td>
+                                <td>$2,450,000</td>
+                                <td>$3,750,000</td>
+                                <td>$3,100,000</td>
+                            </tr>
+                            <tr>
+                                <td>Size</td>
+                                <td>25,000 sq ft</td>
+                                <td>42,000 sq ft</td>
+                                <td>38,500 sq ft</td>
+                            </tr>
+                            <tr>
+                                <td>Safety Score</td>
+                                <td>4.0/5.0</td>
+                                <td>4.5/5.0</td>
+                                <td>4.0/5.0</td>
+                            </tr>
+                            <tr>
+                                <td>Business Potential</td>
+                                <td class="score-high">High</td>
+                                <td class="score-high">High</td>
+                                <td class="score-medium">Medium</td>
+                            </tr>
+                            <tr>
+                                <td>ROI Estimate (5yr)</td>
+                                <td>18.5%</td>
+                                <td>22.3%</td>
+                                <td>15.7%</td>
+                            </tr>
+                            <tr>
+                                <td>Sustainability Features</td>
+                                <td>LEED Gold, Solar Panels</td>
+                                <td>LEED Silver, EV Charging</td>
+                                <td>Energy Efficient Systems</td>
+                            </tr>
+                            <tr>
+                                <td>Hazard Risk</td>
+                                <td class="score-low">Low</td>
+                                <td class="score-low">Low</td>
+                                <td class="score-medium">Medium</td>
+                            </tr>
+                            <tr>
+                                <td>Last Inspection</td>
+                                <td>March 2025</td>
+                                <td>January 2025</td>
+                                <td>November 2024</td>
+                            </tr>
+                            <tr>
+                                <td>Action</td>
+                                <td><a href="#" class="btn btn-sm btn-primary">View Details</a></td>
+                                <td><a href="#" class="btn btn-sm btn-primary">View Details</a></td>
+                                <td><a href="#" class="btn btn-sm btn-primary">View Details</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+<script>
+    // Initialize map
+    const map = L.map('map').setView([40.7128, -74.0060], 13);
+    
+    // Add tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    
+    // Sample property data
+    const properties = [
+        {
+            id: 'prop1',
+            name: 'Downtown Office Building',
+            lat: 40.7128,
+            lng: -74.0060,
+            type: 'Commercial',
+            price: '$2,450,000',
+            safety: 4.0
+        },
+        {
+            id: 'prop2',
+            name: 'East Side Mixed-Use',
+            lat: 40.7200,
+            lng: -73.9800,
+            type: 'Mixed Use',
+            price: '$3,750,000',
+            safety: 4.5
+        },
+        {
+            id: 'prop3',
+            name: 'North District Residential',
+            lat: 40.7300,
+            lng: -74.0100,
+            type: 'Residential',
+            price: '$4,200,000',
+            safety: 3.0
+        },
+        {
+            id: 'prop4',
+            name: 'Industrial Zone Warehouse',
+            lat: 40.7000,
+            lng: -74.0200,
+            type: 'Industrial',
+            price: '$1,850,000',
+            safety: 3.5
+        },
+        {
+            id: 'prop5',
+            name: 'West End Retail Center',
+            lat: 40.7150,
+            lng: -74.0300,
+            type: 'Commercial',
+            price: '$3,100,000',
+            safety: 4.0
+        },
+        {
+            id: 'prop6',
+            name: 'South Quarter Land',
+            lat: 40.6950,
+            lng: -74.0000,
+            type: 'Vacant Land',
+            price: '$5,800,000',
+            safety: 5.0
+        }
+    ];
+    
+    // Add markers to map
+    properties.forEach(property => {
+        const marker = L.marker([property.lat, property.lng]).addTo(map);
+        marker.bindPopup(`
+            <strong>${property.name}</strong><br>
+            Type: ${property.type}<br>
+            Price: ${property.price}<br>
+            Safety Score: ${property.safety}/5.0<br>
+            <button class="btn btn-sm btn-primary mt-2" onclick="highlightProperty('${property.id}')">View Property</button>
+        `);
+    });
+    
+    // Investment range slider
+    const rangeSlider = document.getElementById('investment-range');
+    const rangeValue = document.getElementById('range-value');
+    
+    rangeSlider.addEventListener('input', function() {
+        const value = parseInt(this.value);
+        rangeValue.textContent = '$' + value.toLocaleString();
+    });
+    
+    // Compare functionality
+    const compareButtons = document.querySelectorAll('.compare-btn');
+    const comparisonSection = document.getElementById('comparison-section');
+    const closeComparisonBtn = document.getElementById('close-comparison');
+    let selectedProperties = [];
+    
+    compareButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const propertyId = this.getAttribute('data-id');
+            
+            if (selectedProperties.includes(propertyId)) {
+                // Remove from comparison
+                selectedProperties = selectedProperties.filter(id => id !== propertyId);
+                this.textContent = 'Compare';
+                document.querySelector(`.opportunity-card[data-id="${propertyId}"]`).classList.remove('active');
+            } else {
+                // Add to comparison (max 3)
+                if (selectedProperties.length < 3) {
+                    selectedProperties.push(propertyId);
+                    this.textContent = 'Remove';
+                    document.querySelector(`.opportunity-card[data-id="${propertyId}"]`).classList.add('active');
+                } else {
+                    alert('You can compare up to 3 properties at a time.');
+                    return;
+                }
+            }
+            
+            // Show/hide comparison section based on selections
+            if (selectedProperties.length >= 2) {
+                comparisonSection.style.display = 'block';
+                updateComparisonTable();
+            } else {
+                comparisonSection.style.display = 'none';
+            }
+        });
+    });
+    
+    closeComparisonBtn.addEventListener('click', function() {
+        comparisonSection.style.display = 'none';
+        selectedProperties = [];
+        
+        // Reset all buttons and cards
+        compareButtons.forEach(button => {
+            button.textContent = 'Compare';
+        });
+        
+        document.querySelectorAll('.opportunity-card.active').forEach(card => {
+            card.classList.remove('active');
+        });
+    });
+    
+    // Update comparison table
+    function updateComparisonTable() {
+        // This would typically fetch data from the server
+        // For demo purposes, we're just updating the headers
+        const propNames = {
+            'prop1': 'Downtown Office Building',
+            'prop2': 'East Side Mixed-Use',
+            'prop3': 'North District Residential',
+            'prop4': 'Industrial Zone Warehouse',
+            'prop5': 'West End Retail Center',
+            'prop6': 'South Quarter Land'
+        };
+        
+        // Update column headers
+        for (let i = 0; i < 3; i++) {
+            const colHeader = document.getElementById(`prop-col-${i+1}`);
+            if (selectedProperties[i]) {
+                colHeader.textContent = propNames[selectedProperties[i]];
+                colHeader.style.display = '';
+            } else {
+                colHeader.style.display = 'none';
+            }
+        }
+    }
+    
+    // Function to highlight property from map popup
+    function highlightProperty(propertyId) {
+        const propertyCard = document.querySelector(`.opportunity-card[data-id="${propertyId}"]`);
+        propertyCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Flash effect
+        propertyCard.classList.add('border-primary');
+        setTimeout(() => {
+            propertyCard.classList.remove('border-primary');
+        }, 2000);
+    }
+    
+    // View toggle (grid/list)
+    const viewGridBtn = document.getElementById('view-grid');
+    const viewListBtn = document.getElementById('view-list');
+    const resultsGrid = document.getElementById('results-grid');
+    
+    viewListBtn.addEventListener('click', function() {
+        viewGridBtn.classList.remove('active');
+        viewListBtn.classList.add('active');
+        resultsGrid.classList.add('list-view');
+        
+        // Change layout to list view
+        document.querySelectorAll('#results-grid > div').forEach(col => {
+            col.classList.remove('col-md-6');
+            col.classList.add('col-12');
+        });
+    });
+    
+    viewGridBtn.addEventListener('click', function() {
+        viewListBtn.classList.remove('active');
+        viewGridBtn.classList.add('active');
+        resultsGrid.classList.remove('list-view');
+        
+        // Change layout back to grid view
+        document.querySelectorAll('#results-grid > div').forEach(col => {
+            col.classList.remove('col-12');
+            col.classList.add('col-md-6');
+        });
+    });
+    
+    // Apply filters button
+    document.getElementById('apply-filters').addEventListener('click', function() {
+        // This would typically filter results from the server
+        // For demo purposes, we're just showing an alert
+        alert('Filters applied! This would typically update the results from the server.');
+    });
+    
+    // Reset filters button
+    document.getElementById('reset-filters').addEventListener('click', function() {
+        // Reset all form elements
+        document.getElementById('location').value = 'all';
+        document.getElementById('property-type').value = 'all';
+        document.getElementById('investment-range').value = 1000000;
+        rangeValue.textContent = '$1,000,000';
+        document.getElementById('safety-score').value = '1';
+        document.getElementById('green-energy').checked = false;
+        document.getElementById('leed-certified').checked = false;
+        document.getElementById('public-transport').checked = false;
+        document.getElementById('business-potential').value = 'all';
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,11 @@
+[build]
+  command = "python build_static_site.py"
+  publish = "build"
+
+[build.environment]
+  PYTHON_VERSION = "3.9"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
