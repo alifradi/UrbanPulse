@@ -80,7 +80,8 @@ def get_mock_context_for_template(template_name, current_page_name_from_build):
         "contact.html": {
             "page_title": "Contact Us - UrbanPulse",
             "page_title_hero": "Contact Us", # Specific title for H1
-            "form_action": "alifradi7@gmail.com" 
+            # MODIFIED: Update this to your Formspree endpoint
+            "form_action": "https://formspree.io/f/mblobwqq" 
         },
         "team.html": {
             "page_title": "Our Team - UrbanPulse",
