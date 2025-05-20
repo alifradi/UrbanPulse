@@ -79,9 +79,99 @@ def get_mock_context_for_template(template_name, current_page_name_from_build):
         },
         "services.html": {
             "page_title": "Services & Partnerships - UrbanPulse",
-            "page_title_hero": "Our Services", # Specific title for H1
-            "services": [ 
-                {"name": "Data Insights", "icon": "graph-up-arrow", "description": "Analysis...", "points": ["Point 1", "Point 2"], "link":"/investment/", "name_short":"Insights"},
+            "page_title_hero": "Services & Partnerships", # Title for H1
+            "core_services": [
+                {
+                    "icon": "graph-up-arrow", "name": "Data Insights & Analytics", 
+                    "description": "Comprehensive analysis of urban data to reveal patterns, trends, and opportunities across cities and neighborhoods.",
+                    "points": ["Population and demographic analysis", "Infrastructure condition assessment", "Business activity and economic indicators", "Safety and inspection history analysis", "Custom data visualization and reporting"],
+                    "link": "/investment/", "link_text": "Explore Data Insights"
+                },
+                {
+                    "icon": "building-check", "name": "Investment Opportunity Analysis",
+                    "description": "Data-driven identification and evaluation of urban investment opportunities with comprehensive risk and return assessment.",
+                    "points": ["Property and location evaluation", "Market trend analysis and forecasting", "Comparative ROI modeling", "Vacancy and business potential assessment", "Investment risk profiling"],
+                    "link": "/investment/", "link_text": "Explore Investment Analysis"
+                },
+                {
+                    "icon": "shield-check", "name": "Hazard & Sustainability Assessment",
+                    "description": "Comprehensive analysis of environmental risks, hazards, and sustainability metrics for urban areas and properties.",
+                    "points": ["Environmental risk mapping", "Climate resilience evaluation", "Green energy installation analysis", "Sustainability scoring and benchmarking", "Hazard mitigation recommendations"],
+                    "link": "/hazards/", "link_text": "Explore Hazard Analysis"
+                }
+            ],
+            "specialized_services": [
+                {
+                    "icon": "people", "name": "Strategic Consulting", 
+                    "description": "Expert guidance on urban development strategies, investment decisions, and sustainability initiatives based on comprehensive data analysis.",
+                    "points": ["Urban development strategy formulation", "Investment portfolio optimization", "Sustainability transformation planning", "Risk mitigation strategy development"],
+                    "link_url": "/contact/", "link_text": "Request Consultation"
+                },
+                {
+                    "icon": "gear", "name": "Custom Data Solutions",
+                    "description": "Tailored data collection, analysis, and visualization solutions designed to address specific urban challenges and opportunities.",
+                    "points": ["Custom data collection and integration", "Proprietary analytics model development", "Specialized visualization dashboards", "Data API and integration services"],
+                    "link_url": "/contact/", "link_text": "Discuss Your Needs"
+                },
+                {
+                    "icon": "mortarboard", "name": "Training & Capacity Building",
+                    "description": "Comprehensive training programs to help organizations build internal capacity for urban data analytics and data-driven decision making.",
+                    "points": ["Urban data literacy workshops", "Analytics platform training", "Data-driven decision making seminars", "Custom training curriculum development"],
+                    "link_url": "/contact/", "link_text": "Explore Training Options"
+                },
+                {
+                    "icon": "clipboard-data", "name": "Research & Development",
+                    "description": "Collaborative research initiatives to advance urban data analytics methodologies, tools, and applications for specific sectors or challenges.",
+                    "points": ["Sector-specific research partnerships", "Methodology development and validation", "Pilot program design and implementation", "Academic and industry collaborations"],
+                    "link_url": "/contact/", "link_text": "Discuss Research Opportunities"
+                }
+            ],
+            "service_packages": [
+                {
+                    "name": "Starter", "price": "$2,500", "period": "/month", 
+                    "lead_text": "Essential urban data insights for smaller projects and organizations.",
+                    "features": ["Basic data analytics dashboard", "Monthly insights reports", "Access to core datasets", "Single city coverage", "Email support"],
+                    "non_features": ["Custom analytics", "API access", "Dedicated consultant"],
+                    "button_link": "/contact/", "button_text": "Get Started", "is_featured": False
+                },
+                {
+                    "name": "Professional", "price": "$6,500", "period": "/month",
+                    "lead_text": "Comprehensive analytics and insights for medium-sized organizations and projects.",
+                    "features": ["Advanced analytics dashboard", "Weekly insights reports", "Access to all datasets", "Up to 3 cities coverage", "Priority support", "Basic custom analytics", "Limited API access"],
+                    "non_features": ["Dedicated consultant"],
+                    "button_link": "/contact/", "button_text": "Get Started", "is_featured": True
+                },
+                {
+                    "name": "Enterprise", "price": "Custom", "period": " pricing",
+                    "lead_text": "Tailored solutions for large organizations with complex urban data needs.",
+                    "features": ["Custom analytics platform", "Real-time data and reporting", "Full dataset access + custom data", "Unlimited city coverage", "24/7 premium support", "Advanced custom analytics", "Full API access", "Dedicated consultant team"],
+                    "non_features": [],
+                    "button_link": "/contact/", "button_text": "Contact Sales", "is_featured": False
+                }
+            ],
+            "partners": [
+                {"image_slug": "partner1.png", "name": "Technology Solutions"},
+                {"image_slug": "partner2.png", "name": "Research Institute"},
+                {"image_slug": "partner3.png", "name": "Government Agency"},
+                {"image_slug": "partner4.png", "name": "Investment Group"},
+                {"image_slug": "partner5.png", "name": "University Partner"},
+                {"image_slug": "partner6.png", "name": "Sustainability Alliance"},
+                {"image_slug": "partner7.png", "name": "Data Provider"},
+                {"image_slug": "partner8.png", "name": "Industry Association"}
+            ],
+            "testimonials": [
+                {
+                    "stars": 5, "text": "UrbanPulse's data analytics transformed our investment strategy, helping us identify opportunities we would have otherwise missed. Their hazard analysis saved us from a potentially disastrous investment in a flood-prone area.",
+                    "image_slug": "testimonial1.jpg", "client_name": "Jennifer Martinez", "client_title": "Director of Investments, Urban Growth Capital"
+                },
+                {
+                    "stars": 5, "text": "As a city planner, I've found UrbanPulse's insights invaluable for making data-driven decisions about infrastructure investments. Their sustainability metrics have helped us prioritize green initiatives with the highest impact.",
+                    "image_slug": "testimonial2.jpg", "client_name": "David Wilson", "client_title": "Chief Urban Planner, Metropolitan Development Authority"
+                },
+                {
+                    "stars": 4, "text": "The ROI on our partnership with UrbanPulse has been exceptional. Their custom analytics platform has become an essential tool for our development team, providing insights that drive our strategic decisions.", # Assuming 4.5 stars means 4 full stars
+                    "image_slug": "testimonial3.jpg", "client_name": "Michael Chang", "client_title": "CEO, Innovative Urban Developers"
+                }
             ]
         }
     }
