@@ -8,7 +8,7 @@
         <div class="row align-items-center">
             <div class="col-lg-6">
                 <h1 class="mb-3">{{ page_title_hero }}</h1> {# page_title_hero from context #}
-                <p class="lead mb-4">Meet the experts behind UrbanPulse.</p>
+                <p class="lead mb-4">Meet the experts behind UrbanPulse's urban data analytics platform. Our diverse team combines expertise in data science, urban planning, sustainability, and investment analysis.</p>
             </div>
         </div>
     </div>
@@ -16,7 +16,10 @@
 
 <section class="py-5">
     <div class="container">
-        <div class="row mb-5"><div class="col-lg-8 mx-auto text-center"><h2 class="mb-3">Leadership Team</h2></div></div>
+        <div class="col-lg-8 mx-auto text-center">
+            <h2 class="mb-3">Leadership Team</h2>
+            <p class="lead text-muted">Our leadership brings a combined experience in urban data analytics, technology innovation, and sustainable development.</p>
+        </div>
         <div class="row">
             {% if team_members %}
                 {% for member in team_members %}
@@ -38,6 +41,255 @@
             {% else %}
                 <div class="col-12"><p>Team information is currently unavailable.</p></div>
             {% endif %}
+        </div>
+    </div>
+    <div class="tab-content" id="teamTabsContent">
+        <!-- Data Science Team 
+         <div class="tab-pane fade show active" id="data-science" role="tabpanel" aria-labelledby="data-science-tab">
+            <div class="row mb-4">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h3 class="mb-3">Data Science Team</h3>
+                    <p class="lead text-muted">Our data scientists transform complex urban data into actionable insights through advanced analytics and visualization.</p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="team-member">
+                        <img src="{% static 'core/img/team/data1.jpg' %}" alt="David Park" class="img-fluid">
+                        <h5>David Park</h5>
+                        <p class="position">Lead Data Scientist</p>
+                        <p class="diploma">Ph.D. in Statistics, Carnegie Mellon</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="team-member">
+                        <img src="{% static 'core/img/team/data2.jpg' %}" alt="Aisha Patel" class="img-fluid">
+                        <h5>Aisha Patel</h5>
+                        <p class="position">Machine Learning Engineer</p>
+                        <p class="diploma">M.S. in AI, Georgia Tech</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="team-member">
+                        <img src="{% static 'core/img/team/data3.jpg' %}" alt="Marcus Johnson" class="img-fluid">
+                        <h5>Marcus Johnson</h5>
+                        <p class="position">Data Visualization Specialist</p>
+                        <p class="diploma">M.F.A. in Information Design, RISD</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="team-member">
+                        <img src="{% static 'core/img/team/data4.jpg' %}" alt="Sophia Lee" class="img-fluid">
+                        <h5>Sophia Lee</h5>
+                        <p class="position">GIS Analyst</p>
+                        <p class="diploma">M.S. in Geographic Information Science, UCLA</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div> -->
+        
+        <!-- Urban Planning Team 
+        <div class="tab-pane fade" id="urban-planning" role="tabpanel" aria-labelledby="urban-planning-tab">
+            <div class="row mb-4">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h3 class="mb-3">Urban Planning Team</h3>
+                    <p class="lead text-muted">Our urban planners bring practical expertise in city development, infrastructure, and community engagement.</p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="team-member">
+                        <img src="{% static 'core/img/team/urban1.jpg' %}" alt="James Wilson" class="img-fluid">
+                        <h5>James Wilson</h5>
+                        <p class="position">Director of Urban Planning</p>
+                        <p class="diploma">Master of Urban Planning, Harvard GSD</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="team-member">
+                        <img src="{% static 'core/img/team/urban2.jpg' %}" alt="Olivia Martinez" class="img-fluid">
+                        <h5>Olivia Martinez</h5>
+                        <p class="position">Infrastructure Specialist</p>
+                        <p class="diploma">M.S. in Civil Engineering, UT Austin</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="team-member">
+                        <img src="{% static 'core/img/team/urban3.jpg' %}" alt="Robert Kim" class="img-fluid">
+                        <h5>Robert Kim</h5>
+                        <p class="position">Transportation Analyst</p>
+                        <p class="diploma">M.S. in Transportation Engineering, MIT</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="team-member">
+                        <img src="{% static 'core/img/team/urban4.jpg' %}" alt="Zoe Thompson" class="img-fluid">
+                        <h5>Zoe Thompson</h5>
+                        <p class="position">Community Development Specialist</p>
+                        <p class="diploma">M.A. in Urban Sociology, Columbia University</p>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        
+        <!-- Investment Analysis Team 
+        <div class="tab-pane fade" id="investment" role="tabpanel" aria-labelledby="investment-tab">
+            <div class="row mb-4">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h3 class="mb-3">Investment Analysis Team</h3>
+                    <p class="lead text-muted">Our investment experts analyze urban data to identify opportunities and optimize returns in real estate and development.</p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="team-member">
+                        <img src="{% static 'core/img/team/invest1.jpg' %}" alt="Jonathan Taylor" class="img-fluid">
+                        <h5>Jonathan Taylor</h5>
+                        <p class="position">Chief Investment Strategist</p>
+                        <p class="diploma">MBA, Wharton School of Business</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="team-member">
+                        <img src="{% static 'core/img/team/invest2.jpg' %}" alt="Maya Gupta" class="img-fluid">
+                        <h5>Maya Gupta</h5>
+                        <p class="position">Real Estate Analyst</p>
+                        <p class="diploma">M.S. in Real Estate Development, Columbia</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="team-member">
+                        <img src="{% static 'core/img/team/invest3.jpg' %}" alt="Daniel Garcia" class="img-fluid">
+                        <h5>Daniel Garcia</h5>
+                        <p class="position">Financial Modeling Specialist</p>
+                        <p class="diploma">M.S. in Financial Engineering, NYU</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="team-member">
+                        <img src="{% static 'core/img/team/invest4.jpg' %}" alt="Rachel Wong" class="img-fluid">
+                        <h5>Rachel Wong</h5>
+                        <p class="position">Market Research Analyst</p>
+                        <p class="diploma">MBA, Chicago Booth School of Business</p>
+                    </div>
+                </div>
+            </div>
+        </div> Investment Analysis Team -->
+        
+        <!-- 
+        <div class="tab-pane fade" id="sustainability" role="tabpanel" aria-labelledby="sustainability-tab">
+            <div class="row mb-4">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h3 class="mb-3">Sustainability Team</h3>
+                    <p class="lead text-muted">Our sustainability experts analyze environmental impacts and develop strategies for resilient, eco-friendly urban development.</p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="team-member">
+                        <img src="{% static 'core/img/team/sustain1.jpg' %}" alt="Thomas Green" class="img-fluid">
+                        <h5>Thomas Green</h5>
+                        <p class="position">Environmental Assessment Lead</p>
+                        <p class="diploma">Ph.D. in Environmental Science, Yale</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="team-member">
+                        <img src="{% static 'core/img/team/sustain2.jpg' %}" alt="Leila Ahmadi" class="img-fluid">
+                        <h5>Leila Ahmadi</h5>
+                        <p class="position">Renewable Energy Specialist</p>
+                        <p class="diploma">M.S. in Sustainable Energy, DTU</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="team-member">
+                        <img src="{% static 'core/img/team/sustain3.jpg' %}" alt="Carlos Mendez" class="img-fluid">
+                        <h5>Carlos Mendez</h5>
+                        <p class="position">Climate Resilience Analyst</p>
+                        <p class="diploma">M.S. in Climate Science, University of Washington</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="team-member">
+                        <img src="{% static 'core/img/team/sustain4.jpg' %}" alt="Amara Okafor" class="img-fluid">
+                        <h5>Amara Okafor</h5>
+                        <p class="position">Green Building Specialist</p>
+                        <p class="diploma">M.Arch with Sustainable Design focus, Penn</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        Sustainability Team -->
+    </div>
+</section>
+<!-- Join Our Team Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h2 class="mb-3">Join Our Team</h2>
+                <p class="lead mb-4">We're always looking for talented individuals who are passionate about urban data analytics, sustainability, and creating smarter cities.</p>
+                <p class="mb-4">At UrbanPulse, you'll work with cutting-edge technology and data to solve real urban challenges. We offer competitive benefits, professional development opportunities, and a collaborative, innovative work environment.</p>
+                <a href="#" class="btn btn-primary me-2">View Open Positions</a>
+                <a href="{% url 'contact' %}" class="btn btn-outline-primary">Contact Recruiting</a>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title mb-4">Current Openings</h4>
+                       <!-- 
+                        <div class="d-flex mb-3 pb-3 border-bottom">
+                            <div class="flex-grow-1">
+                                <h5 class="mb-1">Senior Data Scientist</h5>
+                                <p class="text-muted mb-0">New York, NY (Hybrid)</p>
+                            </div>
+                            <a href="#" class="btn btn-sm btn-outline-primary align-self-center">Apply</a>
+                        </div>
+                        
+                        <div class="d-flex mb-3 pb-3 border-bottom">
+                            <div class="flex-grow-1">
+                                <h5 class="mb-1">Urban Planning Specialist</h5>
+                                <p class="text-muted mb-0">Chicago, IL (On-site)</p>
+                            </div>
+                            <a href="#" class="btn btn-sm btn-outline-primary align-self-center">Apply</a>
+                        </div>
+                        
+                        <div class="d-flex mb-3 pb-3 border-bottom">
+                            <div class="flex-grow-1">
+                                <h5 class="mb-1">Frontend Developer</h5>
+                                <p class="text-muted mb-0">Remote (US-based)</p>
+                            </div>
+                            <a href="#" class="btn btn-sm btn-outline-primary align-self-center">Apply</a>
+                        </div>
+                        
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <h5 class="mb-1">Sustainability Analyst</h5>
+                                <p class="text-muted mb-0">San Francisco, CA (Hybrid)</p>
+                            </div>
+                            <a href="#" class="btn btn-sm btn-outline-primary align-self-center">Apply</a>
+                        </div>
+                        -->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
