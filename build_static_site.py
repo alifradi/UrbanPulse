@@ -13,7 +13,7 @@ from jinja2 import Environment, FileSystemLoader
 # Configuration
 BUILD_DIR = "build"
 TEMPLATES_DIR = "core/templates/core"
-STATIC_ASSETS_DIR = "core/static/core"
+STATIC_ASSETS_DIR = "core/static/core" # Make sure this path is correct
 PAGES = [
     {"template": "home.html", "output": "index.html", "name": "home"},
     {"template": "investment.html", "output": "investment/index.html", "name": "investment"},
@@ -27,7 +27,7 @@ PAGES = [
 def get_mock_context_for_template(template_name, current_page_name_from_build):
     """
     Generate mock context data for templates.
-    Ensures page_title is always present.
+    Ensures page_title (for HTML title tag) and other critical variables are always present.
     """
     base_context = {
         "STATIC_URL": "/static/",
@@ -35,9 +35,13 @@ def get_mock_context_for_template(template_name, current_page_name_from_build):
         "current_page_name": current_page_name_from_build,
     }
     
+    # Define specific data for each template
+    # Ensure all keys accessed in templates are present here, or have fallbacks in the template
+    # (though we are trying to remove |default filters for debugging)
     template_specific_data = {
         "home.html": {
-            "page_title": "UrbanPulse - Urban Data Analytics",
+            "page_title": "UrbanPulse - Urban Data Analytics", # For the <title> tag in base.html
+            "hero_title": "Urban Data Intelligence for Smarter Investments", # For the H1 in home.html
             "featured_insights": [
                 {"title": "Buildings Analyzed", "value": "14,382", "icon": "bi-building"},
                 {"title": "Cities Covered", "value": "237", "icon": "bi-geo-alt"},
@@ -51,6 +55,7 @@ def get_mock_context_for_template(template_name, current_page_name_from_build):
                 {"id": "prop1", "name": "Downtown Office Building", "image_slug": "property1.jpg", "type": "Commercial", "address": "123 Main St, Downtown", "safety_score": 4.0, "description": "Modern office building...", "price": "$2,450,000"},
                 {"id": "prop2", "name": "East Side Mixed-Use", "image_slug": "property2.jpg", "type": "Mixed Use", "address": "456 Park Ave, East Side", "safety_score": 4.5, "description": "Newly renovated mixed-use...", "price": "$3,750,000"},
             ]
+            # Add other necessary variables for investment.html, ensuring no default filter is needed if possible
         },
         "hazards.html": {
             "page_title": "Hazard Analysis & Sustainability - UrbanPulse",
@@ -61,42 +66,42 @@ def get_mock_context_for_template(template_name, current_page_name_from_build):
         },
         "contact.html": {
             "page_title": "Contact Us - UrbanPulse",
-            "form_action": "#"
+            "form_action": "#" # For static site, form submission needs a service
         },
         "team.html": {
             "page_title": "Our Team - UrbanPulse",
             "team_members": [
-                {"name": "Ali Fradi", "position": "Co-Founder", "image_slug": "team/ali_fr.jpeg", "diploma": "M.Sc in Applied Mathematics...", "bio": "Former data consultant...", "linkedin_url": "https://www.linkedin.com/in/ali-frady/", "github_url": "https://github.com/alifradi"},
-                {"name": "Kais Riani", "position": "Co-Founder", "image_slug": "team/kais_r.jpg", "diploma": "Ph.D. in Computer and Information Sciences...", "bio": "Computer vision and machine learning engineer...", "linkedin_url": "https://www.linkedin.com/in/kais-riani/", "github_url": "#"},
+                {"name": "Ali Fradi", "position": "Co-Founder", "image_slug": "team/ali_fr.jpeg", "diploma": "M.Sc in Applied Mathematics, Polytechnique Montreal, Canada", "bio": "Former data consultant with 5+ years of experience...", "linkedin_url": "https://www.linkedin.com/in/ali-frady/", "github_url": "https://github.com/alifradi"},
+                {"name": "Kais Riani", "position": "Co-Founder", "image_slug": "team/kais_r.jpg", "diploma": "Ph.D. in Computer and Information Sciences, University of Michigan, USA", "bio": "Computer vision and machine learning engineer...", "linkedin_url": "https://www.linkedin.com/in/kais-riani/", "github_url": "#"},
+                {"name": "Yakin Hajlaoui", "position": "Co-Founder", "image_slug": "team/yakin_h.jpg", "diploma": "Ph.D. in Applied Mathematics, Polytechnique Montreal, Canada", "bio": "Expert in mathematical modeling for different problems...", "linkedin_url": "https://www.linkedin.com/in/yakin-hajlaoui/", "twitter_url": "#"}
             ]
         },
         "contributions.html": {
             "page_title": "Recent Contributions - UrbanPulse",
             "contributions": [
                 {"title": "Predictive Analytics for Urban Infrastructure Resilience", "publication_info": "Journal of Urban Technology, Vol. 38, Issue 2", "description": "This paper presents a novel framework...", "author_image_slug": "team/cto.jpg", "author_name": "Michael Chen, CTO", "date": "March 2025", "link": "#"},
+                {"title": "Quantifying Urban Sustainability: A Comprehensive Metrics Framework", "publication_info": "Sustainable Cities and Society, Vol. 92", "description": "This research introduces a new framework...", "author_image_slug": "team/cso.jpg", "author_name": "Elena Rodriguez, CSO", "date": "January 2025", "link": "#"}
             ]
         },
         "services.html": {
             "page_title": "Services & Partnerships - UrbanPulse",
             "services": [ 
-                {"name": "Data Insights & Analytics", "icon": "graph-up-arrow", "description": "Comprehensive analysis...", "points": ["Population analysis", "Infrastructure assessment"], "link":"/investment/", "name_short":"Data Insights"},
+                {"name": "Data Insights & Analytics", "icon": "graph-up-arrow", "description": "Comprehensive analysis of urban data...", "points": ["Population analysis", "Infrastructure assessment"], "link":"/investment/", "name_short":"Data Insights"},
+                {"name": "Investment Opportunity Analysis", "icon": "building-check", "description": "Data-driven identification and evaluation...", "points": ["Property evaluation", "Market trend analysis"], "link":"/investment/", "name_short":"Investment Analysis"},
             ]
         }
     }
     
-    # Start with base context
     context = base_context.copy()
     
-    # Update with template-specific data if it exists
     if template_name in template_specific_data:
         context.update(template_specific_data[template_name])
     
-    # Ensure page_title is always set, even if to a generic default
+    # Fallback for page_title if not set in template_specific_data
     if "page_title" not in context:
-        # Create a generic title based on the template name if not specified
-        generic_title = template_name.replace('.html', '').replace('_', ' ').title()
+        generic_title = current_page_name_from_build.replace('_', ' ').title()
         context["page_title"] = f"{generic_title} - UrbanPulse"
-        if template_name == "home.html": # Specific default for home
+        if template_name == "home.html" and "page_title" not in template_specific_data.get("home.html", {}): # Double check for home.html
              context["page_title"] = "UrbanPulse - Urban Data Analytics"
 
 
@@ -118,7 +123,7 @@ def main():
     
     for page_config in PAGES:
         output_path = Path(BUILD_DIR) / page_config["output"]
-        if output_path.parent != Path(BUILD_DIR):
+        if output_path.parent != Path(BUILD_DIR): # Check if output is in a subdirectory
             output_path.parent.mkdir(parents=True, exist_ok=True)
             print(f"Created directory: {output_path.parent}")
     
@@ -162,7 +167,9 @@ def main():
             print(f"Generated {output_file_path}")
         except Exception as e:
             print(f"Error processing template '{page_config['template']}' to '{page_config['output']}': {str(e)}")
-            # raise # Optionally re-raise to fail the build immediately
+            # To make Netlify build fail on error, uncomment the next line
+            # sys.exit(1) 
+
 
     print(f"Static site build complete! Files are in the '{BUILD_DIR}' directory.")
 
