@@ -3,37 +3,38 @@
 {% block title %}{{ page_title }}{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css">
 <style>
+    /* Define custom CSS variables or replace with direct values/Bootstrap classes */
     :root {
-        --bs-primary: #0d6efd; /* Default Bootstrap primary */
-        --vibrant-green: #00A651;
-        --light-gray: #f8f9fa;
-        --light-blue: #4A90E2;
-        --dark-slate: #343a40;
+        --bs-primary: #0d6efd; /* Default Bootstrap primary blue */
+        /* Add other CSS variables if used by your style.css or base.html */
     }
-    #hazard-map { height: 500px; width: 100%; border-radius: 8px; }
-    .risk-high { color: #FF3B30; font-weight: bold; }
-    .risk-medium { color: #FF9500; font-weight: 500; }
-    .risk-low { color: var(--vibrant-green); font-weight: 500; }
-    .sustainability-score {
-        width: 80px; height: 80px; border-radius: 50%;
-        display: flex; align-items: center; justify-content: center;
-        font-size: 1.75rem; font-weight: 700;
-        margin: 0 auto 1rem; color: white;
+    .feature-icon { /* Style for service icons */
+        font-size: 2.5rem; 
+        color: var(--bs-primary); 
+        margin-bottom: 1rem; 
+        width: 70px; 
+        height: 70px; 
+        border-radius: 50%; 
+        background-color: #e9ecef; 
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-    .score-a { background-color: var(--vibrant-green); }
-    .score-b { background-color: #4CD964; } /* Slightly lighter green */
-    .score-c { background-color: var(--light-blue); }
-    .score-d { background-color: #FF9500; } /* Orange */
-    .score-f { background-color: #FF3B30; } /* Red */
-
-    .report-card { transition: transform 0.3s ease; }
-    .report-card:hover { transform: translateY(-5px); }
-    .nav-pills .nav-link.active { background-color: var(--bs-primary); }
-    .progress-bar-success { background-color: var(--vibrant-green); }
-    .progress-bar-warning { background-color: #FF9500; }
-    .progress-bar-danger { background-color: #FF3B30; }
+    .partner-logo {
+        max-height: 80px;
+        object-fit: contain; /* Ensures logo is scaled nicely */
+        margin-bottom: 1rem; /* Added for spacing */
+    }
+    .testimonial-img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover; /* Ensures image is nicely cropped if not square */
+        border-radius: 50%; /* Make testimonial images circular */
+    }
+    .card-header h4 {
+        margin-bottom: 0; /* Remove default margin if any */
+    }
 </style>
 {% endblock %}
 
@@ -43,70 +44,228 @@
         <div class="row align-items-center">
             <div class="col-lg-6">
                 <h1 class="mb-3">{{ page_title_hero }}</h1>
-                <p class="lead mb-4">Access comprehensive reports on environmental risks, hazardous events, and sustainability metrics to make informed urban development decisions.</p>
+                <p class="lead mb-4">Discover how UrbanPulse's comprehensive data analytics services and strategic partnerships can transform your urban development and investment strategies.</p>
+            </div>
+            <div class="col-lg-6">
+                <img src="{{ STATIC_URL }}img/services_illustration.png" alt="UrbanPulse Services" class="img-fluid rounded shadow">
             </div>
         </div>
     </div>
 </section>
 
-<section class="py-4">
+<section class="py-5">
     <div class="container">
-        <ul class="nav nav-pills nav-justified mb-4" id="hazardTabs" role="tablist">
-            <li class="nav-item" role="presentation"><button class="nav-link active" id="hazard-map-tab" data-bs-toggle="pill" data-bs-target="#hazard-map-content" type="button" role="tab"><i class="bi bi-map me-2"></i>Hazard Map</button></li>
-            <li class="nav-item" role="presentation"><button class="nav-link" id="sustainability-tab" data-bs-toggle="pill" data-bs-target="#sustainability-content" type="button" role="tab"><i class="bi bi-leaf me-2"></i>Sustainability</button></li>
-            <li class="nav-item" role="presentation"><button class="nav-link" id="historical-tab" data-bs-toggle="pill" data-bs-target="#historical-content" type="button" role="tab"><i class="bi bi-clock-history me-2"></i>Historical</button></li>
-            <li class="nav-item" role="presentation"><button class="nav-link" id="projections-tab" data-bs-toggle="pill" data-bs-target="#projections-content" type="button" role="tab"><i class="bi bi-graph-up me-2"></i>Projections</button></li>
-        </ul>
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-3">Our Core Services</h2>
+                <p class="lead text-muted">We provide comprehensive urban data analytics services to help organizations make informed decisions about urban development, investment, and sustainability.</p>
+            </div>
+        </div>
         
-        <div class="tab-content" id="hazardTabsContent">
-            <div class="tab-pane fade show active" id="hazard-map-content" role="tabpanel" aria-labelledby="hazard-map-tab"><div id="hazard-map"></div></div>
-            
-            <div class="tab-pane fade" id="sustainability-content" role="tabpanel" aria-labelledby="sustainability-tab">
-                <div class="row mb-4">
-                    {% if hazard_reports %}
-                        {% for report in hazard_reports %}
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100 report-card">
-                                <div class="card-body text-center">
-                                    <div class="sustainability-score score-{{ report.score_grade|lower }}">{{ report.score_grade }}</div>
-                                    <h4 class="card-title">{{ report.district_name }}</h4>
-                                    <p class="card-text">{{ report.summary }}</p>
-                                    <div class="mt-3"><a href="{{ report.full_report_link }}" class="btn btn-outline-primary">View Full Report</a></div>
+        <div class="row">
+            {% if core_services %}
+                {% for service in core_services %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center p-4 d-flex flex-column">
+                            <div class="feature-icon mx-auto mb-4">
+                                <i class="bi bi-{{ service.icon }}"></i>
+                            </div>
+                            <h4 class="card-title">{{ service.name }}</h4>
+                            <p class="card-text">{{ service.description }}</p>
+                            {% if service.points %}
+                            <ul class="list-unstyled text-start mt-4">
+                                {% for point in service.points %}
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i> {{ point }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                            <div class="mt-auto pt-3"> {# Ensures button is at the bottom #}
+                                <a href="{{ service.link }}" class="btn btn-outline-primary">{{ service.link_text }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12"><p>Core service details are currently unavailable.</p></div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-3">Specialized Services</h2>
+                <p class="lead text-muted">Beyond our core offerings, we provide specialized services tailored to specific urban development and investment needs.</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% if specialized_services %}
+                {% for service in specialized_services %}
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-primary text-white rounded p-2 me-3 feature-icon" style="width:auto; height:auto; font-size:1.5rem;"> {# Adjusted feature-icon style #}
+                                    <i class="bi bi-{{ service.icon }}"></i>
+                                </div>
+                                <h4 class="card-title mb-0">{{ service.name }}</h4>
+                            </div>
+                            <p class="card-text">{{ service.description }}</p>
+                            {% if service.points %}
+                            <ul class="mt-3">
+                                {% for point in service.points %}
+                                <li>{{ point }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                            <div class="mt-auto pt-3">  {# Ensures button is at the bottom #}
+                                <a href="{{ service.link_url }}" class="btn btn-sm btn-outline-primary">{{ service.link_text }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                 <div class="col-12"><p>Specialized service details are currently unavailable.</p></div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-3">Service Packages</h2>
+                <p class="lead text-muted">Choose from our standardized service packages or contact us for a custom solution tailored to your specific needs.</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% if service_packages %}
+                {% for package in service_packages %}
+                <div class="col-lg-4 col-md-6 mb-4 {% if package.is_featured %}mx-md-auto{% endif %}"> {# Adjusted mx-auto for medium screens and up #}
+                    <div class="card h-100 text-center {% if package.is_featured %}border-primary shadow{% else %}shadow-sm{% endif %}">
+                        <div class="card-header {% if package.is_featured %}bg-primary text-white{% else %}bg-light{% endif %} py-3">
+                            <h4 class="my-0 fw-normal">{{ package.name }}</h4>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h1 class="card-title pricing-card-title">{{ package.price }}<small class="text-muted fw-light">{{ package.period }}</small></h1>
+                            <p class="lead mt-3 mb-4">{{ package.lead_text }}</p>
+                            <ul class="list-unstyled text-start mx-auto mb-4" style="max-width: 280px;">
+                                {% if package.features %}
+                                    {% for feature in package.features %}
+                                    <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i> {{ feature }}</li>
+                                    {% endfor %}
+                                {% endif %}
+                                {% if package.non_features %}
+                                    {% for non_feature in package.non_features %}
+                                    <li class="mb-2 text-muted"><i class="bi bi-x-circle-fill me-2"></i> {{ non_feature }}</li>
+                                    {% endfor %}
+                                {% endif %}
+                            </ul>
+                            <div class="mt-auto">
+                                <a href="{{ package.button_link }}" class="btn btn-lg {% if package.is_featured %}btn-primary{% else %}btn-outline-primary{% endif %} w-100">{{ package.button_text }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12"><p>Service package details are currently unavailable.</p></div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-3">Strategic Partnerships</h2>
+                <p class="lead text-muted">We collaborate with leading organizations across multiple sectors to enhance our urban data analytics capabilities and deliver comprehensive solutions.</p>
+            </div>
+        </div>
+        
+        <div class="row mb-5 justify-content-center align-items-center"> {# Added align-items-center #}
+            {% if partners %}
+                {% for partner in partners %}
+                <div class="col-lg-3 col-md-4 col-6 mb-4 text-center">
+                    <img src="{{ STATIC_URL }}img/partners/{{ partner.image_slug }}" alt="{{ partner.name }}" class="img-fluid partner-logo">
+                    <p class="mb-0 small text-muted">{{ partner.name }}</p>
+                </div>
+                {% endfor %}
+            {% else %}
+                 <div class="col-12 text-center"><p>Partner information is currently unavailable.</p></div>
+            {% endif %}
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h4 class="mb-4">Become a Partner</h4>
+                <p class="mb-4">We're always looking to expand our network of partners to enhance our urban data analytics capabilities and deliver more value to our clients.</p>
+                <a href="/contact/" class="btn btn-primary">Explore Partnership Opportunities</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-3">What Our Clients Say</h2>
+                <p class="lead text-muted">Hear from organizations that have transformed their urban development and investment strategies with our services.</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% if testimonials %}
+                {% for testimonial in testimonials %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                {% for i in range(1, 6) %}
+                                    <i class="bi {% if i <= testimonial.stars %}bi-star-fill{% else %}bi-star{% endif %} text-warning"></i>
+                                {% endfor %}
+                            </div>
+                            <p class="card-text fst-italic">"{{ testimonial.text }}"</p> {# Added fst-italic for quote style #}
+                            <div class="d-flex align-items-center mt-4">
+                                <img src="{{ STATIC_URL }}img/testimonials/{{ testimonial.image_slug }}" alt="{{ testimonial.client_name }}" class="me-3 testimonial-img">
+                                <div>
+                                    <h5 class="mb-0">{{ testimonial.client_name }}</h5>
+                                    <p class="text-muted mb-0">{{ testimonial.client_title }}</p>
                                 </div>
                             </div>
                         </div>
-                        {% endfor %}
-                    {% else %}
-                        <div class="col-12"><p>No sustainability reports available.</p></div>
-                    {% endif %}
+                    </div>
                 </div>
-            </div>
-            <div class="tab-pane fade" id="historical-content" role="tabpanel" aria-labelledby="historical-tab"><p>Historical event data will be displayed here.</p></div>
-            <div class="tab-pane fade" id="projections-content" role="tabpanel" aria-labelledby="projections-tab">
-                <div class="row">
-                    <div class="col-lg-6 mb-4"><div class="card"><div class="card-body"><h4 class="card-title">Climate Chart</h4><canvas id="climateChart"></canvas></div></div></div>
-                    <div class="col-lg-6 mb-4"><div class="card"><div class="card-body"><h4 class="card-title">Infrastructure Chart</h4><canvas id="infrastructureChart"></canvas></div></div></div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center"><p>Testimonials are currently unavailable.</p></div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-4">Ready to Transform Your Urban Strategy?</h2>
+                <p class="lead mb-4">Contact us today to discuss how our urban data analytics services can help you make more informed decisions and achieve better outcomes.</p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="/contact/" class="btn btn-light btn-lg">Contact Us</a>
+                    <a href="#" class="btn btn-outline-light btn-lg">Schedule a Demo</a> {# Placeholder link #}
                 </div>
             </div>
         </div>
     </div>
 </section>
-{% endblock %}
-
-{% block extra_js %}
-<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const hazardMapEl = document.getElementById('hazard-map');
-        if (hazardMapEl) {
-            const map = L.map('hazard-map').setView([40.7128, -74.0060], 13);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(map);
-        }
-        const climateCtx = document.getElementById('climateChart');
-        if (climateCtx) new Chart(climateCtx.getContext('2d'), {type: 'line', data: {labels:['2025','2050'], datasets:[{label:'Temp',data:[15,17]}]}});
-        const infraCtx = document.getElementById('infrastructureChart');
-        if (infraCtx) new Chart(infraCtx.getContext('2d'), {type:'bar', data: {labels:['System A','System B'], datasets:[{label:'Vuln.',data:[30,45]}]}});
-    });
-</script>
 {% endblock %}
