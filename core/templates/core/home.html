@@ -1,4 +1,4 @@
-{% extends 'core/base.html' %} {# This will use base_html_jinja2_v2 #}
+{% extends 'base.html' %} {# Corrected path to base.html #}
 
 {% block title %}{{ page_title }}{% endblock %} {# page_title is for the <title> tag, set in build_static_site.py #}
 
@@ -88,7 +88,7 @@
     <div class="container hero-content">
         <div class="row align-items-center">
             <div class="col-lg-7 fade-in">
-                <h1>{{ hero_title }}</h1> {# Use hero_title from context, no default filter #}
+                <h1>{{ hero_title }}</h1> {# Use hero_title from context #}
                 <p class="lead mb-4">UrbanPulse provides comprehensive data analytics on cities, buildings, safety, and urban development to inform your investment decisions and urban planning strategies.</p>
                 <div class="d-flex gap-3 flex-wrap"> 
                     <a href="/investment/" class="btn btn-light btn-lg">Explore Data Insights</a> 
