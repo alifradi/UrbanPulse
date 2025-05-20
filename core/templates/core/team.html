@@ -2,172 +2,49 @@
 
 {% block title %}{{ page_title }}{% endblock %}
 
-{% block extra_css %}
-<style>
-    /* Add any team-page specific CSS here if needed */
-    .team-member img {
-        width: 180px; /* Increased size for leadership */
-        height: 180px;
-        object-fit: cover;
-        border: 3px solid #dee2e6; /* Added a light border */
-    }
-    .team-member .position {
-        color: var(--bs-primary, #0d6efd); /* Use Bootstrap primary or fallback */
-        font-weight: 500;
-    }
-    .team-member .diploma {
-        font-size: 0.9em;
-    }
-    .team-member .social-icons a {
-        font-size: 1.5rem; /* Slightly larger social icons */
-    }
-
-    /* Styles for department tabs if uncommented */
-    .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-        background-color: var(--bs-primary, #0d6efd);
-        color: white;
-    }
-    .department-member img { /* For smaller images in department tabs */
-        width: 120px;
-        height: 120px;
-        object-fit: cover;
-        border-radius: 50%;
-    }
-    .job-listing .card-body {
-        padding: 1rem 1.25rem; /* Adjust padding for job listings */
-    }
-</style>
-{% endblock %}
-
 {% block content %}
 <section class="bg-light py-5">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6">
-                <h1 class="mb-3">{{ page_title_hero }}</h1>
+                <h1 class="mb-3">{{ page_title_hero }}</h1> {# page_title_hero from context #}
                 <p class="lead mb-4">Meet the experts behind UrbanPulse's urban data analytics platform. Our diverse team combines expertise in data science, urban planning, sustainability, and investment analysis.</p>
             </div>
-            <div class="col-lg-6 text-center"> {# Added text-center for better alignment if image is present #}
-                {# Ensure team_illustration.png is in core/static/core/img/ if you uncomment this #}
-                </div>
         </div>
     </div>
 </section>
 
 <section class="py-5">
     <div class="container">
-        <div class="row mb-5">
-            <div class="col-lg-8 mx-auto text-center">
-                <h2 class="mb-3">Leadership Team</h2>
-                <p class="lead text-muted">Our leadership brings decades of combined experience in urban data analytics, technology innovation, and sustainable development.</p>
-            </div>
+        <div class="col-lg-8 mx-auto text-center">
+            <h2 class="mb-3">Leadership Team</h2>
+            <p class="lead text-muted">Our leadership brings a combined experience in urban data analytics, technology innovation, and sustainable development.</p>
         </div>
-        
-        <div class="row justify-content-center"> {# Added justify-content-center #}
+        <div class="row">
             {% if team_members %}
                 {% for member in team_members %}
                 <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="team-member card p-3 h-100 text-center shadow-sm">
-                        <img src="{{ STATIC_URL }}img/{{ member.image_slug }}" alt="{{ member.name }}" class="img-fluid rounded-circle mx-auto mb-3">
-                        <h5 class="card-title mb-1">{{ member.name }}</h5>
-                        <p class="position mb-2">{{ member.position }}</p>
-                        <p class="diploma text-muted mb-2">{{ member.diploma }}</p>
-                        <p class="text-muted small mb-3">{{ member.bio }}</p>
+                    <div class="team-member card p-3 h-100 text-center">
+                        <img src="{{ STATIC_URL }}img/{{ member.image_slug }}" alt="{{ member.name }}" class="img-fluid rounded-circle mx-auto mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                        <h5>{{ member.name }}</h5>
+                        <p class="position text-primary">{{ member.position }}</p>
+                        <p class="diploma small text-muted">{{ member.diploma }}</p>
+                        <p class="text-muted small">{{ member.bio }}</p>
                         <div class="social-icons mt-auto">
-                            {% if member.linkedin_url %}<a href="{{ member.linkedin_url }}" class="text-primary me-2" target="_blank" rel="noopener noreferrer"><i class="bi bi-linkedin"></i></a>{% endif %}
-                            {% if member.github_url %}<a href="{{ member.github_url }}" class="text-primary me-2" target="_blank" rel="noopener noreferrer"><i class="bi bi-github"></i></a>{% endif %}
-                            {% if member.twitter_url %}<a href="{{ member.twitter_url }}" class="text-primary" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter-x"></i></a>{% endif %}
+                            {% if member.linkedin_url %}<a href="{{ member.linkedin_url }}" class="text-primary me-2 fs-4"><i class="bi bi-linkedin"></i></a>{% endif %}
+                            {% if member.github_url %}<a href="{{ member.github_url }}" class="text-primary me-2 fs-4"><i class="bi bi-github"></i></a>{% endif %}
+                            {% if member.twitter_url %}<a href="{{ member.twitter_url }}" class="text-primary fs-4"><i class="bi bi-twitter-x"></i></a>{% endif %}
                         </div>
                     </div>
                 </div>
                 {% endfor %}
             {% else %}
-                <div class="col-12"><p>Leadership team information is currently unavailable.</p></div>
+                <div class="col-12"><p>Team information is currently unavailable.</p></div>
             {% endif %}
         </div>
     </div>
+    
 </section>
 
-<section class="py-5 bg-light">
-    <div class="container">
-        <ul class="nav nav-pills nav-justified mb-5" id="teamTabs" role="tablist">
-            {% if department_teams %}
-                {% for dept_key, dept_data in department_teams.items() %}
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link {% if dept_data.is_active %}active{% endif %}" id="{{ dept_data.tab_id }}-tab" data-bs-toggle="pill" data-bs-target="#{{ dept_data.tab_id }}" type="button" role="tab" aria-controls="{{ dept_data.tab_id }}" aria-selected="{{ 'true' if dept_data.is_active else 'false' }}">
-                        {{ dept_data.tab_name }}
-                    </button>
-                </li>
-                {% endfor %}
-            {% else %}
-                <li class="nav-item"><span class="nav-link disabled">Department Data Unavailable</span></li>
-            {% endif %}
-        </ul>
-        
-        <div class="tab-content" id="teamTabsContent">
-            {% if department_teams %}
-                {% for dept_key, dept_data in department_teams.items() %}
-                <div class="tab-pane fade {% if dept_data.is_active %}show active{% endif %}" id="{{ dept_data.tab_id }}" role="tabpanel" aria-labelledby="{{ dept_data.tab_id }}-tab">
-                    <div class="row mb-4">
-                        <div class="col-lg-8 mx-auto text-center">
-                            <h3 class="mb-3">{{ dept_data.tab_name }} Team</h3>
-                            <p class="lead text-muted">{{ dept_data.lead_text }}</p>
-                        </div>
-                    </div>
-                    <div class="row justify-content-center">
-                        {% if dept_data.members %}
-                            {% for member in dept_data.members %}
-                            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                                <div class="team-member text-center">
-                                    <img src="{{ STATIC_URL }}img/{{ member.image_slug }}" alt="{{ member.name }}" class="img-fluid department-member mb-2">
-                                    <h6 class="mb-0">{{ member.name }}</h6>
-                                    <p class="position small text-primary mb-1">{{ member.position }}</p>
-                                    <p class="diploma small text-muted">{{ member.diploma }}</p>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        {% else %}
-                            <p class="text-center">No members listed for this department yet.</p>
-                        {% endif %}
-                    </div>
-                </div>
-                {% endfor %}
-            {% endif %}
-        </div>
-    </div>
-</section>
 
-<section class="py-5">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6 mb-4 mb-lg-0">
-                <h2 class="mb-3">Join Our Team</h2>
-                <p class="lead mb-4">We're always looking for talented individuals who are passionate about urban data analytics, sustainability, and creating smarter cities.</p>
-                <p class="mb-4">At UrbanPulse, you'll work with cutting-edge technology and data to solve real urban challenges. We offer competitive benefits, professional development opportunities, and a collaborative, innovative work environment.</p>
-                <a href="{{ join_team_links.open_positions_url }}" class="btn btn-primary me-2">View Open Positions</a>
-                <a href="{{ join_team_links.contact_recruiting_url }}" class="btn btn-outline-primary">Contact Recruiting</a>
-            </div>
-            <div class="col-lg-6">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h4 class="card-title mb-4">Current Openings</h4>
-                        {% if job_openings %}
-                            {% for job in job_openings %}
-                            <div class="d-flex mb-3 pb-3 {% if not loop.last %}border-bottom{% endif %}">
-                                <div class="flex-grow-1">
-                                    <h5 class="mb-1">{{ job.title }}</h5>
-                                    <p class="text-muted mb-0">{{ job.location }}</p>
-                                </div>
-                                <a href="{{ job.apply_link }}" class="btn btn-sm btn-outline-primary align-self-center">Apply</a>
-                            </div>
-                            {% endfor %}
-                        {% else %}
-                            <p class="text-muted">Currently, there are no open positions listed. Please check back later or contact recruiting for inquiries.</p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 {% endblock %}
