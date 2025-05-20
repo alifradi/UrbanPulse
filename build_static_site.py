@@ -6,15 +6,15 @@ This script generates a static version of the UrbanPulse website for Netlify dep
 
 import os
 import shutil
-import subprocess
-import sys
+# subprocess and sys are no longer needed for Jinja2 installation
 from pathlib import Path
+from jinja2 import Environment, FileSystemLoader # Import Jinja2 at the top
 
 # Configuration
 BUILD_DIR = "build"
-STATIC_DIR = "static"
-TEMPLATES_DIR = "core/templates/core"
-STATIC_ASSETS_DIR = "core/static/core"
+# STATIC_DIR = "static" # This variable was defined but not used directly in main logic, BUILD_DIR/static is used.
+TEMPLATES_DIR = "core/templates/core"  # Make sure this path is correct relative to your project root
+STATIC_ASSETS_DIR = "core/static/core" # Make sure this path is correct
 PAGES = [
     {"template": "home.html", "output": "index.html"},
     {"template": "investment.html", "output": "investment/index.html"},
@@ -25,86 +25,15 @@ PAGES = [
     {"template": "services.html", "output": "services/index.html"},
 ]
 
-def main():
-    """Main build function"""
-    print("Starting UrbanPulse static site build...")
-    
-    # Create build directory
-    if os.path.exists(BUILD_DIR):
-        print(f"Cleaning existing {BUILD_DIR} directory...")
-        shutil.rmtree(BUILD_DIR)
-    
-    os.makedirs(BUILD_DIR, exist_ok=True)
-    
-    # Create directories for pages
-    for page in PAGES:
-        if "/" in page["output"]:
-            directory = os.path.join(BUILD_DIR, os.path.dirname(page["output"]))
-            os.makedirs(directory, exist_ok=True)
-    
-    # Copy static assets
-    if os.path.exists(STATIC_ASSETS_DIR):
-        print("Copying static assets...")
-        shutil.copytree(
-            STATIC_ASSETS_DIR,
-            os.path.join(BUILD_DIR, "static"),
-            dirs_exist_ok=True
-        )
-    else:
-        print(f"Warning: Static assets directory {STATIC_ASSETS_DIR} not found")
-    
-    # Copy media files if they exist
-    if os.path.exists("media"):
-        print("Copying media files...")
-        shutil.copytree(
-            "media",
-            os.path.join(BUILD_DIR, "media"),
-            dirs_exist_ok=True
-        )
-    
-    # Process templates
-    print("Processing templates...")
-    try:
-        from jinja2 import Environment, FileSystemLoader
-        
-        # Set up Jinja environment
-        env = Environment(loader=FileSystemLoader(TEMPLATES_DIR))
-        
-        # Process each page
-        for page in PAGES:
-            try:
-                template = env.get_template(page["template"])
-                output_path = os.path.join(BUILD_DIR, page["output"])
-                
-                # Render template with mock context
-                context = get_mock_context_for_template(page["template"])
-                rendered_content = template.render(**context)
-                
-                # Write to output file
-                with open(output_path, "w", encoding="utf-8") as f:
-                    f.write(rendered_content)
-                
-                print(f"Generated {output_path}")
-            except Exception as e:
-                print(f"Error processing {page['template']}: {str(e)}")
-    
-    except ImportError:
-        print("Jinja2 not installed. Installing...")
-        subprocess.check_call([sys.executable, "-m", "pip", "install", "jinja2"])
-        print("Please run the script again.")
-        return
-    
-    print("Static site build complete! Files are in the 'build' directory.")
-
 def get_mock_context_for_template(template_name):
     """Generate mock context data for templates"""
     # Base context used across all templates
     base_context = {
-        "STATIC_URL": "/static/",
-        "MEDIA_URL": "/media/",
+        "STATIC_URL": "/static/",  # Assuming static files will be served from /static/
+        "MEDIA_URL": "/media/",    # Assuming media files will be served from /media/
     }
     
-    # Template-specific context
+    # Template-specific context (ensure these match your template needs)
     template_contexts = {
         "home.html": {
             "page_title": "UrbanPulse - Urban Data Analytics",
@@ -137,7 +66,7 @@ def get_mock_context_for_template(template_name):
         "team.html": {
             "page_title": "Our Team - UrbanPulse",
             "team_members": [
-                {"name": "Sarah Johnson", "position": "CEO", "image": "team/ceo.jpg"},
+                {"name": "Sarah Johnson", "position": "CEO", "image": "team/ceo.jpg"}, # Ensure these image paths are correct relative to your static/media setup
                 {"name": "Michael Chen", "position": "CTO", "image": "team/cto.jpg"},
                 {"name": "Elena Rodriguez", "position": "CSO", "image": "team/cso.jpg"}
             ]
@@ -152,7 +81,7 @@ def get_mock_context_for_template(template_name):
         "services.html": {
             "page_title": "Services & Partnerships - UrbanPulse",
             "services": [
-                {"name": "Data Insights & Analytics", "icon": "graph-up-arrow"},
+                {"name": "Data Insights & Analytics", "icon": "graph-up-arrow"}, # Ensure your templates can use these icon names
                 {"name": "Investment Opportunity Analysis", "icon": "building-check"},
                 {"name": "Hazard & Sustainability Assessment", "icon": "shield-check"}
             ]
@@ -165,6 +94,86 @@ def get_mock_context_for_template(template_name):
         context.update(template_contexts[template_name])
     
     return context
+
+def main():
+    """Main build function"""
+    print("Starting UrbanPulse static site build...")
+    
+    # Ensure template directory exists
+    if not os.path.isdir(TEMPLATES_DIR):
+        print(f"Error: Templates directory '{TEMPLATES_DIR}' not found. Please check the path.")
+        sys.exit(1) # Exit if templates directory is missing
+
+    # Create build directory
+    if os.path.exists(BUILD_DIR):
+        print(f"Cleaning existing {BUILD_DIR} directory...")
+        shutil.rmtree(BUILD_DIR)
+    
+    os.makedirs(BUILD_DIR, exist_ok=True)
+    
+    # Create directories for pages if they have subpaths
+    for page in PAGES:
+        output_path = Path(BUILD_DIR) / page["output"]
+        if output_path.parent != Path(BUILD_DIR): # Check if output is in a subdirectory
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            print(f"Created directory: {output_path.parent}")
+    
+    # Copy static assets
+    static_output_dir = Path(BUILD_DIR) / "static"
+    if os.path.exists(STATIC_ASSETS_DIR):
+        print(f"Copying static assets from '{STATIC_ASSETS_DIR}' to '{static_output_dir}'...")
+        shutil.copytree(
+            STATIC_ASSETS_DIR,
+            static_output_dir,
+            dirs_exist_ok=True
+        )
+    else:
+        print(f"Warning: Static assets directory '{STATIC_ASSETS_DIR}' not found. Skipping static asset copy.")
+    
+    # Copy media files if they exist
+    media_input_dir = "media" # Assuming 'media' is at the project root
+    media_output_dir = Path(BUILD_DIR) / "media"
+    if os.path.exists(media_input_dir):
+        print(f"Copying media files from '{media_input_dir}' to '{media_output_dir}'...")
+        shutil.copytree(
+            media_input_dir,
+            media_output_dir,
+            dirs_exist_ok=True
+        )
+    else:
+        print(f"Info: Media directory '{media_input_dir}' not found. Skipping media file copy.")
+    
+    # Process templates
+    print("Processing templates...")
+    
+    # Set up Jinja environment
+    # Ensure TEMPLATES_DIR is an absolute path or correctly relative to where the script is run from.
+    # For Netlify, paths are usually relative to the repository root.
+    env = Environment(loader=FileSystemLoader(TEMPLATES_DIR))
+    
+    # Process each page
+    for page in PAGES:
+        try:
+            template = env.get_template(page["template"])
+            output_file_path = Path(BUILD_DIR) / page["output"]
+            
+            # Render template with mock context
+            context = get_mock_context_for_template(page["template"])
+            rendered_content = template.render(**context)
+            
+            # Write to output file
+            with open(output_file_path, "w", encoding="utf-8") as f:
+                f.write(rendered_content)
+            
+            print(f"Generated {output_file_path}")
+        except Exception as e:
+            # Provide more specific error information if possible
+            print(f"Error processing template '{page['template']}' to '{page['output']}': {str(e)}")
+            # Depending on severity, you might want to exit or continue
+            # For CI, it's often better to fail fast:
+            # raise
+
+    print(f"Static site build complete! Files are in the '{BUILD_DIR}' directory.")
 
 if __name__ == "__main__":
     main()
