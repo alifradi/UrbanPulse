@@ -37,9 +37,9 @@ def get_mock_context_for_template(template_name, current_page_name_from_build):
             "hero_title": "Urban Data Intelligence for Smarter Investments",
             "featured_insights": [
                 {"title": "Buildings Analyzed", "value": "14,382", "icon": "building"},
-                {"title": "Cities Covered", "value": "237", "icon": "geo-alt"},
-                {"title": "Business Opportunities", "value": "3,845", "icon": "shop"},
-                {"title": "Data Accuracy", "value": "98.7%", "icon": "check-circle"}
+                {"title": "Cities Covered", "value": "4", "icon": "geo-alt"},
+                #{"title": "Business Opportunities", "value": "3,845", "icon": "shop"},
+                {"title": "Data Accuracy", "value": "Gold to silver data sources", "icon": "check-circle"}
             ]
         },
         "investment.html": {
@@ -80,7 +80,7 @@ def get_mock_context_for_template(template_name, current_page_name_from_build):
         "contact.html": {
             "page_title": "Contact Us - UrbanPulse",
             "page_title_hero": "Contact Us", # Specific title for H1
-            "form_action": "#" 
+            "form_action": "alifradi7@gmail.com" 
         },
         "team.html": {
             "page_title": "Our Team - UrbanPulse",
@@ -149,45 +149,45 @@ def get_mock_context_for_template(template_name, current_page_name_from_build):
             ],
             "service_packages": [
                 {
-                    "name": "Starter", "price": "$2,500", "period": "/month", 
-                    "lead_text": "Essential urban data insights for smaller projects and organizations.",
-                    "features": ["Basic data analytics dashboard", "Monthly insights reports", "Access to core datasets", "Single city coverage", "Email support"],
-                    "non_features": ["Custom analytics", "API access", "Dedicated consultant"],
-                    "button_link": "/contact/", "button_text": "Get Started", "is_featured": False
+                #    "name": "Starter", "price": "$2,500", "period": "/month", 
+                #    "lead_text": "Essential urban data insights for smaller projects and organizations.",
+                #    "features": ["Basic data analytics dashboard", "Monthly insights reports", "Access to core datasets", "Single city coverage", "Email support"],
+                #    "non_features": ["Custom analytics", "API access", "Dedicated consultant"],
+                #    "button_link": "/contact/", "button_text": "Get Started", "is_featured": False
                 },
                 {
-                    "name": "Professional", "price": "$6,500", "period": "/month",
-                    "lead_text": "Comprehensive analytics and insights for medium-sized organizations and projects.",
-                    "features": ["Advanced analytics dashboard", "Weekly insights reports", "Access to all datasets", "Up to 3 cities coverage", "Priority support", "Basic custom analytics", "Limited API access"],
-                    "non_features": ["Dedicated consultant"],
-                    "button_link": "/contact/", "button_text": "Get Started", "is_featured": True
+                #    "name": "Professional", "price": "$6,500", "period": "/month",
+                #    "lead_text": "Comprehensive analytics and insights for medium-sized organizations and projects.",
+                #    "features": ["Advanced analytics dashboard", "Weekly insights reports", "Access to all datasets", "Up to 3 cities coverage", "Priority support", "Basic custom analytics", "Limited API access"],
+                #    "non_features": ["Dedicated consultant"],
+                #    "button_link": "/contact/", "button_text": "Get Started", "is_featured": True
                 },
                 {
-                    "name": "Enterprise", "price": "Custom", "period": " pricing",
-                    "lead_text": "Tailored solutions for large organizations with complex urban data needs.",
-                    "features": ["Custom analytics platform", "Real-time data and reporting", "Full dataset access + custom data", "Unlimited city coverage", "24/7 premium support", "Advanced custom analytics", "Full API access", "Dedicated consultant team"],
-                    "non_features": [],
-                    "button_link": "/contact/", "button_text": "Contact Sales", "is_featured": False
+                #    "name": "Enterprise", "price": "Custom", "period": " pricing",
+                #    "lead_text": "Tailored solutions for large organizations with complex urban data needs.",
+                #    "features": ["Custom analytics platform", "Real-time data and reporting", "Full dataset access + custom data", "Unlimited city coverage", "24/7 premium support", "Advanced custom analytics", "Full API access", "Dedicated consultant team"],
+                #    "non_features": [],
+                #    "button_link": "/contact/", "button_text": "Contact Sales", "is_featured": False
                 }
             ],
             "partners": [
 
-                {"image_slug": "goc.PNG", "name": "Partner"},
-                {"image_slug": "qatar-digital-government.png", "name": "Partner"},
-                {"image_slug": "LogoTXTW.png", "name": "Partner"}
+              #  {"image_slug": "goc.PNG", "name": "Partner"},
+              #  {"image_slug": "qatar-digital-government.png", "name": "Partner"},
+              #  {"image_slug": "LogoTXTW.png", "name": "Partner"}
             ],
             "testimonials": [
                 {
-                    "stars": 5, "text": "UrbanPulse's data analytics transformed our investment strategy, helping us identify opportunities we would have otherwise missed. Their hazard analysis saved us from a potentially disastrous investment in a flood-prone area.",
-                    "image_slug": "testimonial1.jpg", "client_name": "Jennifer Martinez", "client_title": "Director of Investments, Urban Growth Capital"
+              #      "stars": 5, "text": "UrbanPulse's data analytics transformed our investment strategy, helping us identify opportunities we would have otherwise missed. Their hazard analysis saved us from a potentially disastrous investment in a flood-prone area.",
+              #      "image_slug": "testimonial1.jpg", "client_name": "Jennifer Martinez", "client_title": "Director of Investments, Urban Growth Capital"
                 },
                 {
-                    "stars": 5, "text": "As a city planner, I've found UrbanPulse's insights invaluable for making data-driven decisions about infrastructure investments. Their sustainability metrics have helped us prioritize green initiatives with the highest impact.",
-                    "image_slug": "testimonial2.jpg", "client_name": "David Wilson", "client_title": "Chief Urban Planner, Metropolitan Development Authority"
+              #      "stars": 5, "text": "As a city planner, I've found UrbanPulse's insights invaluable for making data-driven decisions about infrastructure investments. Their sustainability metrics have helped us prioritize green initiatives with the highest impact.",
+              #      "image_slug": "testimonial2.jpg", "client_name": "David Wilson", "client_title": "Chief Urban Planner, Metropolitan Development Authority"
                 },
                 {
-                    "stars": 4, "text": "The ROI on our partnership with UrbanPulse has been exceptional. Their custom analytics platform has become an essential tool for our development team, providing insights that drive our strategic decisions.", # Assuming 4.5 stars means 4 full stars
-                    "image_slug": "testimonial3.jpg", "client_name": "Michael Chang", "client_title": "CEO, Innovative Urban Developers"
+               #     "stars": 4, "text": "The ROI on our partnership with UrbanPulse has been exceptional. Their custom analytics platform has become an essential tool for our development team, providing insights that drive our strategic decisions.", # Assuming 4.5 stars means 4 full stars
+               #     "image_slug": "testimonial3.jpg", "client_name": "Michael Chang", "client_title": "CEO, Innovative Urban Developers"
                 }
             ]
         }
