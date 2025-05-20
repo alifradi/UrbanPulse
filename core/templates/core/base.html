@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}UrbanPulse - Urban Data Analytics{% endblock %}</title>
+    <title>{% block title %}{{ page_title }}{% endblock %}</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     
@@ -29,7 +29,6 @@
                         <a class="nav-link {% if current_page_name == 'home' %}active{% endif %}" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        {# Assuming 'insights' maps to the investment page for the static site #}
                         <a class="nav-link {% if current_page_name == 'investment' %}active{% endif %}" href="/investment/">Data Insights</a>
                     </li>
                     <li class="nav-item">
@@ -44,7 +43,6 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item {% if current_page_name == 'team' %}active{% endif %}" href="/team/">Our Team</a></li>
-                            {# Assuming 'use_cases' maps to the services page #}
                             <li><a class="dropdown-item {% if current_page_name == 'services' %}active{% endif %}" href="/services/">Use Cases</a></li>
                             <li><a class="dropdown-item {% if current_page_name == 'contributions' %}active{% endif %}" href="/contributions/">Recent Contributions</a></li>
                             <li><a class="dropdown-item {% if current_page_name == 'services' %}active{% endif %}" href="/services/">Services & Partnerships</a></li>
@@ -62,7 +60,6 @@
     </nav>
 
     <main>
-        {# Removed {% bootstrap_messages %} as it's Django-specific. Message handling would need a different approach in a static site or via JS. #}
         {% block content %}{% endblock %}
     </main>
 
@@ -73,28 +70,28 @@
                     <img src="{{ STATIC_URL }}img/urbanpulse_logo_white.png" alt="UrbanPulse Logo" height="60" class="mb-3"> {# Static image path #}
                     <p>Providing real-time urban data analytics and insights for informed investment decisions, urban development, and sustainability planning.</p>
                     <div class="social-icons mt-3">
-                        <a href="#" class="text-white me-3"><i class="bi bi-linkedin"></i></a> {# Placeholder link #}
-                        <a href="#" class="text-white me-3"><i class="bi bi-twitter-x"></i></a> {# Placeholder link #}
-                        <a href="#" class="text-white me-3"><i class="bi bi-facebook"></i></a> {# Placeholder link #}
-                        <a href="#" class="text-white"><i class="bi bi-instagram"></i></a> {# Placeholder link #}
+                        <a href="#" class="text-white me-3"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-instagram"></i></a>
                     </div>
                 </div>
                 <div class="col-md-2 mb-4 mb-md-0">
                     <h5>Services</h5>
                     <ul class="list-unstyled">
-                        <li><a href="/investment/" class="text-white-50">Data Insights</a></li> {# Static path #}
-                        <li><a href="/investment/" class="text-white-50">Investment Analysis</a></li> {# Static path #}
-                        <li><a href="/hazards/" class="text-white-50">Hazard Reports</a></li> {# Static path #}
-                        <li><a href="/services/" class="text-white-50">Consulting</a></li> {# Static path #}
+                        <li><a href="/investment/" class="text-white-50">Data Insights</a></li>
+                        <li><a href="/investment/" class="text-white-50">Investment Analysis</a></li>
+                        <li><a href="/hazards/" class="text-white-50">Hazard Reports</a></li>
+                        <li><a href="/services/" class="text-white-50">Consulting</a></li>
                     </ul>
                 </div>
                 <div class="col-md-2 mb-4 mb-md-0">
                     <h5>Company</h5>
                     <ul class="list-unstyled">
-                        <li><a href="/team/" class="text-white-50">Our Team</a></li> {# Static path #}
-                        <li><a href="/services/" class="text-white-50">Use Cases</a></li> {# Static path, assuming maps to services #}
-                        <li><a href="/contributions/" class="text-white-50">Contributions</a></li> {# Static path #}
-                        <li><a href="#" class="text-white-50">Careers</a></li> {# Placeholder link #}
+                        <li><a href="/team/" class="text-white-50">Our Team</a></li>
+                        <li><a href="/services/" class="text-white-50">Use Cases</a></li> 
+                        <li><a href="/contributions/" class="text-white-50">Contributions</a></li>
+                        <li><a href="#" class="text-white-50">Careers</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4">
@@ -109,12 +106,12 @@
             <hr class="mt-4 mb-4 border-secondary">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start">
-                    <p class="mb-0">&copy; 2025 UrbanPulse. All rights reserved.</p>
+                    <p class="mb-0">© 2025 UrbanPulse. All rights reserved.</p>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
-                    <a href="#" class="text-white-50 me-3">Privacy Policy</a> {# Placeholder link #}
-                    <a href="#" class="text-white-50 me-3">Terms of Service</a> {# Placeholder link #}
-                    <a href="#" class="text-white-50">Cookie Policy</a> {# Placeholder link #}
+                    <a href="#" class="text-white-50 me-3">Privacy Policy</a>
+                    <a href="#" class="text-white-50 me-3">Terms of Service</a>
+                    <a href="#" class="text-white-50">Cookie Policy</a>
                 </div>
             </div>
         </div>
