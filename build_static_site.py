@@ -36,7 +36,7 @@ def get_mock_context_for_template(template_name, current_page_name_from_build):
             "page_title": "UrbanPulse - Urban Data Analytics",
             "hero_title": "Urban Data Intelligence for Smarter Investments",
             "featured_insights": [
-                {"title": "Buildings Analyzed", "value": "14,382", "icon": "building"},
+                {"title": "Dataset categories", "value": "42", "icon": "building"},
                 {"title": "Cities Covered", "value": "4", "icon": "geo-alt"},
                 #{"title": "Business Opportunities", "value": "3,845", "icon": "shop"},
                 {"title": "Data Accuracy", "value": "Gold to silver data sources", "icon": "check-circle"}
