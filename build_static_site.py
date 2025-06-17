@@ -38,7 +38,7 @@ def get_mock_context_for_template(template_name, current_page_name_from_build):
             "featured_insights": [
                 {"title": "Dataset categories", "value": "42", "icon": "building"},
                 {"title": "Cities Covered", "value": "4", "icon": "geo-alt"},
-                #{"title": "Business Opportunities", "value": "3,845", "icon": "shop"},
+                {"title": "Business Opportunities", "value": "As Available", "icon": "shop"},
                 {"title": "Data Accuracy", "value": "Gold to silver data sources", "icon": "check-circle"}
             ]
         },
