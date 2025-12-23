@@ -1,0 +1,313 @@
+/* UrbanPulse Main Stylesheet */
+
+/* Variables based on brand style guide */
+:root {
+    /* Primary Colors */
+    --deep-blue: #0066A4;
+    --vibrant-green: #00A651;
+    --dark-slate: #2D3E50;
+    
+    /* Secondary Colors */
+    --light-blue: #4A90E2;
+    --mint-green: #4CD964;
+    --light-gray: #F5F7FA;
+    --medium-gray: #BDC3C7;
+    
+    /* Font Families */
+    --font-primary: 'Montserrat', sans-serif;
+    --font-secondary: 'Open Sans', sans-serif;
+}
+
+/* Global Styles */
+body {
+    font-family: var(--font-primary);
+    color: var(--dark-slate);
+    background-color: var(--light-gray);
+    padding-top: 76px; /* Adjust for fixed navbar */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-primary);
+    font-weight: 700;
+}
+
+p, li, td, th, input, textarea, select {
+    font-family: var(--font-primary);
+    font-weight: 400;
+}
+
+/* Navigation */
+.navbar {
+    padding: 15px 0;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: var(--dark-slate);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+}
+
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar-light .navbar-nav .nav-link.active {
+    color: var(--deep-blue);
+}
+
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-item:hover {
+    background-color: var(--light-gray);
+    color: var(--deep-blue);
+}
+
+/* Buttons */
+.btn {
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--vibrant-green);
+    border-color: var(--vibrant-green);
+}
+
+.btn-primary:hover {
+    background-color: #008c44; /* 10% darker */
+    border-color: #008c44;
+}
+
+.btn-secondary {
+    background-color: #FFFFFF;
+    border-color: var(--deep-blue);
+    color: var(--deep-blue);
+}
+
+.btn-secondary:hover {
+    background-color: #E6F2FF;
+    border-color: var(--deep-blue);
+    color: var(--deep-blue);
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    color: var(--deep-blue);
+    font-weight: 700;
+}
+
+/* Hero Section */
+.hero {
+    background-color: var(--deep-blue);
+    color: white;
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0, 102, 164, 0.9) 0%, rgba(0, 166, 81, 0.8) 100%);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.hero p {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+/* Features Section */
+.features {
+    padding: 80px 0;
+}
+
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    background-color: var(--light-gray);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    color: var(--deep-blue);
+    font-size: 2rem;
+}
+
+/* Data Visualization */
+.chart-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.metric-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    text-align: center;
+    height: 100%;
+}
+
+.metric-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--deep-blue);
+    margin-bottom: 0.5rem;
+}
+
+.metric-label {
+    font-size: 1rem;
+    color: var(--dark-slate);
+    opacity: 0.8;
+}
+
+/* Contact Form */
+.contact-form {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+
+.form-control {
+    border: 1px solid var(--medium-gray);
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+}
+
+.form-control:focus {
+    border-color: var(--deep-blue);
+    box-shadow: 0 0 0 0.25rem rgba(0, 102, 164, 0.25);
+}
+
+/* Team Section */
+.team-member {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.team-member img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    border: 5px solid white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.team-member h5 {
+    margin-bottom: 0.25rem;
+}
+
+.team-member .position {
+    color: var(--deep-blue);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+/* Footer */
+footer {
+    background-color: var(--dark-slate);
+}
+
+footer h5 {
+    color: white;
+    margin-bottom: 1.25rem;
+    font-weight: 600;
+}
+
+footer .social-icons a {
+    font-size: 1.25rem;
+    transition: opacity 0.3s ease;
+}
+
+footer .social-icons a:hover {
+    opacity: 0.8;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 991.98px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .navbar-collapse {
+        background-color: white;
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .hero {
+        padding: 80px 0;
+    }
+    
+    .features, .insights, .investment {
+        padding: 60px 0;
+    }
+    
+    .metric-value {
+        font-size: 2rem;
+    }
+}
+
+/* Animation Classes */
+.fade-in {
+    animation: fadeIn 1s ease-in-out;
+}
+
+.slide-up {
+    animation: slideUp 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}

@@ -37,17 +37,20 @@ def get_mock_context_for_template(template_name, current_page_name_from_build):
             "hero_title": "Urban Data Intelligence for Smarter Investments",
             "featured_insights": [
                 {"title": "Dataset categories", "value": "42", "icon": "building"},
-                {"title": "Cities Covered", "value": "4", "icon": "geo-alt"},
+                {"title": "Cities Covered", "value": "10", "icon": "geo-alt"},
                 {"title": "Business Opportunities", "value": "As Available", "icon": "shop"},
                 {"title": "Data Accuracy", "value": "Gold to silver data sources", "icon": "check-circle"}
             ]
         },
         "investment.html": {
-            "page_title": "Investment Opportunities - UrbanPulse",
-             "page_title_hero": "Investment Opportunities",
-            "opportunities": [ 
-                {"id": "prop1", "name": "Downtown Office Building", "image_slug": "property1.jpg", "type": "Commercial", "address": "123 Main St, Downtown", "safety_score": 4.0, "description": "Modern office building...", "price": "$2,450,000", "lat": 40.7128, "lng": -74.0060},
-                {"id": "prop2", "name": "East Side Mixed-Use", "image_slug": "property2.jpg", "type": "Mixed Use", "address": "456 Park Ave, East Side", "safety_score": 4.5, "description": "Newly renovated mixed-use...", "price": "$3,750,000", "lat": 40.7200, "lng": -73.9800},
+            "page_title": "Urban Data Insights - UrbanPulse",
+            "page_title_hero": "Urban Data Insights",
+            "insight_posts": [
+                {
+                    "title": "Quality of Life in Montreal",
+                    "image_path": "showoff/quality of life in montreal.jpeg",
+                    "paragraph": "Our advanced Machine Learning models analyze and map the Quality of Life across Montreal's neighborhoods, transforming complex urban data into precise visual intelligence. This mapping of ML results empowers real estate companies and brokers to accurately identify superior residential locations, providing the reassurance needed to spot high-potential areas and make informed investment decisions."
+                }
             ]
         },
         "hazards.html": {

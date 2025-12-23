@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - UrbanPulse</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <link rel="stylesheet" href="/static/css/style.css">
+    
+    
+
+<style>
+    /* Define custom CSS variables if they are used by this page and not in base.html */
+    :root {
+        --bs-primary: #0d6efd; /* Default Bootstrap primary */
+    }
+    /* Styles for FAQ accordion arrows, if not already in a global CSS file */
+    .accordion-button::after {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    }
+    .accordion-button:not(.collapsed)::after {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230c63e4'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+        transform: rotate(-180deg);
+    }
+</style>
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="/"> 
+                <img src="/static/img/urbanpulse_logo.png" alt="UrbanPulse Logo" height="90"> 
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link " href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/investment/">Data Insights</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/investment/">Investment Opportunities</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/hazards/">Hazard Analysis</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            About Us
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item " href="/team/">Our Team</a></li>
+                            <li><a class="dropdown-item " href="/services/">Use Cases</a></li>
+                            <li><a class="dropdown-item " href="/contributions/">Recent Contributions</a></li>
+                            <li><a class="dropdown-item " href="/services/">Services & Partnerships</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/contact/">Contact Us</a>
+                    </li>
+                </ul>
+                <div class="ms-3">
+                    <a href="#" class="btn btn-primary">Sign Up Free</a> 
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="mb-3">Contact Us</h1>
+                <p class="lead mb-4">Have questions about our urban data analytics or need more information? Our team is ready to help you make informed decisions for urban development and investment.</p>
+            </div>
+            <div class="col-lg-6">
+                
+                </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 mb-5 mb-lg-0">
+                <div class="contact-form">
+                    <h3 class="mb-4">Send Us a Message</h3>
+                    
+                    
+                    
+                    <form method="POST" action="https://formspree.io/f/mblobwqq"> 
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="name" class="form-label">Your Name *</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Your Email *</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">Subject *</label>
+                            <input type="text" class="form-control" id="subject" name="subject" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message *</label>
+                            <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="interest" class="form-label">I'm interested in:</label>
+                            <select class="form-select" id="interest" name="interest">
+                                <option value="data_insights">Data Insights & Analytics</option>
+                                <option value="investment">Investment Opportunities</option>
+                                <option value="hazard_analysis">Hazard Analysis & Sustainability</option>
+                                <option value="consulting">Consulting Services</option>
+                                <option value="partnership">Partnership Opportunities</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" id="newsletter" name="newsletter">
+                            <label class="form-check-label" for="newsletter">
+                                Subscribe to our newsletter for urban data insights and updates
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="col-lg-5">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h3 class="mb-4">Get in Touch</h3>
+                        
+                        <div class="d-flex mb-4">
+                            <div class="flex-shrink-0">
+                                <div class="bg-light rounded-circle p-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                    <i class="bi bi-geo-alt text-primary fs-5"></i>
+                                </div>
+                            </div>
+                            <div class="ms-3">
+                                <h5>Our Location</h5>
+                                <p class="mb-0">2500 Chem. de Polytechnique<br>Montréal, QC H3T 0A3</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex mb-4">
+                            <div class="flex-shrink-0">
+                                <div class="bg-light rounded-circle p-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                    <i class="bi bi-envelope text-primary fs-5"></i>
+                                </div>
+                            </div>
+                            <div class="ms-3">
+                                <h5>Email Us</h5>
+                                <p class="mb-0">up.team@urban-pulse.org</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex mb-4">
+                            <div class="flex-shrink-0">
+                                <div class="bg-light rounded-circle p-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                    <i class="bi bi-telephone text-primary fs-5"></i>
+                                </div>
+                            </div>
+                            <div class="ms-3">
+                                <h5>Call Us</h5>
+                                <p class="mb-0">+1 (438) 493-3907<br>+1 (514) 214-3691</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex mb-4">
+                            <div class="flex-shrink-0">
+                                <div class="bg-light rounded-circle p-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                    <i class="bi bi-clock text-primary fs-5"></i>
+                                </div>
+                            </div>
+                            <div class="ms-3">
+                                <h5>Business Hours</h5>
+                                <p class="mb-0">Monday - Friday: 9:00 AM - 6:00 PM<br>Saturday & Sunday: Closed</p>
+                            </div>
+                        </div>
+                        
+                        <h5 class="mt-4 mb-3">Connect With Us</h5>
+                        <div class="social-icons">
+                            <a href="https://www.linkedin.com/company/107395162/admin/dashboard/" class="btn btn-outline-primary me-2"><i class="bi bi-linkedin"></i></a>
+                            <a href="#" class="btn btn-outline-primary me-2"><i class="bi bi-twitter-x"></i></a>
+                            <a href="https://www.facebook.com/profile.php?id=61576716682417" class="btn btn-outline-primary me-2"><i class="bi bi-facebook"></i></a>
+                            <a href="#" class="btn btn-outline-primary"><i class="bi bi-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body p-0">
+                        
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2795.9069634082513!2d-73.6160100841958!3d45.50940897910178!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc919f0a6c0d509%3A0x1845e1105990c107!2sPolytechnique%20Montr%C3%A9al!5e0!3m2!1sen!2sca!4v1620000000000!5m2!1sen!2sca" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-3">Frequently Asked Questions</h2>
+                <p class="lead text-muted">Find answers to common questions about our urban data analytics platform and services.</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div class="accordion" id="faqAccordion">
+                    
+                        <p>No FAQs available at the moment.</p>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    </main>
+
+    <footer class="bg-dark text-white py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <img src="/static/img/urbanpulse_logo_white.png" alt="UrbanPulse Logo" height="60" class="mb-3"> 
+                    <p>Providing real-time urban data analytics and insights for informed investment decisions, urban development, and sustainability planning.</p>
+                    <div class="social-icons mt-3">
+                        <a href="https://www.linkedin.com/company/upurbanpulse/" class="text-white me-3"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 mb-4 mb-md-0">
+                    <h5>Services</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/investment/" class="text-white-50">Data Insights</a></li>
+                        <li><a href="/investment/" class="text-white-50">Investment Analysis</a></li>
+                        <li><a href="/hazards/" class="text-white-50">Hazard Reports</a></li>
+                        <li><a href="/services/" class="text-white-50">Consulting</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-4 mb-md-0">
+                    <h5>Company</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/team/" class="text-white-50">Our Team</a></li>
+                        <li><a href="/services/" class="text-white-50">Use Cases</a></li> 
+                        <li><a href="/contributions/" class="text-white-50">Contributions</a></li>
+                        <li><a href="#" class="text-white-50">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <address class="text-white-50">
+                        <p><i class="bi bi-geo-alt me-2"></i> 2500 Chem. de Polytechnique<br>Montréal, QC H3T 0A3</p>
+                        <p><i class="bi bi-envelope me-2"></i> up.team@urban-pulse.org</p>
+                        <p><i class="bi bi-telephone me-2"></i> +1 (438) 493-3907</p>
+                    </address>
+                </div>
+            </div>
+            <hr class="mt-4 mb-4 border-secondary">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">© 2025 UrbanPulse. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-white-50 me-3">Privacy Policy</a>
+                    <a href="#" class="text-white-50 me-3">Terms of Service</a>
+                    <a href="#" class="text-white-50">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    
+</body>
+</html>
