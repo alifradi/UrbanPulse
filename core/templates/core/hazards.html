@@ -6,46 +6,109 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css">
 <style>
     :root {
-        --bs-primary: #0d6efd; /* Default Bootstrap primary */
-        --deep-blue: #003366; /* Example for deep blue */
-        --vibrant-green: #00A651; /* Example for vibrant green */
+        --bs-primary: #0d6efd;
+        /* Default Bootstrap primary */
+        --deep-blue: #003366;
+        /* Example for deep blue */
+        --vibrant-green: #00A651;
+        /* Example for vibrant green */
     }
+
     #hazard-map {
         height: 500px;
         width: 100%;
         border-radius: 8px;
     }
-    .risk-high { color: #FF3B30; font-weight: bold; }
-    .risk-medium { color: #FF9500; font-weight: 500; }
-    .risk-low { color: var(--vibrant-green); font-weight: 500; } /* Using defined vibrant-green */
+
+    .risk-high {
+        color: #FF3B30;
+        font-weight: bold;
+    }
+
+    .risk-medium {
+        color: #FF9500;
+        font-weight: 500;
+    }
+
+    .risk-low {
+        color: var(--vibrant-green);
+        font-weight: 500;
+    }
+
+    /* Using defined vibrant-green */
 
     .sustainability-score {
-        width: 80px; height: 80px; border-radius: 50%;
-        display: flex; align-items: center; justify-content: center;
-        font-size: 1.75rem; font-weight: 700;
-        margin: 0 auto 1rem; color: white;
-    }
-    .score-a { background-color: var(--vibrant-green); }
-    .score-b { background-color: #4CD964; } /* Lighter green */
-    .score-c { background-color: #4A90E2; } /* Light Blue */
-    .score-d { background-color: #FF9500; } /* Orange */
-    .score-f { background-color: #FF3B30; } /* Red */
-
-    .report-card { transition: transform 0.3s ease; }
-    .report-card:hover { transform: translateY(-5px); }
-
-    .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-        background-color: var(--deep-blue); /* Using defined deep-blue */
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin: 0 auto 1rem;
         color: white;
     }
-    .progress-bar-success { background-color: var(--vibrant-green); }
-    .progress-bar-warning { background-color: #FF9500; }
-    .progress-bar-danger { background-color: #FF3B30; }
+
+    .score-a {
+        background-color: var(--vibrant-green);
+    }
+
+    .score-b {
+        background-color: #4CD964;
+    }
+
+    /* Lighter green */
+    .score-c {
+        background-color: #4A90E2;
+    }
+
+    /* Light Blue */
+    .score-d {
+        background-color: #FF9500;
+    }
+
+    /* Orange */
+    .score-f {
+        background-color: #FF3B30;
+    }
+
+    /* Red */
+
+    .report-card {
+        transition: transform 0.3s ease;
+    }
+
+    .report-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .nav-pills .nav-link.active,
+    .nav-pills .show>.nav-link {
+        background-color: var(--deep-blue);
+        /* Using defined deep-blue */
+        color: white;
+    }
+
+    .progress-bar-success {
+        background-color: var(--vibrant-green);
+    }
+
+    .progress-bar-warning {
+        background-color: #FF9500;
+    }
+
+    .progress-bar-danger {
+        background-color: #FF3B30;
+    }
 
     .chart-container {
-        height: 250px; /* Ensure charts have a defined height */
-        position: relative; /* Needed for Chart.js responsiveness */
+        height: 250px;
+        /* Ensure charts have a defined height */
+        position: relative;
+        /* Needed for Chart.js responsiveness */
     }
+
     .timeline .card {
         margin-bottom: 1.5rem;
     }
@@ -58,11 +121,13 @@
         <div class="row align-items-center">
             <div class="col-lg-6">
                 <h1 class="mb-3">{{ page_title_hero }}</h1>
-                <p class="lead mb-4">Access comprehensive reports on environmental risks, hazardous events, and sustainability metrics to make informed urban development decisions.</p>
+                <p class="lead mb-4">The first urban resilience platform tailored for GCC climate realities. Identify
+                    properties outside flash flood zones, assess heat stress risks, and measure proximity to 31K+
+                    emergency services.</p>
             </div>
             <div class="col-lg-6">
                 {# Ensure hazard_analysis.png is in core/static/core/img/ #}
-               <!-- <img src="{{ STATIC_URL }}img/hazard_analysis.png" alt="Hazard Analysis" class="img-fluid rounded shadow">-->
+                <!-- <img src="{{ STATIC_URL }}img/hazard_analysis.png" alt="Hazard Analysis" class="img-fluid rounded shadow">-->
             </div>
         </div>
     </div>
@@ -72,88 +137,177 @@
     <div class="container">
         <ul class="nav nav-pills nav-justified mb-4" id="hazardTabs" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="hazard-map-tab" data-bs-toggle="pill" data-bs-target="#hazard-map-content" type="button" role="tab" aria-controls="hazard-map-content" aria-selected="true">
+                <button class="nav-link active" id="hazard-map-tab" data-bs-toggle="pill"
+                    data-bs-target="#hazard-map-content" type="button" role="tab" aria-controls="hazard-map-content"
+                    aria-selected="true">
                     <i class="bi bi-map me-2"></i>Hazard Map
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="sustainability-tab" data-bs-toggle="pill" data-bs-target="#sustainability-content" type="button" role="tab" aria-controls="sustainability-content" aria-selected="false">
+                <button class="nav-link" id="sustainability-tab" data-bs-toggle="pill"
+                    data-bs-target="#sustainability-content" type="button" role="tab"
+                    aria-controls="sustainability-content" aria-selected="false">
                     <i class="bi bi-leaf me-2"></i>Sustainability Reports
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="historical-tab" data-bs-toggle="pill" data-bs-target="#historical-content" type="button" role="tab" aria-controls="historical-content" aria-selected="false">
+                <button class="nav-link" id="historical-tab" data-bs-toggle="pill" data-bs-target="#historical-content"
+                    type="button" role="tab" aria-controls="historical-content" aria-selected="false">
                     <i class="bi bi-clock-history me-2"></i>Historical Events
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="projections-tab" data-bs-toggle="pill" data-bs-target="#projections-content" type="button" role="tab" aria-controls="projections-content" aria-selected="false">
+                <button class="nav-link" id="projections-tab" data-bs-toggle="pill"
+                    data-bs-target="#projections-content" type="button" role="tab" aria-controls="projections-content"
+                    aria-selected="false">
                     <i class="bi bi-graph-up me-2"></i>Future Projections
                 </button>
             </li>
         </ul>
-        
+
         <div class="tab-content" id="hazardTabsContent">
-            <div class="tab-pane fade show active" id="hazard-map-content" role="tabpanel" aria-labelledby="hazard-map-tab">
+            <div class="tab-pane fade show active" id="hazard-map-content" role="tabpanel"
+                aria-labelledby="hazard-map-tab">
                 <div class="row">
                     <div class="col-lg-3 mb-4">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title mb-3">Hazard Filters</h5>
                                 <div class="mb-3">
-                                    <label class="form-label">Hazard Types</label>
-                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="flood-hazard" checked><label class="form-check-label" for="flood-hazard">Flood Zones</label></div>
-                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="fire-hazard" checked><label class="form-check-label" for="fire-hazard">Fire Risk Areas</label></div>
-                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="earthquake-hazard" checked><label class="form-check-label" for="earthquake-hazard">Seismic Activity</label></div>
-                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="pollution-hazard" checked><label class="form-check-label" for="pollution-hazard">Air Quality Concerns</label></div>
-                                    <div class="form-check"><input class="form-check-input" type="checkbox" id="infrastructure-hazard" checked><label class="form-check-label" for="infrastructure-hazard">Infrastructure Vulnerabilities</label></div>
+                                    <label class="form-label">Regional Hazards</label>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox"
+                                            id="flood-hazard" checked><label class="form-check-label"
+                                            for="flood-hazard">Flash Flood Zones</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox"
+                                            id="heat-hazard" checked><label class="form-check-label"
+                                            for="heat-hazard">Heat Island Effect</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox"
+                                            id="seismic-hazard" checked><label class="form-check-label"
+                                            for="seismic-hazard">Seismic Activity (Riyadh/UAE Mountains)</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox"
+                                            id="pollution-hazard" checked><label class="form-check-label"
+                                            for="pollution-hazard">Dust & Air Quality</label></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox"
+                                            id="infrastructure-hazard" checked><label class="form-check-label"
+                                            for="infrastructure-hazard">Infrastructure Vulnerability</label></div>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="risk-level">Risk Level</label>
-                                    <select class="form-select" id="risk-level"><option value="all">All Risk Levels</option><option value="high">High Risk Only</option><option value="medium">Medium Risk & Above</option><option value="low">Low Risk & Above</option></select>
+                                    <select class="form-select" id="risk-level">
+                                        <option value="all">All Risk Levels</option>
+                                        <option value="high">High Risk Only</option>
+                                        <option value="medium">Medium Risk & Above</option>
+                                        <option value="low">Low Risk & Above</option>
+                                    </select>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="time-period">Time Period</label>
-                                    <select class="form-select" id="time-period"><option value="current">Current Assessment</option><option value="5year">5-Year Projection</option><option value="10year">10-Year Projection</option><option value="historical">Historical Data</option></select>
+                                    <select class="form-select" id="time-period">
+                                        <option value="current">Current Assessment</option>
+                                        <option value="5year">5-Year Projection</option>
+                                        <option value="10year">10-Year Projection</option>
+                                        <option value="historical">Historical Data</option>
+                                    </select>
                                 </div>
                                 <button class="btn btn-primary w-100" id="apply-hazard-filters">Apply Filters</button>
-                                <button class="btn btn-outline-secondary w-100 mt-2" id="reset-hazard-filters">Reset</button>
+                                <button class="btn btn-outline-secondary w-100 mt-2"
+                                    id="reset-hazard-filters">Reset</button>
                             </div>
                         </div>
                         <div class="card mt-4">
                             <div class="card-body">
                                 <h5 class="card-title mb-3">Legend</h5>
-                                <div class="d-flex align-items-center mb-2"><div style="width: 20px; height: 20px; background-color: #FF3B30; border-radius: 50%;"></div><span class="ms-2">High Risk</span></div>
-                                <div class="d-flex align-items-center mb-2"><div style="width: 20px; height: 20px; background-color: #FF9500; border-radius: 50%;"></div><span class="ms-2">Medium Risk</span></div>
-                                <div class="d-flex align-items-center mb-2"><div style="width: 20px; height: 20px; background-color: #FFCC00; border-radius: 50%;"></div><span class="ms-2">Low Risk</span></div>
-                                <div class="d-flex align-items-center"><div style="width: 20px; height: 20px; background-color: #00A651; border-radius: 50%;"></div><span class="ms-2">Minimal Risk</span></div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <div
+                                        style="width: 20px; height: 20px; background-color: #FF3B30; border-radius: 50%;">
+                                    </div><span class="ms-2">High Risk</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <div
+                                        style="width: 20px; height: 20px; background-color: #FF9500; border-radius: 50%;">
+                                    </div><span class="ms-2">Medium Risk</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <div
+                                        style="width: 20px; height: 20px; background-color: #FFCC00; border-radius: 50%;">
+                                    </div><span class="ms-2">Low Risk</span>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <div
+                                        style="width: 20px; height: 20px; background-color: #00A651; border-radius: 50%;">
+                                    </div><span class="ms-2">Minimal Risk</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-9">
-                        <div class="card mb-4"><div class="card-body p-0"><div id="hazard-map"></div></div></div>
+                        <div class="card mb-4">
+                            <div class="card-body p-0">
+                                <div id="hazard-map"></div>
+                            </div>
+                        </div>
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">Selected Area Analysis</h5>
-                                <p class="card-text text-muted">Click on the map to select an area for detailed hazard analysis.</p>
+                                <p class="card-text text-muted">Click on the map to select an area for detailed hazard
+                                    analysis.</p>
                                 <div id="area-analysis" style="display: none;">
                                     <h6 class="mt-4 mb-3">Downtown District</h6>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h6 class="mb-2">Flood Risk</h6><div class="progress mb-3" style="height:20px;"><div class="progress-bar progress-bar-warning" role="progressbar" style="width:65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">65%</div></div>
-                                            <h6 class="mb-2">Fire Risk</h6><div class="progress mb-3" style="height:20px;"><div class="progress-bar progress-bar-success" role="progressbar" style="width:25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div></div>
-                                            <h6 class="mb-2">Seismic Risk</h6><div class="progress mb-3" style="height:20px;"><div class="progress-bar progress-bar-success" role="progressbar" style="width:15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">15%</div></div>
+                                            <h6 class="mb-2">Flood Risk</h6>
+                                            <div class="progress mb-3" style="height:20px;">
+                                                <div class="progress-bar progress-bar-warning" role="progressbar"
+                                                    style="width:65%" aria-valuenow="65" aria-valuemin="0"
+                                                    aria-valuemax="100">65%</div>
+                                            </div>
+                                            <h6 class="mb-2">Fire Risk</h6>
+                                            <div class="progress mb-3" style="height:20px;">
+                                                <div class="progress-bar progress-bar-success" role="progressbar"
+                                                    style="width:25%" aria-valuenow="25" aria-valuemin="0"
+                                                    aria-valuemax="100">25%</div>
+                                            </div>
+                                            <h6 class="mb-2">Seismic Risk</h6>
+                                            <div class="progress mb-3" style="height:20px;">
+                                                <div class="progress-bar progress-bar-success" role="progressbar"
+                                                    style="width:15%" aria-valuenow="15" aria-valuemin="0"
+                                                    aria-valuemax="100">15%</div>
+                                            </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <h6 class="mb-2">Air Quality Risk</h6><div class="progress mb-3" style="height:20px;"><div class="progress-bar progress-bar-warning" role="progressbar" style="width:55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100">55%</div></div>
-                                            <h6 class="mb-2">Infrastructure Risk</h6><div class="progress mb-3" style="height:20px;"><div class="progress-bar progress-bar-danger" role="progressbar" style="width:75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div></div>
-                                            <h6 class="mb-2">Overall Risk</h6><div class="progress mb-3" style="height:20px;"><div class="progress-bar progress-bar-warning" role="progressbar" style="width:60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div></div>
+                                            <h6 class="mb-2">Air Quality Risk</h6>
+                                            <div class="progress mb-3" style="height:20px;">
+                                                <div class="progress-bar progress-bar-warning" role="progressbar"
+                                                    style="width:55%" aria-valuenow="55" aria-valuemin="0"
+                                                    aria-valuemax="100">55%</div>
+                                            </div>
+                                            <h6 class="mb-2">Infrastructure Risk</h6>
+                                            <div class="progress mb-3" style="height:20px;">
+                                                <div class="progress-bar progress-bar-danger" role="progressbar"
+                                                    style="width:75%" aria-valuenow="75" aria-valuemin="0"
+                                                    aria-valuemax="100">75%</div>
+                                            </div>
+                                            <h6 class="mb-2">Overall Risk</h6>
+                                            <div class="progress mb-3" style="height:20px;">
+                                                <div class="progress-bar progress-bar-warning" role="progressbar"
+                                                    style="width:60%" aria-valuenow="60" aria-valuemin="0"
+                                                    aria-valuemax="100">60%</div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="mt-3">
-                                        <h6>Risk Factors</h6><ul><li>Located in 100-year flood plain</li><li>Aging electrical grid</li></ul>
-                                        <h6>Mitigation Recommendations</h6><ul><li>Improve drainage</li><li>Modernize electrical system</li></ul>
-                                        <div class="text-end mt-3"><a href="#" class="btn btn-primary">Download Full Report</a></div>
+                                        <h6>Risk Factors</h6>
+                                        <ul>
+                                            <li>Located in 100-year flood plain</li>
+                                            <li>Aging electrical grid</li>
+                                        </ul>
+                                        <h6>Mitigation Recommendations</h6>
+                                        <ul>
+                                            <li>Improve drainage</li>
+                                            <li>Modernize electrical system</li>
+                                        </ul>
+                                        <div class="text-end mt-3"><a href="#" class="btn btn-primary">Download Full
+                                                Report</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -161,96 +315,225 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="tab-pane fade" id="sustainability-content" role="tabpanel" aria-labelledby="sustainability-tab">
-                <div class="row mb-4"><div class="col-lg-8 mx-auto text-center"><h3>Urban Sustainability Reports</h3><p class="lead text-muted">Comprehensive analysis of sustainability metrics.</p></div></div>
+                <div class="row mb-4">
+                    <div class="col-lg-8 mx-auto text-center">
+                        <h3>Urban Sustainability Reports</h3>
+                        <p class="lead text-muted">Comprehensive analysis of sustainability metrics.</p>
+                    </div>
+                </div>
                 <div class="row mb-4">
                     {% if sustainability_reports %} {# Changed from hazard_reports to be more specific #}
-                        {% for report in sustainability_reports %}
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100 report-card">
-                                <div class="card-body text-center">
-                                    <div class="sustainability-score score-{{ report.score_grade|lower }}">{{ report.score_grade }}</div>
-                                    <h4 class="card-title">{{ report.district_name }}</h4>
-                                    <p class="card-text">{{ report.summary }}</p>
-                                    <hr>
-                                    <div class="row text-start">
-                                        <div class="col-6"><p class="mb-1"><strong>Green Buildings:</strong></p><p class="mb-1"><strong>Solar Capacity:</strong></p><p class="mb-1"><strong>EV Charging:</strong></p><p class="mb-1"><strong>Public Transit:</strong></p><p class="mb-1"><strong>Waste Recycling:</strong></p></div>
-                                        <div class="col-6 text-end"><p class="mb-1">{{ report.green_buildings_pct }}%</p><p class="mb-1">{{ report.solar_capacity_mw }} MW</p><p class="mb-1">{{ report.ev_stations_count }} Stations</p><p class="mb-1">{{ report.public_transit_rating }}</p><p class="mb-1">{{ report.waste_recycling_pct }}%</p></div>
+                    {% for report in sustainability_reports %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 report-card">
+                            <div class="card-body text-center">
+                                <div class="sustainability-score score-{{ report.score_grade|lower }}">{{
+                                    report.score_grade }}</div>
+                                <h4 class="card-title">{{ report.district_name }}</h4>
+                                <p class="card-text">{{ report.summary }}</p>
+                                <hr>
+                                <div class="row text-start">
+                                    <div class="col-6">
+                                        <p class="mb-1"><strong>Green Buildings:</strong></p>
+                                        <p class="mb-1"><strong>Solar Capacity:</strong></p>
+                                        <p class="mb-1"><strong>EV Charging:</strong></p>
+                                        <p class="mb-1"><strong>Public Transit:</strong></p>
+                                        <p class="mb-1"><strong>Waste Recycling:</strong></p>
                                     </div>
-                                    <div class="mt-3"><a href="{{ report.full_report_link }}" class="btn btn-outline-primary">View Full Report</a></div>
+                                    <div class="col-6 text-end">
+                                        <p class="mb-1">{{ report.green_buildings_pct }}%</p>
+                                        <p class="mb-1">{{ report.solar_capacity_mw }} MW</p>
+                                        <p class="mb-1">{{ report.ev_stations_count }} Stations</p>
+                                        <p class="mb-1">{{ report.public_transit_rating }}</p>
+                                        <p class="mb-1">{{ report.waste_recycling_pct }}%</p>
+                                    </div>
                                 </div>
+                                <div class="mt-3"><a href="{{ report.full_report_link }}"
+                                        class="btn btn-outline-primary">View Full Report</a></div>
                             </div>
                         </div>
-                        {% endfor %}
+                    </div>
+                    {% endfor %}
                     {% else %}
-                        <div class="col-12"><p>No sustainability reports available at this time.</p></div>
+                    <div class="col-12">
+                        <p>No sustainability reports available at this time.</p>
+                    </div>
                     {% endif %}
                 </div>
-                <div class="row"><div class="col-12 text-center"><a href="#" class="btn btn-primary">Generate Custom Sustainability Report</a></div></div>
+                <div class="row">
+                    <div class="col-12 text-center"><a href="#" class="btn btn-primary">Generate Custom Sustainability
+                            Report</a></div>
+                </div>
             </div>
-            
+
             <div class="tab-pane fade" id="historical-content" role="tabpanel" aria-labelledby="historical-tab">
-                <div class="row mb-4"><div class="col-lg-8 mx-auto text-center"><h3>Historical Hazardous Events</h3><p class="lead text-muted">Database of past environmental and infrastructure events.</p></div></div>
+                <div class="row mb-4">
+                    <div class="col-lg-8 mx-auto text-center">
+                        <h3>Historical Hazardous Events</h3>
+                        <p class="lead text-muted">Database of past environmental and infrastructure events.</p>
+                    </div>
+                </div>
                 <div class="row mb-4">
                     <div class="col-lg-4 mb-4">
-                        <div class="card"><div class="card-body">
-                            <h5 class="card-title">Event Filters</h5>
-                            <div class="mb-3"><label class="form-label" for="event-type">Event Type</label><select class="form-select" id="event-type"><option value="all">All Events</option><option value="flood">Flooding</option></select></div>
-                            <button class="btn btn-primary w-100" id="apply-event-filters">Apply Filters</button>
-                        </div></div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Event Filters</h5>
+                                <div class="mb-3"><label class="form-label" for="event-type">Event Type</label><select
+                                        class="form-select" id="event-type">
+                                        <option value="all">All Events</option>
+                                        <option value="flood">Flooding</option>
+                                    </select></div>
+                                <button class="btn btn-primary w-100" id="apply-event-filters">Apply Filters</button>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-lg-8">
-                        <div class="card"><div class="card-body">
-                            <h5 class="card-title">Historical Events Timeline</h5>
-                            <div class="timeline mt-4">
-                                {% if historical_events_data %}
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Historical Events Timeline</h5>
+                                <div class="timeline mt-4">
+                                    {% if historical_events_data %}
                                     {% for event in historical_events_data %}
                                     <div class="card mb-3 border-{{event.severity_class}}">
                                         <div class="card-body">
-                                            <div class="d-flex justify-content-between align-items-center mb-2"><h5 class="card-title mb-0">{{event.title}}</h5><span class="badge bg-{{event.severity_class}} {% if event.severity_class == 'warning' or event.severity_class == 'info'%}text-dark{% endif %}">{{event.severity_text}}</span></div>
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <h5 class="card-title mb-0">{{event.title}}</h5><span
+                                                    class="badge bg-{{event.severity_class}} {% if event.severity_class == 'warning' or event.severity_class == 'info'%}text-dark{% endif %}">{{event.severity_text}}</span>
+                                            </div>
                                             <h6 class="card-subtitle mb-2 text-muted">{{event.date_location}}</h6>
                                             <p class="card-text">{{event.description}}</p>
-                                            <div class="row mt-3"><div class="col-md-4"><p class="mb-1"><strong>Economic Impact:</strong></p><p class="mb-1"><strong>Recovery Time:</strong></p><p class="mb-1"><strong>Response Rating:</strong></p></div><div class="col-md-8"><p class="mb-1 risk-{{event.impact_class}}">{{event.economic_impact}}</p><p class="mb-1">{{event.recovery_time}}</p><p class="mb-1">{{event.response_rating}}</p></div></div>
-                                            <div class="mt-3"><a href="{{event.report_link}}" class="btn btn-sm btn-outline-primary">View Detailed Report</a></div>
+                                            <div class="row mt-3">
+                                                <div class="col-md-4">
+                                                    <p class="mb-1"><strong>Economic Impact:</strong></p>
+                                                    <p class="mb-1"><strong>Recovery Time:</strong></p>
+                                                    <p class="mb-1"><strong>Response Rating:</strong></p>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <p class="mb-1 risk-{{event.impact_class}}">
+                                                        {{event.economic_impact}}</p>
+                                                    <p class="mb-1">{{event.recovery_time}}</p>
+                                                    <p class="mb-1">{{event.response_rating}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="mt-3"><a href="{{event.report_link}}"
+                                                    class="btn btn-sm btn-outline-primary">View Detailed Report</a>
+                                            </div>
                                         </div>
                                     </div>
                                     {% endfor %}
-                                {% else %}
+                                    {% else %}
                                     <p>No historical events to display.</p>
-                                {% endif %}
+                                    {% endif %}
+                                </div>
+                                {% if historical_events_data %}<div class="text-center mt-4"><button
+                                        class="btn btn-outline-primary">Load More Events</button></div>{% endif %}
                             </div>
-                            {% if historical_events_data %}<div class="text-center mt-4"><button class="btn btn-outline-primary">Load More Events</button></div>{% endif %}
-                        </div></div>
+                        </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="tab-pane fade" id="projections-content" role="tabpanel" aria-labelledby="projections-tab">
-                <div class="row mb-4"><div class="col-lg-8 mx-auto text-center"><h3>Future Risk Projections</h3><p class="lead text-muted">Data-driven forecasts of environmental risks, infrastructure vulnerabilities, and sustainability trends.</p></div></div>
                 <div class="row mb-4">
-                    <div class="col-lg-6 mb-4"><div class="card h-100"><div class="card-body"><h4 class="card-title">Climate Impact Projections</h4><p class="card-text">Projected changes in temperature, precipitation, and extreme weather events over the next 30 years.</p><div class="chart-container mt-4"><canvas id="climateChart"></canvas></div><div class="mt-4"><h6>Key Findings:</h6><ul><li>Projected 2.3°C temperature increase by 2050</li><li>15% increase in annual precipitation</li></ul></div><div class="text-end mt-3"><a href="#" class="btn btn-outline-primary">View Detailed Projections</a></div></div></div></div>
-                    <div class="col-lg-6 mb-4"><div class="card h-100"><div class="card-body"><h4 class="card-title">Infrastructure Vulnerability Forecast</h4><p class="card-text">Projected infrastructure vulnerabilities and failure risks.</p><div class="chart-container mt-4"><canvas id="infrastructureChart"></canvas></div><div class="mt-4"><h6>Key Findings:</h6><ul><li>35% of stormwater infrastructure inadequate by 2040</li><li>Electrical grid capacity challenges</li></ul></div><div class="text-end mt-3"><a href="#" class="btn btn-outline-primary">View Detailed Projections</a></div></div></div></div>
+                    <div class="col-lg-8 mx-auto text-center">
+                        <h3>Future Risk Projections</h3>
+                        <p class="lead text-muted">Data-driven forecasts of environmental risks, infrastructure
+                            vulnerabilities, and sustainability trends.</p>
+                    </div>
                 </div>
                 <div class="row mb-4">
-                    <div class="col-12"><div class="card"><div class="card-body">
-                        <h4 class="card-title">District Risk Evolution (2025-2050)</h4>
-                        <div class="table-responsive mt-4"><table class="table table-bordered">
-                            <thead class="table-light"><tr><th>District</th><th>Current Risk (2025)</th><th>5-Year (2030)</th><th>15-Year (2040)</th><th>25-Year (2050)</th><th>Key Vulnerabilities</th></tr></thead>
-                            <tbody>
-                                {% if district_risk_evolution %}
-                                    {% for district in district_risk_evolution %}
-                                    <tr><td>{{district.name}}</td><td class="risk-{{district.current_risk_class}}">{{district.current_risk_text}}</td><td class="risk-{{district.proj5_risk_class}}">{{district.proj5_risk_text}}</td><td class="risk-{{district.proj15_risk_class}}">{{district.proj15_risk_text}}</td><td class="risk-{{district.proj25_risk_class}}">{{district.proj25_risk_text}}</td><td>{{district.vulnerabilities}}</td></tr>
-                                    {% endfor %}
-                                {% else %}
-                                    <tr><td colspan="6" class="text-center">District risk evolution data unavailable.</td></tr>
-                                {% endif %}
-                            </tbody>
-                        </table></div>
-                        <div class="alert alert-info mt-4"><i class="bi bi-info-circle me-2"></i> Projections are based on current models. Regular updates recommended.</div>
-                    </div></div></div>
+                    <div class="col-lg-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h4 class="card-title">Climate Impact Projections</h4>
+                                <p class="card-text">Projected changes in temperature, precipitation, and extreme
+                                    weather events over the next 30 years.</p>
+                                <div class="chart-container mt-4"><canvas id="climateChart"></canvas></div>
+                                <div class="mt-4">
+                                    <h6>Key Findings:</h6>
+                                    <ul>
+                                        <li>Projected 2.3°C temperature increase by 2050</li>
+                                        <li>15% increase in annual precipitation</li>
+                                    </ul>
+                                </div>
+                                <div class="text-end mt-3"><a href="#" class="btn btn-outline-primary">View Detailed
+                                        Projections</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h4 class="card-title">Infrastructure Vulnerability Forecast</h4>
+                                <p class="card-text">Projected infrastructure vulnerabilities and failure risks.</p>
+                                <div class="chart-container mt-4"><canvas id="infrastructureChart"></canvas></div>
+                                <div class="mt-4">
+                                    <h6>Key Findings:</h6>
+                                    <ul>
+                                        <li>35% of stormwater infrastructure inadequate by 2040</li>
+                                        <li>Electrical grid capacity challenges</li>
+                                    </ul>
+                                </div>
+                                <div class="text-end mt-3"><a href="#" class="btn btn-outline-primary">View Detailed
+                                        Projections</a></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="row"><div class="col-12 text-center"><a href="#" class="btn btn-primary">Generate Custom Projection Report</a></div></div>
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">District Risk Evolution (2025-2050)</h4>
+                                <div class="table-responsive mt-4">
+                                    <table class="table table-bordered">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>District</th>
+                                                <th>Current Risk (2025)</th>
+                                                <th>5-Year (2030)</th>
+                                                <th>15-Year (2040)</th>
+                                                <th>25-Year (2050)</th>
+                                                <th>Key Vulnerabilities</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% if district_risk_evolution %}
+                                            {% for district in district_risk_evolution %}
+                                            <tr>
+                                                <td>{{district.name}}</td>
+                                                <td class="risk-{{district.current_risk_class}}">
+                                                    {{district.current_risk_text}}</td>
+                                                <td class="risk-{{district.proj5_risk_class}}">
+                                                    {{district.proj5_risk_text}}</td>
+                                                <td class="risk-{{district.proj15_risk_class}}">
+                                                    {{district.proj15_risk_text}}</td>
+                                                <td class="risk-{{district.proj25_risk_class}}">
+                                                    {{district.proj25_risk_text}}</td>
+                                                <td>{{district.vulnerabilities}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                            {% else %}
+                                            <tr>
+                                                <td colspan="6" class="text-center">District risk evolution data
+                                                    unavailable.</td>
+                                            </tr>
+                                            {% endif %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="alert alert-info mt-4"><i class="bi bi-info-circle me-2"></i> Projections
+                                    are based on current models. Regular updates recommended.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-center"><a href="#" class="btn btn-primary">Generate Custom Projection
+                            Report</a></div>
+                </div>
             </div>
         </div>
     </div>
@@ -261,56 +544,56 @@
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const hazardMapElement = document.getElementById('hazard-map');
-    if (hazardMapElement) {
-        const hazardMap = L.map('hazard-map').setView([40.7128, -74.0060], 13); // Default: New York
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(hazardMap);
-        // Example markers (replace with dynamic data from context if available)
-        L.circle([40.7128, -74.0060], { color: '#FF3B30', fillColor: '#FF3B30', fillOpacity: 0.5, radius: 500 }).addTo(hazardMap).bindPopup('High Flood Risk Zone');
-        L.circle([40.6950, -74.0000], { color: '#FF9500', fillColor: '#FF9500', fillOpacity: 0.5, radius: 700 }).addTo(hazardMap).bindPopup('Medium Flood Risk Zone');
-    }
+    document.addEventListener('DOMContentLoaded', function () {
+        const hazardMapElement = document.getElementById('hazard-map');
+        if (hazardMapElement) {
+            const hazardMap = L.map('hazard-map').setView([25.276987, 51.520008], 11); // Default: Doha, Qatar
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(hazardMap);
+            // Example markers for Doha
+            L.circle([25.2854, 51.5310], { color: '#FF3B30', fillColor: '#FF3B30', fillOpacity: 0.5, radius: 1000 }).addTo(hazardMap).bindPopup('High Flood Risk Zone (Historical)');
+            L.circle([25.2421, 51.5160], { color: '#FF9500', fillColor: '#FF9500', fillOpacity: 0.5, radius: 1500 }).addTo(hazardMap).bindPopup('Urban Heat Island Cluster');
+        }
 
-    const areaAnalysisDiv = document.getElementById('area-analysis');
-    if (hazardMapElement && areaAnalysisDiv) {
-        hazardMapElement.addEventListener('click', function() { // Changed from hazardMap.on('click', ...) to be sure it's the element
-            areaAnalysisDiv.style.display = 'block';
-        });
-    }
-    
-    const climateCtxElement = document.getElementById('climateChart');
-    if (climateCtxElement) {
-        const climateCtx = climateCtxElement.getContext('2d');
-        new Chart(climateCtx, {
-            type: 'line',
-            data: {
-                labels: ['2025', '2030', '2035', '2040', '2045', '2050'],
-                datasets: [
-                    { label: 'Avg Temp (°C)', data: [15.2, 15.8, 16.4, 16.9, 17.3, 17.5], borderColor: '#FF3B30', backgroundColor: 'rgba(255,59,48,0.1)', tension: 0.3, fill: true },
-                    { label: 'Precipitation (% change)', data: [0, 3, 6, 9, 12, 15], borderColor: '#4A90E2', backgroundColor: 'rgba(74,144,226,0.1)', tension: 0.3, fill: true }
-                ]
-            },
-            options: { responsive: true, maintainAspectRatio: false }
-        });
-    }
-    
-    const infraCtxElement = document.getElementById('infrastructureChart');
-    if (infraCtxElement) {
-        const infraCtx = infraCtxElement.getContext('2d');
-        new Chart(infraCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Stormwater', 'Electrical', 'Transportation', 'Water Supply', 'Buildings'],
-                datasets: [
-                    { label: 'Current Vulnerability (%)', data: [25, 30, 20, 15, 35], backgroundColor: '#4A90E2' },
-                    { label: 'Projected Vulnerability (%)', data: [35, 45, 30, 25, 50], backgroundColor: '#FF9500' }
-                ]
-            },
-            options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, max: 100 } } }
-        });
-    }
-});
+        const areaAnalysisDiv = document.getElementById('area-analysis');
+        if (hazardMapElement && areaAnalysisDiv) {
+            hazardMapElement.addEventListener('click', function () { // Changed from hazardMap.on('click', ...) to be sure it's the element
+                areaAnalysisDiv.style.display = 'block';
+            });
+        }
+
+        const climateCtxElement = document.getElementById('climateChart');
+        if (climateCtxElement) {
+            const climateCtx = climateCtxElement.getContext('2d');
+            new Chart(climateCtx, {
+                type: 'line',
+                data: {
+                    labels: ['2025', '2030', '2035', '2040', '2045', '2050'],
+                    datasets: [
+                        { label: 'Avg Temp (°C)', data: [15.2, 15.8, 16.4, 16.9, 17.3, 17.5], borderColor: '#FF3B30', backgroundColor: 'rgba(255,59,48,0.1)', tension: 0.3, fill: true },
+                        { label: 'Precipitation (% change)', data: [0, 3, 6, 9, 12, 15], borderColor: '#4A90E2', backgroundColor: 'rgba(74,144,226,0.1)', tension: 0.3, fill: true }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        const infraCtxElement = document.getElementById('infrastructureChart');
+        if (infraCtxElement) {
+            const infraCtx = infraCtxElement.getContext('2d');
+            new Chart(infraCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Stormwater', 'Electrical', 'Transportation', 'Water Supply', 'Buildings'],
+                    datasets: [
+                        { label: 'Current Vulnerability (%)', data: [25, 30, 20, 15, 35], backgroundColor: '#4A90E2' },
+                        { label: 'Projected Vulnerability (%)', data: [35, 45, 30, 25, 50], backgroundColor: '#FF9500' }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, max: 100 } } }
+            });
+        }
+    });
 </script>
 {% endblock %}

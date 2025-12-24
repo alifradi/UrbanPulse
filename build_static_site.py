@@ -33,13 +33,13 @@ def get_mock_context_for_template(template_name, current_page_name_from_build):
     
     template_specific_data = {
         "home.html": {
-            "page_title": "UrbanPulse - Urban Data Analytics",
-            "hero_title": "Urban Data Intelligence for Smarter Investments",
+            "page_title": "UrbanPulse - Global Urban Intelligence for Commercial Expansion",
+            "hero_title": "Global Urban Intelligence for Strategic Expansion",
             "featured_insights": [
-                {"title": "Dataset categories", "value": "42", "icon": "building"},
-                {"title": "Cities Covered", "value": "10", "icon": "geo-alt"},
-                {"title": "Business Opportunities", "value": "As Available", "icon": "shop"},
-                {"title": "Data Accuracy", "value": "Gold to silver data sources", "icon": "check-circle"}
+                {"title": "Global POIs", "value": "60,000+", "icon": "bi-geo-alt"},
+                {"title": "Key Markets", "value": "7+ (QA, AE, SA, CA, BH, EG)", "icon": "bi-globe"},
+                {"title": "Verified Businesses", "value": "5,000+", "icon": "bi-shop"},
+                {"title": "Update Frequency", "value": "Weekly", "icon": "bi-arrow-repeat"}
             ]
         },
         "investment.html": {
@@ -54,30 +54,21 @@ def get_mock_context_for_template(template_name, current_page_name_from_build):
             ]
         },
         "hazards.html": {
-            "page_title": "Hazard Analysis & Sustainability - UrbanPulse",
-            "page_title_hero": "Hazard Analysis & Sustainability",
-            "sustainability_reports": [ # Renamed from hazard_reports for clarity
-                 {"score_grade": "A", "district_name": "Downtown District", "summary": "Leading sustainability initiatives with extensive green building adoption and renewable energy integration.", "green_buildings_pct": 85, "solar_capacity_mw": 12.5, "ev_stations_count": 245, "public_transit_rating": "Excellent", "waste_recycling_pct": 78, "full_report_link": "#"},
-                 {"score_grade": "B", "district_name": "North District", "summary": "Strong sustainability performance with ongoing improvements in renewable energy and transportation.", "green_buildings_pct": 72, "solar_capacity_mw": 8.3, "ev_stations_count": 178, "public_transit_rating": "Good", "waste_recycling_pct": 65, "full_report_link": "#"},
-                 {"score_grade": "C", "district_name": "Industrial Zone", "summary": "Moderate sustainability with significant improvement opportunities in emissions and energy efficiency.", "green_buildings_pct": 45, "solar_capacity_mw": 5.1, "ev_stations_count": 62, "public_transit_rating": "Limited", "waste_recycling_pct": 52, "full_report_link": "#"},
-                 {"score_grade": "B", "district_name": "East Side", "summary": "Strong sustainability metrics with recent improvements in green building adoption and public transit.", "green_buildings_pct": 68, "solar_capacity_mw": 7.8, "ev_stations_count": 156, "public_transit_rating": "Very Good", "waste_recycling_pct": 70, "full_report_link": "#"},
-                 {"score_grade": "D", "district_name": "South Quarter", "summary": "Below average sustainability performance with significant room for improvement across all metrics.", "green_buildings_pct": 32, "solar_capacity_mw": 2.3, "ev_stations_count": 28, "public_transit_rating": "Poor", "waste_recycling_pct": 35, "full_report_link": "#"},
-                 {"score_grade": "C", "district_name": "West End", "summary": "Average sustainability performance with recent improvements in renewable energy adoption.", "green_buildings_pct": 55, "solar_capacity_mw": 6.2, "ev_stations_count": 95, "public_transit_rating": "Average", "waste_recycling_pct": 58, "full_report_link": "#"}
+            "page_title": "Urban Opportunity & Site Analysis - UrbanPulse",
+            "page_title_hero": "Urban Opportunity & Site Analysis",
+            "sustainability_reports": [
+                 {"score_grade": "A", "district_name": "Mile End, Montreal", "summary": "High commercial density with superior pedestrian catchment and artisanal cluster potential.", "green_buildings_pct": 82, "solar_capacity_mw": 5.0, "ev_stations_count": 45, "public_transit_rating": "Excellent (STM)", "waste_recycling_pct": 78, "full_report_link": "#"},
+                 {"score_grade": "A", "district_name": "Lusail, Qatar", "summary": "Rapidly growing business district with premium infrastructure and international brand attraction.", "green_buildings_pct": 92, "solar_capacity_mw": 15.0, "ev_stations_count": 120, "public_transit_rating": "Excellent (Metro Link)", "waste_recycling_pct": 82, "full_report_link": "#"},
+                 {"score_grade": "B", "district_name": "Liberty Village, Toronto", "summary": "Young professional demographic with high density of service-based commercial POIs.", "green_buildings_pct": 75, "solar_capacity_mw": 8.2, "ev_stations_count": 85, "public_transit_rating": "Very Good (TTC)", "waste_recycling_pct": 70, "full_report_link": "#"},
+                 {"score_grade": "B", "district_name": "Downtown Dubai, UAE", "summary": "World-class retail anchor density and massive international tourist catchment.", "green_buildings_pct": 88, "solar_capacity_mw": 10.5, "ev_stations_count": 310, "public_transit_rating": "Very Good", "waste_recycling_pct": 75, "full_report_link": "#"}
             ],
             "historical_events_data": [
-                {"title": "Downtown Flooding", "severity_class": "danger", "severity_text": "Critical", "date_location": "June 15, 2023 | Downtown District", "description": "Severe flooding affected 60% of the downtown area...", "economic_impact": "$42.5 Million", "recovery_time": "8 Months", "response_rating": "Adequate (3/5)", "impact_class": "high", "report_link": "#"},
-                {"title": "Industrial Zone Fire", "severity_class": "warning", "severity_text": "Major", "date_location": "August 3, 2022 | Industrial Zone", "description": "Fire at a manufacturing facility spread to adjacent properties...", "economic_impact": "$18.7 Million", "recovery_time": "5 Months", "response_rating": "Good (4/5)", "impact_class": "medium", "report_link": "#"},
-                {"title": "Power Grid Failure", "severity_class": "warning", "severity_text": "Major", "date_location": "January 12, 2022 | Multiple Districts", "description": "Widespread power outage during winter storm...", "economic_impact": "$23.2 Million", "recovery_time": "3 Months", "response_rating": "Poor (2/5)", "impact_class": "medium", "report_link": "#"},
-                {"title": "Chemical Spill", "severity_class": "info", "severity_text": "Moderate", "date_location": "March 28, 2021 | Industrial Zone", "description": "Contained chemical spill at manufacturing facility...", "economic_impact": "$3.8 Million", "recovery_time": "2 Months", "response_rating": "Excellent (5/5)", "impact_class": "low", "report_link": "#"},
-                {"title": "Water Main Break", "severity_class": "secondary", "severity_text": "Minor", "date_location": "October 5, 2020 | East Side", "description": "Water main break affected service to approximately 200 residences...", "economic_impact": "$850,000", "recovery_time": "2 Weeks", "response_rating": "Good (4/5)", "impact_class": "low", "report_link": "#"}
+                {"title": "Doha Flash Flood Event", "severity_class": "danger", "severity_text": "Critical", "date_location": "April 2024 | Doha, Qatar", "description": "Record rainfall led to significant infrastructure disruptions and basement flooding in low-elevation residential clusters.", "economic_impact": "$15 Million (Est.)", "recovery_time": "3 Weeks", "response_rating": "Rapid (4/5)", "impact_class": "high", "report_link": "#"},
+                {"title": "Dubai Extreme Heatwave", "severity_class": "warning", "severity_text": "Major", "date_location": "August 2023 | Dubai, UAE", "description": "Peak temperatures exceeding 50°C stressed cooling systems in older architectural clusters.", "economic_impact": "Operational Surge", "recovery_time": "Climate Seasonal", "response_rating": "Good (4/5)", "impact_class": "medium", "report_link": "#"}
             ],
             "district_risk_evolution": [
-                {"name": "Downtown", "current_risk_class": "medium", "current_risk_text": "Medium (60%)", "proj5_risk_class": "medium", "proj5_risk_text": "Medium (65%)", "proj15_risk_class": "high", "proj15_risk_text": "High (72%)", "proj25_risk_class": "high", "proj25_risk_text": "High (78%)", "vulnerabilities": "Flooding, Infrastructure Age, Heat Island Effect"},
-                {"name": "North District", "current_risk_class": "low", "current_risk_text": "Low (35%)", "proj5_risk_class": "low", "proj5_risk_text": "Low (38%)", "proj15_risk_class": "medium", "proj15_risk_text": "Medium (52%)", "proj25_risk_class": "medium", "proj25_risk_text": "Medium (58%)", "vulnerabilities": "Wildland Interface, Water Supply"},
-                {"name": "East Side", "current_risk_class": "medium", "current_risk_text": "Medium (55%)", "proj5_risk_class": "low", "proj5_risk_text": "Low (48%)", "proj15_risk_class": "low", "proj15_risk_text": "Low (42%)", "proj25_risk_class": "low", "proj25_risk_text": "Low (40%)", "vulnerabilities": "Current Infrastructure, Improving with Investments"},
-                {"name": "West End", "current_risk_class": "medium", "current_risk_text": "Medium (58%)", "proj5_risk_class": "medium", "proj5_risk_text": "Medium (62%)", "proj15_risk_class": "medium", "proj15_risk_text": "Medium (65%)", "proj25_risk_class": "high", "proj25_risk_text": "High (70%)", "vulnerabilities": "Coastal Proximity, Aging Infrastructure"},
-                {"name": "South Quarter", "current_risk_class": "high", "current_risk_text": "High (75%)", "proj5_risk_class": "high", "proj5_risk_text": "High (80%)", "proj15_risk_class": "high", "proj15_risk_text": "High (85%)", "proj25_risk_class": "high", "proj25_risk_text": "High (88%)", "vulnerabilities": "Flood Plain, Industrial Contamination, Infrastructure"},
-                {"name": "Industrial Zone", "current_risk_class": "high", "current_risk_text": "High (72%)", "proj5_risk_class": "medium", "proj5_risk_text": "Medium (65%)", "proj15_risk_class": "medium", "proj15_risk_text": "Medium (60%)", "proj25_risk_class": "medium", "proj25_risk_text": "Medium (55%)", "vulnerabilities": "Environmental Hazards, Improving with Remediation"}
+                {"name": "Doha Bay", "current_risk_class": "medium", "current_risk_text": "Medium (Flood/Heat)", "proj5_risk_class": "medium", "proj5_risk_text": "Mitigated (60%)", "proj15_risk_class": "high", "proj15_risk_text": "High (Heat Stress)", "proj25_risk_class": "high", "proj25_risk_text": "High (75%)", "vulnerabilities": "Sea Level Rise, Urban Heat Island"},
+                {"name": "Riyadh Center", "current_risk_class": "low", "current_risk_text": "Low (Seismic)", "proj5_risk_class": "low", "proj5_risk_text": "Low (40%)", "proj15_risk_class": "medium", "proj15_risk_text": "Medium (Water Stress)", "proj25_risk_class": "medium", "proj25_risk_text": "Medium (55%)", "vulnerabilities": "Water Depletion, Temperature Extremes"}
             ]
         },
         "contact.html": {
@@ -103,33 +94,33 @@ def get_mock_context_for_template(template_name, current_page_name_from_build):
             ]
         },
         "services.html": {
-            "page_title": "Services & Partnerships - UrbanPulse",
-            "page_title_hero": "Services & Partnerships", # Title for H1
+            "page_title": "Global Urban Intelligence Services - UrbanPulse",
+            "page_title_hero": "Global Site Selection & Market Analysis",
             "core_services": [
                 {
-                    "icon": "graph-up-arrow", "name": "Data Insights & Analytics", 
-                    "description": "Comprehensive analysis of urban data to reveal patterns, trends, and opportunities across cities and neighborhoods.",
-                    "points": ["Population and demographic analysis", "Infrastructure condition assessment", "Business activity and economic indicators", "Safety and inspection history analysis", "Custom data visualization and reporting"],
-                    "link": "/investment/", "link_text": "Explore Data Insights"
+                    "icon": "globe", "name": "Cross-Border Market Benchmarking", 
+                    "description": "Compare commercial viability across global cities from Montreal to Dubai using standardized POI metrics.",
+                    "points": ["Identify undervalued commercial zones in 7+ countries", "Analyze 60,000+ POIs for catchment potential", "Compare restaurant density and competitive clusters", "Benchmarking international expansion feasibility"],
+                    "link": "/investment/", "link_text": "Compare Global Markets"
                 },
                 {
-                    "icon": "building-check", "name": "Investment Opportunity Analysis",
-                    "description": "Data-driven identification and evaluation of urban investment opportunities with comprehensive risk and return assessment.",
-                    "points": ["Property and location evaluation", "Market trend analysis and forecasting", "Comparative ROI modeling", "Vacancy and business potential assessment", "Investment risk profiling"],
-                    "link": "/investment/", "link_text": "Explore Investment Analysis"
+                    "icon": "shop", "name": "Commercial Site Selection",
+                    "description": "Helping international brands and restaurant chains find the 'best spot' using high-density amenity mapping.",
+                    "points": ["Micro-location analysis for high-footfall categories", "Demographic-anchor correlation mapping", "Proximity analysis to 5,000+ geocoded businesses", "Custom catchment reports for international retail"],
+                    "link": "/investment/", "link_text": "Find Your Site"
                 },
                 {
-                    "icon": "shield-check", "name": "Hazard & Sustainability Assessment",
-                    "description": "Comprehensive analysis of environmental risks, hazards, and sustainability metrics for urban areas and properties.",
-                    "points": ["Environmental risk mapping", "Climate resilience evaluation", "Green energy installation analysis", "Sustainability scoring and benchmarking", "Hazard mitigation recommendations"],
-                    "link": "/hazards/", "link_text": "Explore Hazard Analysis"
+                    "icon": "graph-up-arrow", "name": "Opportunity Indexing",
+                    "description": "Score districts based on commercial potential, worker proximity, and transit density.",
+                    "points": ["Urban Opportunity Index (0-100) per district", "Identify 'Retail Deserts' with high unserved demand", "Transit accessibility scoring for worker hubs", "Visual heatmap of commercial activity"],
+                    "link": "/investment/", "link_text": "Analyze Opportunities"
                 }
             ],
             "specialized_services": [
                 {
-                    "icon": "people", "name": "Strategic Consulting", 
-                    "description": "Expert guidance on urban development strategies, investment decisions, and sustainability initiatives based on comprehensive data analysis.",
-                    "points": ["Urban development strategy formulation", "Investment portfolio optimization", "Sustainability transformation planning", "Risk mitigation strategy development"],
+                    "icon": "briefcase", "name": "Strategic Growth Consulting", 
+                    "description": "Expert guidance for international companies entering new markets in North America or the GCC.",
+                    "points": ["Market entry strategy for international brands", "Portfolio expansion optimization", "Commercial risk & opportunity assessment", "Site-specific feasibility studies"],
                     "link_url": "/contact/", "link_text": "Request Consultation"
                 },
                 {
