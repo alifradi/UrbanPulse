@@ -50,6 +50,11 @@ def get_mock_context_for_template(template_name, current_page_name_from_build):
                     "title": "Quality of Life in Montreal",
                     "image_path": "showoff/quality of life in montreal.jpeg",
                     "paragraph": "Our advanced Machine Learning models analyze and map the Quality of Life across Montreal's neighborhoods, transforming complex urban data into precise visual intelligence. This mapping of ML results empowers real estate companies and brokers to accurately identify superior residential locations, providing the reassurance needed to spot high-potential areas and make informed investment decisions."
+                },
+                {
+                    "title": "Early Warning System for Toronto",
+                    "image_path": "showoff/toronto_crimes.png",
+                    "paragraph": "Our early warning system leverages POI history and registered crime data to provide municipalities with actionable insights for urban safety improvement. By analyzing patterns in Points of Interest and correlating them with crime statistics, we help city planners and decision-makers identify areas requiring intervention, allocate resources more effectively, and proactively address safety concerns before they escalate."
                 }
             ]
         },
